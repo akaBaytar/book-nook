@@ -4,15 +4,18 @@ datasource db {
 }
 
 model User {
-  id        String   @id
+  id        String   @id @default(uuid())
   clerkId   String   @unique
+  email     String?  @unique
+  firstName String?
+  lastName  String?
+  books     Book[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  books     Book[]
 }
 
 model Book {
-  id              String    @id
+  id              String    @id @default(uuid())
   userId          String
   user            User      @relation(fields: [userId], references: [id])
   name            String

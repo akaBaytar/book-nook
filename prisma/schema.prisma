@@ -29,6 +29,7 @@ model Book {
   type            Type      @default(book)
   page            Int       @default(0)
   completed       Boolean   @default(false)
+  image           String?
   translator      String?
   illustrator     String?
   genre           String?

@@ -6,11 +6,9 @@ import AppSidebar from '@/components/layout/app-sidebar';
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider defaultOpen>
+      <Navbar />
       <AppSidebar />
-      <main>
-        <Navbar />
-        {children}
-      </main>
+      <main className='ps-2 pe-4 mt-20 md:mt-6 w-full'>{children}</main>
     </SidebarProvider>
   );
 };

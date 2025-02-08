@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id
+  clerkId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  books     Book[]
+}
+
+model Book {
+  id              String    @id
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  name            String
+  author          String
+  publisher       String
+  rating          Decimal   @default(0)
+  type            Type      @default(book)
+  page            Int       @default(0)
+  completed       Boolean   @default(false)
+  translator      String?
+  illustrator     String?
+  genre           String?
+  language        String?
+  quote           String?
+  summary         String?
+  category        String?
+  volume          Int?
+  ISBN            Int?
+  printing        Int?
+  publicationDate DateTime?
+  acquiredDate    DateTime?
+  startDate       DateTime?
+  endDate         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum Type {
+  book
+  eBook
+  audioBook
+}

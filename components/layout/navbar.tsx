@@ -3,7 +3,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const Navbar = () => {
   return (
-    <nav className='rounded-md fixed top-4 start-4 end-4 md:hidden p-2 flex justify-between items-center bg-sidebar border'>
+    <nav className='rounded-md fixed top-4 start-4 end-4 md:hidden p-2 flex justify-between items-center bg-sidebar border z-50'>
       <SidebarTrigger />
       <p className='font-semibold text-xl'>LOGO IPSUM</p>
       <UserButton

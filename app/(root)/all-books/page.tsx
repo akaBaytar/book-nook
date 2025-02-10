@@ -13,7 +13,7 @@ const AllBooksPage = () => {
   return (
     <>
       <h1 className='text-2xl font-medium'>All Books</h1>
-      <div className='mt-5'>
+      <div className='mt-2.5'>
         <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
           {BOOKS.map((book) => (
             <Link key={book.id} href={`/books/${book.id}`}>

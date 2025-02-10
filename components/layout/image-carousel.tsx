@@ -10,6 +10,8 @@ import {
   CarouselContent,
 } from '@/components/ui/carousel';
 
+import { CAROUSEL } from '@/mock';
+
 const ImageCarousel = () => {
   return (
     <Carousel
@@ -20,24 +22,17 @@ const ImageCarousel = () => {
         }),
       ]}>
       <CarouselContent>
-        <CarouselItem>
-          <Image
-            src='/placeholder.svg'
-            width={600}
-            height={400}
-            alt='placeholder image'
-            className='rounded-md'
-          />
-        </CarouselItem>
-        <CarouselItem>
-          <Image
-            src='/placeholder.svg'
-            width={600}
-            height={400}
-            alt='placeholder image'
-            className='rounded-md'
-          />
-        </CarouselItem>
+        {CAROUSEL.map(({ id, image }) => (
+          <CarouselItem key={id}>
+            <Image
+              src={image}
+              width={400}
+              height={400}
+              alt='placeholder image'
+              className='rounded-md cursor-ew-resize'
+            />
+          </CarouselItem>
+        ))}
       </CarouselContent>
     </Carousel>
   );

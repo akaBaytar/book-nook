@@ -8,7 +8,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <SidebarProvider defaultOpen>
       <Navbar />
       <AppSidebar />
-      <main className='ps-2 pe-4 mt-20 md:mt-6 w-full'>{children}</main>
+      <main className='px-4 md:ps-0 my-20 md:my-4 w-full'>{children}</main>
     </SidebarProvider>
   );
 };

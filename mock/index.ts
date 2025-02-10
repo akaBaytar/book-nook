@@ -12,7 +12,7 @@ export const BOOKS = [
     image: '/mock/1.jpg',
     translator: 'Aydın Emeç',
     illustrator: null,
-    genre: 'Roman',
+    genre: ['Roman', 'Dram', 'Çocuk Edebiyatı'],
     language: 'Türkçe',
     quote: 'İçimdeki acıyı dindirmek için kitaplara sığındım.',
     summary:
@@ -41,7 +41,7 @@ export const BOOKS = [
     image: '/mock/2.jpg',
     translator: 'Kamuran Şipal',
     illustrator: null,
-    genre: 'Fantastik',
+    genre: ['Fantastik', 'Macera', 'Bilim Kurgu'],
     language: 'Türkçe',
     quote: 'Zaman, yaşamın kendisidir ve yaşamın yeri yürektir.',
     summary:
@@ -70,7 +70,7 @@ export const BOOKS = [
     image: '/mock/3.jpg',
     translator: 'Celâl Üster',
     illustrator: null,
-    genre: 'Distopya',
+    genre: ['Distopya', 'Siyaset', 'Alegori'],
     language: 'Türkçe',
     quote: 'Bütün hayvanlar eşittir, ama bazı hayvanlar daha eşittir.',
     summary:
@@ -99,7 +99,7 @@ export const BOOKS = [
     image: '/mock/4.jpg',
     translator: null,
     illustrator: null,
-    genre: 'Roman',
+    genre: ['Roman', 'Aşk', 'Psikolojik'],
     language: 'Türkçe',
     quote: 'Dünyada insanın en kolay bulabileceği şey, kendisidir.',
     summary:
@@ -128,7 +128,7 @@ export const BOOKS = [
     image: '/mock/5.jpg',
     translator: null,
     illustrator: null,
-    genre: 'Roman',
+    genre: ['Roman', 'Tarih', 'Felsefi'],
     language: 'Türkçe',
     quote: 'Her hikâye bir kazı gibidir.',
     summary:

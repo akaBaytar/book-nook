@@ -32,7 +32,7 @@ model Book {
   image           String?
   translator      String?
   illustrator     String?
-  genre           String?
+  genre           String[]
   language        String?
   quote           String?
   summary         String?

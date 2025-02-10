@@ -7,8 +7,9 @@ import '../styles/globals.css';
 import { Sour_Gummy } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: 'Book Tracker',
-  description: 'Book tracking app',
+  title: 'Book Nook - Your Personal Library, Anytime, Anywhere',
+  description:
+    'Track your progress, set reading goals and build your dream library.',
 };
 
 const sourGummy = Sour_Gummy({ subsets: ['latin-ext'] });

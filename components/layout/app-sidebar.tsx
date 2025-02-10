@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
@@ -60,7 +61,16 @@ const AppSidebar = async () => {
   return (
     <Sidebar side='left' variant='floating'>
       <SidebarHeader>
-        <p className='font-semibold text-3xl text-center'>LOGO IPSUM</p>
+        <div className='flex items-center'>
+          <Image
+            src='/logo.png'
+            alt='book nook app logo'
+            height={50}
+            width={50}
+            priority
+          />
+          <p className='min-w-[76px] text-center tracking-wide'>Book Nook</p>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -93,7 +103,7 @@ const AppSidebar = async () => {
               elements: {
                 avatarBox: 'size-10 rounded-md',
                 userButtonPopoverCard: 'w-[17rem]',
-                 userButtonTrigger: 'rounded-md',
+                userButtonTrigger: 'rounded-md',
               },
             }}
           />

@@ -53,7 +53,7 @@ const chartConfig = {
 
 const DashboardChart = () => {
   return (
-    <Card className='flex flex-col rounded-md mt-2.5'>
+    <Card className='flex flex-col rounded-md'>
       <CardHeader className='items-center pb-0'>
         <CardTitle>My Book Chart</CardTitle>
         <CardDescription>Monthly and yearly book data</CardDescription>

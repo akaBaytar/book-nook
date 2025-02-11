@@ -14,42 +14,69 @@ model User {
   firstName String?
   lastName  String?
   books     Book[]
+  lists     List[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([clerkId])
 }
 
 model Book {
   id              String    @id @default(uuid())
   userId          String
-  user            User      @relation(fields: [userId], references: [id])
+  listId          String?
   name            String
   author          String
   publisher       String
-  rating          Decimal   @default(0)
-  type            Type      @default(book)
-  page            Int       @default(0)
+  rating          Decimal   @default(0) @db.Decimal(3, 1)
+  type            BookType  @default(BOOK)
+  pageCount       Int       @default(0)
   completed       Boolean   @default(false)
-  image           String?
+  genre           String[]
+  image           String?   @db.Text
   translator      String?
   illustrator     String?
-  genre           String[]
   language        String?
-  quote           String?
-  summary         String?
+  quote           String?   @db.Text
+  summary         String?   @db.Text
   category        String?
   volume          Int?
-  ISBN            Int?
+  isbn            String?
   printing        Int?
   publicationDate DateTime?
   acquiredDate    DateTime?
   startDate       DateTime?
   endDate         DateTime?
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  list            List?     @relation(fields: [listId], references: [id])
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([listId])
 }
 
-enum Type {
-  book
-  eBook
-  audioBook
+model List {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  description String?  @db.Text
+  books       Book[]
+  privacy     Privacy  @default(PUBLIC)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+enum Privacy {
+  PUBLIC
+  PRIVATE
+}
+
+enum BookType {
+  BOOK
+  EBOOK
+  AUDIO_BOOK
 }

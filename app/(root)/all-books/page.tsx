@@ -1,68 +1,79 @@
-import Image from 'next/image';
+'use client';
 
-import { BookHeartIcon } from 'lucide-react';
+import { useState } from 'react';
 
-import { Card, CardTitle, CardDescription } from '@/components/ui/card';
+import { SearchIcon } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+import BookCard from '@/components/shared/book-card';
 
 import { BOOKS } from '@/mock';
-import Link from 'next/link';
 
 const AllBooksPage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterCompleted, setFilterCompleted] = useState('all');
+
+  const filteredBooks = BOOKS.filter((book) => {
+    const matchesSearch =
+      book.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesFilter =
+      filterCompleted === 'all'
+        ? true
+        : filterCompleted === 'completed'
+        ? book.completed
+        : !book.completed;
+
+    return matchesSearch && matchesFilter;
+  });
+
   return (
-    <>
-      <h1 className='text-2xl font-medium'>All Books</h1>
-      <div className='mt-2.5'>
-        <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-          {BOOKS.map((book) => (
-            <Link key={book.id} href={`/books/${book.id}`}>
-              <Card className='flex items-center justify-between gap-5 p-2.5 rounded-md'>
-                <div className='flex items-center gap-2.5'>
-                  <Image
-                    src={book.image}
-                    width={60}
-                    height={60}
-                    alt={book.name}
-                    className='object-cover rounded-md'
-                  />
-                  <div className='flex flex-col'>
-                    <CardTitle title={book.name} className='line-clamp-1'>
-                      {book.name}
-                    </CardTitle>
-                    <CardDescription
-                      title={book.author}
-                      className='line-clamp-1'>
-                      {book.author}
-                    </CardDescription>
-                    <CardDescription
-                      title={book.publisher}
-                      className='text-xs font-light line-clamp-1'>
-                      {book.publisher}
-                    </CardDescription>
-                  </div>
-                </div>
-                <div
-                  title={book.completed ? 'Completed' : 'Not completed'}
-                  className='flex flex-col items-center justify-center gap-3 w-24'>
-                  <BookHeartIcon
-                    className={cn(
-                      'size-6',
-                      book.completed ? 'text-pink-600' : 'text-emerald-600'
-                    )}
-                  />
-                  <CardDescription
-                    title={book.endDate?.toDateString()}
-                    className='text-xs line-clamp-1'>
-                    {book.endDate?.toLocaleDateString()}
-                  </CardDescription>
-                </div>
-              </Card>
-            </Link>
-          ))}
+    <div className='space-y-5'>
+      <div className='flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between'>
+        <h1 className='text-2xl font-medium'>
+          All Books ({filteredBooks.length})
+        </h1>
+        <div className='flex items-center gap-5 justify-between lg:gap-2.5'>
+          <div className='relative'>
+            <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
+            <Input
+              placeholder='Search...'
+              className='ps-7'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className='flex gap-1 sm:gap-2.5'>
+            <Button
+              variant={filterCompleted === 'all' ? 'default' : 'outline'}
+              size='sm'
+              onClick={() => setFilterCompleted('all')}>
+              All
+            </Button>
+            <Button
+              variant={filterCompleted === 'completed' ? 'default' : 'outline'}
+              size='sm'
+              onClick={() => setFilterCompleted('completed')}>
+              Completed
+            </Button>
+            <Button
+              variant={filterCompleted === 'reading' ? 'default' : 'outline'}
+              size='sm'
+              onClick={() => setFilterCompleted('reading')}>
+              Reading
+            </Button>
+          </div>
         </div>
       </div>
-    </>
+      <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
+        {filteredBooks.map((book) => (
+          <BookCard key={book.id} book={book} />
+        ))}
+      </div>
+    </div>
   );
 };
 

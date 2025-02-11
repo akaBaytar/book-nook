@@ -138,7 +138,10 @@ const TBRGamePage = () => {
           <Badge
             variant={selectedGenre === 'all' ? 'default' : 'outline'}
             className='cursor-pointer size-9'
-            onClick={() => setSelectedGenre('all')}>
+            onClick={() => {
+              setSelectedGenre('all');
+              setSelectedIndex(null);
+            }}>
             All
           </Badge>
           {genres.map((genre) => (
@@ -148,7 +151,10 @@ const TBRGamePage = () => {
               className={`cursor-pointer h-9 ${
                 selectedGenre === genre ? 'bg-black hover:bg-black/90' : ''
               }`}
-              onClick={() => setSelectedGenre(genre)}>
+              onClick={() => {
+                setSelectedGenre(genre)
+                setSelectedIndex(null)
+              }}>
               {genre.charAt(0).toUpperCase() + genre.slice(1)}
             </Badge>
           ))}

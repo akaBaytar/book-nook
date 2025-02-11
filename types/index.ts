@@ -11,39 +11,37 @@ export type User = {
   updatedAt: Date;
 };
 
-export type Book =
-  | string
-  | {
-      id: string;
-      userId: string;
-      listId?: string | null;
-      name: string;
-      author: string;
-      publisher: string;
-      rating: number;
-      type: BookType | string;
-      pageCount: number;
-      completed: boolean;
-      genre: string[];
-      image?: string | null;
-      translator?: string | null;
-      illustrator?: string | null;
-      language?: string | null;
-      quote?: string | null;
-      summary?: string | null;
-      category?: string | null;
-      volume?: number | null;
-      isbn?: string | null;
-      printing?: number | null;
-      publicationDate?: Date;
-      acquiredDate?: Date | null;
-      startDate?: Date | null;
-      endDate?: Date | null;
-      user?: User | null;
-      list?: List | null;
-      createdAt: Date;
-      updatedAt: Date;
-    };
+export type Book = {
+  id: string;
+  userId: string;
+  listId?: string | null;
+  name: string;
+  author: string;
+  publisher: string;
+  rating: number;
+  type: BookType | string;
+  pageCount: number;
+  completed: boolean;
+  genre: string[];
+  image?: string | null;
+  translator?: string | null;
+  illustrator?: string | null;
+  language?: string | null;
+  quote?: string | null;
+  summary?: string | null;
+  category?: string | null;
+  volume?: number | null;
+  isbn?: string | null;
+  printing?: number | null;
+  publicationDate?: Date;
+  acquiredDate?: Date | null;
+  startDate?: Date | null;
+  endDate?: Date | null;
+  user?: User | null;
+  list?: List | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export type List = {
   id: string;

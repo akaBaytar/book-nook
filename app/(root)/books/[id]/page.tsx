@@ -24,8 +24,8 @@ const BookDetailsPage = async ({ params }: PropType) => {
   const {
     type,
     name,
-    ISBN,
-    page,
+    isbn,
+    pageCount,
     quote,
     image,
     genre,
@@ -104,14 +104,14 @@ const BookDetailsPage = async ({ params }: PropType) => {
                 <strong>Category:</strong> {category}
               </p>
             )}
-            {page && (
+            {pageCount && (
               <p className='line-clamp-1'>
-                <strong>Pages:</strong> {page}
+                <strong>Pages:</strong> {pageCount}
               </p>
             )}
-            {ISBN && (
+            {isbn && (
               <p className='line-clamp-1'>
-                <strong>ISBN:</strong> {ISBN}
+                <strong>ISBN:</strong> {isbn}
               </p>
             )}
             {language && (

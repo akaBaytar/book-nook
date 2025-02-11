@@ -18,7 +18,9 @@ const AllBooksPage = () => {
   const filteredBooks = BOOKS.filter((book) => {
     const matchesSearch =
       book.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchQuery.toLowerCase());
+      book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.translator?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.publisher.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesFilter =
       filterCompleted === 'all'
@@ -60,10 +62,10 @@ const AllBooksPage = () => {
               Completed
             </Button>
             <Button
-              variant={filterCompleted === 'reading' ? 'default' : 'outline'}
+              variant={filterCompleted === 'unread' ? 'default' : 'outline'}
               size='sm'
-              onClick={() => setFilterCompleted('reading')}>
-              Reading
+              onClick={() => setFilterCompleted('unread')}>
+              Unread
             </Button>
           </div>
         </div>

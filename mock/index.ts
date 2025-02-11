@@ -307,7 +307,7 @@ export const CAROUSEL = [
 
 export const LISTS = [
   {
-    id: 'list1',
+    id: '1',
     userId: 'user1',
     name: 'Dünya Klasikleri',
     description: 'Dünya edebiyatından unutulmaz klasik eserler',
@@ -317,7 +317,7 @@ export const LISTS = [
     updatedAt: new Date(),
   },
   {
-    id: 'list2',
+    id: '2',
     userId: 'user1',
     name: 'Türk Edebiyatı',
     description: 'Türk edebiyatının seçkin eserleri',
@@ -327,7 +327,7 @@ export const LISTS = [
     updatedAt: new Date(),
   },
   {
-    id: 'list3',
+    id: '3',
     userId: 'user1',
     name: 'Bilim Kurgu ve Fantastik',
     description: 'Hayal gücünün sınırlarını zorlayan eserler',
@@ -337,7 +337,7 @@ export const LISTS = [
     updatedAt: new Date(),
   },
   {
-    id: 'list4',
+    id: '4',
     userId: 'user1',
     name: 'Çok Satanlar',
     description: 'En çok okunan ve beğenilen kitaplar',

@@ -14,7 +14,7 @@ const ListCard = ({ list }: { list: List }) => {
   const previewBooks = listBooks.slice(0, 6);
 
   return (
-    <Link href={`/lists/${list.id}`}>
+    <Link href={`/my-lists/${list.id}`}>
       <Card className='p-4 rounded-md hover:shadow-md transition-shadow'>
         <div className='flex justify-between items-start'>
           <div className='space-y-2'>

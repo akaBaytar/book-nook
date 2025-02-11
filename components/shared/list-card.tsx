@@ -9,7 +9,8 @@ import { BOOKS } from '@/mock';
 import type { List } from '@/types';
 
 const ListCard = ({ list }: { list: List }) => {
-  const listBooks = BOOKS.filter((book) => list.books.includes(book.id));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const listBooks = BOOKS.filter((book) => list.books.includes(book.id as any));
 
   const previewBooks = listBooks.slice(0, 6);
 

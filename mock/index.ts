@@ -322,7 +322,7 @@ export const LISTS = [
     name: 'Türk Edebiyatı',
     description: 'Türk edebiyatının seçkin eserleri',
     privacy: 'PUBLIC',
-    books: ['4', '5'], 
+    books: ['4', '5'],
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -342,8 +342,191 @@ export const LISTS = [
     name: 'Çok Satanlar',
     description: 'En çok okunan ve beğenilen kitaplar',
     privacy: 'PUBLIC',
-    books: ['1', '7', '9'], 
+    books: ['1', '7', '9'],
     createdAt: new Date(),
     updatedAt: new Date(),
+  },
+];
+
+export const TBR_LIST = [
+  {
+    id: 1,
+    title: 'The Midnight Library',
+    description:
+      'Between life and death there is a library that contains an infinite number of books, each one the story of another reality. One tells the story of your life as it is, along with other books for the lives you could have lived if you had made different choices.',
+    genre: 'fantasy',
+    pages: 304,
+    rating: 4.2,
+  },
+  {
+    id: 2,
+    title: 'Project Hail Mary',
+    description:
+      'Ryland Grace is the sole survivor on a desperate mission to save humanity. With no memory of how he got there or who he is, he must unravel the mysteries of his past while facing an extinction-level threat in deep space, armed only with his wit and a few scientific instruments.',
+    genre: 'scifi',
+    pages: 496,
+    rating: 4.8,
+  },
+  {
+    id: 3,
+    title: 'Klara and the Sun',
+    description:
+      'From her place in the store, Klara, an Artificial Friend with outstanding observational qualities, watches carefully the behavior of those who come in to browse, and of those who pass on the street outside. She remains hopeful that a customer will soon choose her, while contemplating the mysteries of human behavior and what it means to love.',
+    genre: 'literary',
+    pages: 303,
+    rating: 4.1,
+  },
+  {
+    id: 4,
+    title: 'The Seven Husbands',
+    description:
+      'Aging Hollywood icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life. She chooses an unknown journalist for her final interview, revealing her journey from making her way to Los Angeles in the 1950s to her decision to leave show business in the 80s, and the seven husbands along the way.',
+    genre: 'historical',
+    pages: 389,
+    rating: 4.5,
+  },
+  {
+    id: 5,
+    title: 'Dune',
+    description:
+      'In the far future, humanity has spread across the galaxy to thousands of worlds, all ruled by the Padishah Emperor. The story follows Paul Atreides, whose family accepts the stewardship of the dangerous desert planet Arrakis, the only source of the most valuable substance in the universe - melange, or "spice."',
+    genre: 'scifi',
+    pages: 412,
+    rating: 4.7,
+  },
+  {
+    id: 6,
+    title: 'The Silent Patient',
+    description:
+      "A woman shoots her husband five times in the face and then never speaks again. The mystery that captivates the public and casts doubt upon the woman's guilt. A criminal psychotherapist has waited a long time for the opportunity to work with the silent patient, hoping to uncover the mystery of why she shot her husband and has refused to speak ever since.",
+    genre: 'thriller',
+    pages: 339,
+    rating: 4.3,
+  },
+  {
+    id: 7,
+    title: 'Mexican Gothic',
+    description:
+      "A debutante investigates family secrets after her cousin sends her a disturbing letter from High Place, a distant house in the Mexican countryside. She discovers her cousin's new husband may be hiding a dark history, and the house itself seems to have a life of its own, with walls that bleed and mushrooms that grow in unlikely places.",
+    genre: 'horror',
+    pages: 320,
+    rating: 3.9,
+  },
+  {
+    id: 8,
+    title: 'The Song of Achilles',
+    description:
+      "A retelling of the Trojan War from Patroclus' perspective, following his exile to the court of King Peleus where he meets young Prince Achilles. As they grow into young men skilled in the arts of war and medicine, their bond blossoms into something deeper - despite the displeasure of Achilles' goddess mother Thetis.",
+    genre: 'fantasy',
+    pages: 378,
+    rating: 4.6,
+  },
+  {
+    id: 9,
+    title: 'Verity',
+    description:
+      "A struggling writer accepts an offer to complete the remaining books in an injured author's successful series. While staying at the author's home, she discovers an unfinished autobiography containing disturbing admissions about the author's life, her marriage, and the mysterious circumstances surrounding her daughter's death.",
+    genre: 'thriller',
+    pages: 333,
+    rating: 4.4,
+  },
+  {
+    id: 10,
+    title: 'The Invisible Life',
+    description:
+      'A young woman discovers a secret library of manuscripts rejected for publication, forming deep connections with these hidden stories and their authors. As she delves deeper into these forgotten tales, she begins to question her own life choices and the power of untold stories, leading her on a journey of self-discovery and redemption.',
+    genre: 'literary',
+    pages: 354,
+    rating: 4.0,
+  },
+  {
+    id: 11,
+    title: 'Foundation',
+    description:
+      'A mathematician predicts the fall of a galactic empire and a dark age lasting 30,000 years. To preserve knowledge and save mankind, he creates a foundation of scientists and engineers at the edge of the galaxy. As the old empire crumbles, the Foundation faces challenges that will test their dedication to preserving human knowledge.',
+    genre: 'scifi',
+    pages: 255,
+    rating: 4.3,
+  },
+  {
+    id: 12,
+    title: 'The Thursday Murder Club',
+    description:
+      "Four retirees meet weekly in their peaceful retirement village to discuss unsolved crimes, calling themselves the Thursday Murder Club. When a local developer is found dead, they find themselves in the middle of their first live case. With their diverse skills and life experiences, they work to catch the killer before it's too late.",
+    genre: 'mystery',
+    pages: 382,
+    rating: 4.2,
+  },
+  {
+    id: 13,
+    title: 'The House in the Cerulean Sea',
+    description:
+      'A case worker is sent to investigate an orphanage for magical children on a remote island. The children range from a gnome to a sprite to an unidentifiable green blob, and their caretaker is unlike anyone the case worker has ever met. What starts as a routine inspection becomes a journey that will change his life forever.',
+    genre: 'fantasy',
+    pages: 396,
+    rating: 4.5,
+  },
+  {
+    id: 14,
+    title: 'The Push',
+    description:
+      "A mother's experience of raising a child who seems different from other children, exploring the darkest corners of motherhood, nature versus nurture, and the question of whether a parent can ever truly know their child. As her daughter grows, she begins to question everything she knows about herself and her family.",
+    genre: 'thriller',
+    pages: 307,
+    rating: 4.1,
+  },
+  {
+    id: 15,
+    title: 'The Memory Police',
+    description:
+      'On an unnamed island, things keep disappearing - birds, roses, photographs - and with them, the memories of their existence. The Memory Police enforce these disappearances, hunting down anyone who remembers. When a young novelist discovers her editor is one of those who can still remember, she must find a way to save him from the Memory Police.',
+    genre: 'literary',
+    pages: 274,
+    rating: 3.8,
+  },
+  {
+    id: 16,
+    title: 'A Gentleman in Moscow',
+    description:
+      "A Russian count is sentenced to house arrest in the Metropol, a grand hotel across from the Kremlin. As decades pass outside the hotel's walls, the count's reduced circumstances provide him a doorway into a much larger world of emotional discovery, as he forges unexpected friendships and masters the art of living.",
+    genre: 'historical',
+    pages: 462,
+    rating: 4.7,
+  },
+  {
+    id: 17,
+    title: 'The Fifth Season',
+    description:
+      'In a world plagued by catastrophic climate changes, people with the power to control earth and stone are both feared and needed. The story follows three women with extraordinary power at different points in time as they navigate a world where survival requires brutal choices, and the end of the world becomes a terrifying reality.',
+    genre: 'fantasy',
+    pages: 468,
+    rating: 4.4,
+  },
+  {
+    id: 18,
+    title: 'The Guest List',
+    description:
+      "A wedding celebration turns dark as someone turns up dead on a remote island off the coast of Ireland. As a storm rages outside, secrets from the past begin to surface. Every guest has a motive, every guest has a secret, and someone won't leave the island alive. The question is not just who did it, but why.",
+    genre: 'mystery',
+    pages: 320,
+    rating: 4.0,
+  },
+  {
+    id: 19,
+    title: 'Hamnet',
+    description:
+      "A fictionalized account of the life of Shakespeare's son Hamnet, who died at age 11. The story moves from the glove-maker's workshop in Stratford to the plague-ridden streets of London, exploring the bond between twins, the creative process, and the way in which loss transforms and inspires art.",
+    genre: 'historical',
+    pages: 372,
+    rating: 4.3,
+  },
+  {
+    id: 20,
+    title: 'The Glass Hotel',
+    description:
+      'A woman disappears from a container ship off the coast of Mauritania, raising questions about her past involvement with a massive Ponzi scheme that collapsed five years earlier. The story weaves together lives touched by financial fraud, ghost ships, and the strange interconnectedness of modern life.',
+    genre: 'literary',
+    pages: 301,
+    rating: 3.9,
   },
 ];

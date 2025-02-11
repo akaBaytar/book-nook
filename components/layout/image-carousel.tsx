@@ -20,7 +20,8 @@ const ImageCarousel = () => {
         Autoplay({
           delay: 120000,
         }),
-      ]}>
+      ]}
+      className='px-2'>
       <CarouselContent>
         {CAROUSEL.map(({ id, image }) => (
           <CarouselItem key={id}>

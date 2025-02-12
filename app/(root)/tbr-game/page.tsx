@@ -102,7 +102,7 @@ const TBRGamePage = () => {
   };
 
   return (
-    <div className='flex flex-col gap-5 mt-5 md:mt-0'>
+    <div className='flex flex-col gap-5 mt-5 md:mt-0 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex items-center justify-between'>
         <h1 className='text-2xl font-medium'>TBR Game</h1>
         <div className='flex gap-2.5'>
@@ -124,20 +124,20 @@ const TBRGamePage = () => {
           </Button>
         </div>
       </div>
-      <div className='flex flex-col gap-5 lg:flex-row lg:items-center'>
+      <div className='flex flex-col gap-5 xl:flex-row xl:items-center'>
         <div className='relative flex-1 min-w-48'>
           <SearchIcon className='absolute start-2 top-2.5 size-4 text-slate-500' />
           <Input
             placeholder='Search...'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className='ps-8'
+            className='ps-8 bg-white'
           />
         </div>
-        <div className='flex gap-2.5 items-center overflow-x-auto pb-2 md:pb-0'>
+        <div className='flex gap-2.5 items-center  overflow-x-auto p-2 bg-white border rounded-md'>
           <Badge
             variant={selectedGenre === 'all' ? 'default' : 'outline'}
-            className='cursor-pointer size-9'
+            className='cursor-pointer'
             onClick={() => {
               setSelectedGenre('all');
               setSelectedIndex(null);
@@ -148,7 +148,7 @@ const TBRGamePage = () => {
             <Badge
               key={genre}
               variant={selectedGenre === genre ? 'default' : 'outline'}
-              className={`cursor-pointer h-9 ${
+              className={`cursor-pointer ${
                 selectedGenre === genre ? 'bg-black hover:bg-black/90' : ''
               }`}
               onClick={() => {
@@ -172,7 +172,7 @@ const TBRGamePage = () => {
           </AlertDescription>
         </Alert>
       )}
-      <div className='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5'>
+      <div className='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5'>
         {filteredBooks.map((book, index) => (
           <Card
             key={book.id}

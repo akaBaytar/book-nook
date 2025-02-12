@@ -1,10 +1,32 @@
+'use client';
+
+import { use } from 'react';
+
+import Link from 'next/link';
 import Image from 'next/image';
 
-import { StarIcon } from 'lucide-react';
+import {
+  ArrowLeft,
+  StarIcon,
+  BookOpen,
+  Calendar,
+  Library,
+  Share2,
+} from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+
+import { formatDate } from '@/utils';
 
 import { BOOKS } from '@/mock';
 
@@ -12,20 +34,15 @@ type PropType = {
   params: Promise<{ id: number }>;
 };
 
-const BookDetailsPage = async ({ params }: PropType) => {
-  const { id } = await params;
+const BookDetailsPage = ({ params }: PropType) => {
+  const { id } = use(params);
 
   const book = BOOKS[id - 1];
-
-  if (!book) {
-    return <p className='text-red-500 text-center'>Book not found.</p>;
-  }
 
   const {
     type,
     name,
     isbn,
-    pageCount,
     quote,
     image,
     genre,
@@ -37,6 +54,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
     language,
     printing,
     category,
+    pageCount,
     completed,
     publisher,
     startDate,
@@ -46,125 +64,195 @@ const BookDetailsPage = async ({ params }: PropType) => {
     publicationDate,
   } = book;
 
+  if (!book) {
+    return (
+      <div className='flex flex-col items-center justify-center h-[calc(100vh-2rem)] gap-5'>
+        <p className='text-xl text-muted-foreground'>Book not found.</p>
+        <Link href='/all-books'>
+          <Button variant='outline'>
+            <ArrowLeft className='mr-2 size-4' />
+            Back to Books
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <Card className='rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
-      <CardHeader className='flex flex-col items-center'>
+    <Card className='relative rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
+      <CardHeader className='flex items-center text-center xl:flex-row xl:items-start gap-5 sm:gap-10'>
         {image && (
-          <Image
-            src={image}
-            alt={name}
-            width={200}
-            height={300}
-            className='rounded-md object-cover'
-          />
+          <div className='relative min-w-[200px]'>
+            <Image
+              src={image}
+              alt={name}
+              width={200}
+              height={300}
+              className='rounded-md object-cover'
+            />
+          </div>
         )}
-        {name && (
-          <CardTitle className='mt-5 text-xl font-bold'>{name}</CardTitle>
-        )}
-        {author && <p className='text-sm text-gray-500'>by {author}</p>}
-      </CardHeader>
-      <CardContent>
-        <div className='flex flex-col items-center text-center text-pretty'>
+        <div className='flex flex-col items-center text-center xl:text-start xl:items-start space-y-5'>
+          <div>
+            {name && (
+              <CardTitle className='text-2xl font-bold flex items-center gap-2.5'>
+                {name}{' '}
+                {completed && (
+                  <Badge className='hover:bg-black mt-0.5'>Completed</Badge>
+                )}
+              </CardTitle>
+            )}
+            {author && (
+              <p className='text-lg text-muted-foreground'>by {author}</p>
+            )}
+          </div>
           {genre && genre.length > 0 && (
-            <div className='flex flex-wrap gap-2.5 mb-5'>
+            <div className='flex flex-wrap gap-2.5'>
               {genre.map((g: string) => (
-                <Badge key={g}>{g}</Badge>
+                <Badge
+                  key={g}
+                  variant='secondary'
+                  className='border border-input'>
+                  {g}
+                </Badge>
               ))}
             </div>
           )}
           {rating && (
-            <div className='flex items-center gap-1 mb-5'>
-              <StarIcon className='size-5 fill-amber-500 text-amber-500' />
+            <div className='flex items-center gap-1'>
+              <StarIcon className='fill-amber-500 text-amber-500 size-5'/>
               <span className='text-lg font-semibold'>{rating}/5</span>
             </div>
           )}
-          {summary && <p className='text-gray-700 text-sm'>{summary}</p>}
-          {quote && (
-            <p className='text-gray-700 text-sm mt-2.5 italic'>
-              &quot;{quote}&quot;
-            </p>
+          {(pageCount || startDate || endDate) && (
+            <div className='flex flex-wrap gap-5'>
+              {pageCount && (
+                <div className='flex items-center gap-1'>
+                  <BookOpen className='size-4 text-muted-foreground' />
+                  <span>{pageCount} pages</span>
+                </div>
+              )}
+              {startDate && (
+                <div className='flex items-center gap-1'>
+                  <Calendar className='size-4 text-muted-foreground' />
+                  <span>Started {formatDate(startDate)}</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
-        <Separator className='my-10' />
-        <div className='grid grid-cols-2 xl:grid-cols-3 gap-5 text-sm text-gray-700'>
-          {type && (
-            <p>
-              <strong>Type:</strong>{' '}
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </p>
+      </CardHeader>
+      <CardContent className='space-y-10'>
+        <div className='space-y-5'>
+          {summary && (
+            <div className='space-y-2.5 text-center xl:text-start'>
+              <h3 className='text-lg font-semibold'>Summary</h3>
+              <p className='text-muted-foreground leading-relaxed'>{summary}</p>
+            </div>
           )}
-          {volume && (
-            <p className='line-clamp-1'>
-              <strong>Volume:</strong> {volume}
-            </p>
+          {quote && (
+            <blockquote className='border-s-4 border p-4 rounded-md italic text-muted-foreground'>
+              &quot;{quote}&quot;
+            </blockquote>
           )}
-          {category && (
-            <p className='line-clamp-1'>
-              <strong>Category:</strong> {category}
-            </p>
-          )}
-          {pageCount && (
-            <p className='line-clamp-1'>
-              <strong>Pages:</strong> {pageCount}
-            </p>
-          )}
-          {isbn && (
-            <p className='line-clamp-1'>
-              <strong>ISBN:</strong> {isbn}
-            </p>
-          )}
-          {language && (
-            <p className='line-clamp-1'>
-              <strong>Language:</strong> {language}
-            </p>
-          )}
-          {printing && (
-            <p className='line-clamp-1'>
-              <strong>Printing:</strong> {printing}
-            </p>
-          )}
-          {publisher && (
-            <p className='line-clamp-1'>
-              <strong>Publisher:</strong> {publisher}
-            </p>
-          )}
-          {publicationDate && (
-            <p className='line-clamp-1'>
-              <strong>Publication Date:</strong>{' '}
-              {publicationDate.toLocaleDateString()}
-            </p>
-          )}
-          {startDate && (
-            <p className='line-clamp-1'>
-              <strong>Start Date:</strong> {startDate.toLocaleDateString()}
-            </p>
-          )}
-          {endDate && (
-            <p className='line-clamp-1'>
-              <strong>End Date:</strong> {endDate.toLocaleDateString()}
-            </p>
-          )}
-          {acquiredDate && (
-            <p className='line-clamp-1'>
-              <strong>Acquired Date:</strong>{' '}
-              {acquiredDate.toLocaleDateString()}
-            </p>
-          )}
-          <p className='line-clamp-1'>
-            <strong>Completed:</strong> {completed ? 'Yes' : 'No'}
-          </p>
-          {translator && (
-            <p className='line-clamp-1'>
-              <strong>Translator:</strong> {translator}
-            </p>
-          )}
-          {illustrator && (
-            <p className='line-clamp-1'>
-              <strong>Illustrator:</strong> {illustrator}
-            </p>
-          )}
+        </div>
+        <Separator />
+        <div>
+          <h3 className='text-lg font-semibold mb-4'>Book Details</h3>
+          <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 text-sm'>
+            {type && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Type</p>
+                <p className='font-medium'>
+                  {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
+                </p>
+              </div>
+            )}
+            {volume && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Volume</p>
+                <p className='font-medium'>{volume}</p>
+              </div>
+            )}
+            {category && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Category</p>
+                <p className='font-medium'>{category}</p>
+              </div>
+            )}
+            {isbn && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>ISBN</p>
+                <p className='font-medium'>{isbn}</p>
+              </div>
+            )}
+            {language && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Language</p>
+                <p className='font-medium'>{language}</p>
+              </div>
+            )}
+            {printing && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Printing</p>
+                <p className='font-medium'>{printing}</p>
+              </div>
+            )}
+            {publisher && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Publisher</p>
+                <p className='font-medium'>{publisher}</p>
+              </div>
+            )}
+            {publicationDate && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Publication Date</p>
+                <p className='font-medium'>{formatDate(publicationDate)}</p>
+              </div>
+            )}
+            {endDate && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>End Date</p>
+                <p className='font-medium'>{formatDate(endDate)}</p>
+              </div>
+            )}
+            {acquiredDate && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Acquired Date</p>
+                <p className='font-medium'>{formatDate(acquiredDate)}</p>
+              </div>
+            )}
+            {translator && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Translator</p>
+                <p className='font-medium'>{translator}</p>
+              </div>
+            )}
+            {illustrator && (
+              <div className='space-y-1'>
+                <p className='text-muted-foreground'>Illustrator</p>
+                <p className='font-medium'>{illustrator}</p>
+              </div>
+            )}
+          </div>
         </div>
       </CardContent>
+      <div className='flex items-center gap-2.5 absolute top-4 end-4'>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant='outline' size='icon'>
+                <Share2 className='size-4' />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Share book</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <Button>
+          <Library className='mr-2 size-4' />
+          Add to List
+        </Button>
+      </div>
     </Card>
   );
 };

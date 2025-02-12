@@ -172,7 +172,7 @@ const TBRGamePage = () => {
           </AlertDescription>
         </Alert>
       )}
-      <div className='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5'>
+      <div className='grid sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-5'>
         {filteredBooks.map((book, index) => (
           <Card
             key={book.id}

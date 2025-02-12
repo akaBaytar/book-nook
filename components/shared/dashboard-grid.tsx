@@ -39,7 +39,7 @@ const DashboardGrid = () => {
     icon: Icon,
   }: CardPropType) => (
     <Card className='rounded-md'>
-      <CardHeader className='flex flex-row items-center justify-between pb-2'>
+      <CardHeader className='flex flex-row items-center justify-between pb-1'>
         <h3 className='text-lg font-medium text-gray-700'>{title}</h3>
         <Icon className={`h-5 w-5 ${color}`} />
       </CardHeader>

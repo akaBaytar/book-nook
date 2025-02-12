@@ -6,25 +6,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import {
-  ArrowLeft,
   StarIcon,
-  BookOpen,
-  Calendar,
-  Library,
-  Share2,
+  QuoteIcon,
+  Share2Icon,
+  LibraryIcon,
+  CalendarIcon,
+  BookOpenIcon,
+  ArrowLeftIcon,
 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 
 import { formatDate } from '@/utils';
 
@@ -70,7 +64,7 @@ const BookDetailsPage = ({ params }: PropType) => {
         <p className='text-xl text-muted-foreground'>Book not found.</p>
         <Link href='/all-books'>
           <Button variant='outline'>
-            <ArrowLeft className='mr-2 size-4' />
+            <ArrowLeftIcon className='mr-2 size-4' />
             Back to Books
           </Button>
         </Link>
@@ -80,6 +74,16 @@ const BookDetailsPage = ({ params }: PropType) => {
 
   return (
     <Card className='relative rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
+      <div className='flex items-center justify-center xl:justify-end gap-2.5 mt-4 mx-4'>
+        <Button variant='outline'>
+          <Share2Icon className='size-4' />
+          Share Book
+        </Button>
+        <Button>
+          <LibraryIcon className='mr-2 size-4' />
+          Add to List
+        </Button>
+      </div>
       <CardHeader className='flex items-center text-center xl:flex-row xl:items-start gap-5 sm:gap-10'>
         {image && (
           <div className='relative min-w-[200px]'>
@@ -120,21 +124,21 @@ const BookDetailsPage = ({ params }: PropType) => {
           )}
           {rating && (
             <div className='flex items-center gap-1'>
-              <StarIcon className='fill-amber-500 text-amber-500 size-5'/>
+              <StarIcon className='fill-amber-500 text-amber-500 size-5' />
               <span className='text-lg font-semibold'>{rating}/5</span>
             </div>
           )}
           {(pageCount || startDate || endDate) && (
             <div className='flex flex-wrap gap-5'>
               {pageCount && (
-                <div className='flex items-center gap-1'>
-                  <BookOpen className='size-4 text-muted-foreground' />
+                <div className='flex items-center justify-center xl:justify-start w-full gap-1'>
+                  <BookOpenIcon className='size-4 text-muted-foreground' />
                   <span>{pageCount} pages</span>
                 </div>
               )}
               {startDate && (
-                <div className='flex items-center gap-1'>
-                  <Calendar className='size-4 text-muted-foreground' />
+                <div className='flex items-center justify-center xl:justify-start w-full gap-1'>
+                  <CalendarIcon className='size-4 text-muted-foreground' />
                   <span>Started {formatDate(startDate)}</span>
                 </div>
               )}
@@ -151,8 +155,10 @@ const BookDetailsPage = ({ params }: PropType) => {
             </div>
           )}
           {quote && (
-            <blockquote className='border-s-4 border p-4 rounded-md italic text-muted-foreground'>
-              &quot;{quote}&quot;
+            <blockquote className='flex gap-1 items-center border-s-4 border p-2.5 rounded-md italic text-muted-foreground'>
+              <QuoteIcon className='size-4 rotate-180 '/>
+              {quote}
+              <QuoteIcon className='size-4'/>
             </blockquote>
           )}
         </div>
@@ -237,22 +243,6 @@ const BookDetailsPage = ({ params }: PropType) => {
           </div>
         </div>
       </CardContent>
-      <div className='flex items-center gap-2.5 absolute top-4 end-4'>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant='outline' size='icon'>
-                <Share2 className='size-4' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Share book</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <Button>
-          <Library className='mr-2 size-4' />
-          Add to List
-        </Button>
-      </div>
     </Card>
   );
 };

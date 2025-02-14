@@ -35,7 +35,7 @@ const AllBooksPage = () => {
   return (
     <div className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between'>
-        <h1 className='text-2xl font-medium'>
+        <h1 className='text-2xl'>
           All Books ({filteredBooks.length})
         </h1>
         <div className='flex items-center gap-5 justify-between lg:gap-2.5'>

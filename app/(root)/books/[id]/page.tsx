@@ -11,7 +11,7 @@ import {
   Share2Icon,
   LibraryIcon,
   CalendarIcon,
-  BookOpenIcon,
+  SwatchBookIcon,
   ArrowLeftIcon,
 } from 'lucide-react';
 
@@ -80,7 +80,7 @@ const BookDetailsPage = ({ params }: PropType) => {
           Share Book
         </Button>
         <Button>
-          <LibraryIcon className='mr-2 size-4' />
+          <LibraryIcon className='me-2 size-4' />
           Add to List
         </Button>
       </div>
@@ -99,10 +99,12 @@ const BookDetailsPage = ({ params }: PropType) => {
         <div className='flex flex-col items-center text-center xl:text-start xl:items-start space-y-5'>
           <div>
             {name && (
-              <CardTitle className='text-2xl font-bold flex items-center gap-2.5'>
+              <CardTitle className='text-2xl font-medium tracking-[0.015em] flex items-center gap-2.5'>
                 {name}{' '}
                 {completed && (
-                  <Badge className='hover:bg-black mt-0.5'>Completed</Badge>
+                  <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
+                    Completed
+                  </Badge>
                 )}
               </CardTitle>
             )}
@@ -124,21 +126,21 @@ const BookDetailsPage = ({ params }: PropType) => {
           )}
           {rating && (
             <div className='flex items-center gap-1'>
-              <StarIcon className='fill-amber-500 text-amber-500 size-5' />
-              <span className='text-lg font-semibold'>{rating}/5</span>
+              <StarIcon className='fill-pink-100 text-pink-400 size-5' />
+              <span className='text-lg'>{rating}/5</span>
             </div>
           )}
           {(pageCount || startDate || endDate) && (
             <div className='flex flex-wrap gap-5'>
               {pageCount && (
                 <div className='flex items-center justify-center xl:justify-start w-full gap-1'>
-                  <BookOpenIcon className='size-4 text-muted-foreground' />
+                  <SwatchBookIcon className='fill-pink-100 text-pink-400 size-5' />
                   <span>{pageCount} pages</span>
                 </div>
               )}
               {startDate && (
                 <div className='flex items-center justify-center xl:justify-start w-full gap-1'>
-                  <CalendarIcon className='size-4 text-muted-foreground' />
+                  <CalendarIcon className='fill-pink-100 text-pink-400 size-5' />
                   <span>Started {formatDate(startDate)}</span>
                 </div>
               )}
@@ -150,26 +152,26 @@ const BookDetailsPage = ({ params }: PropType) => {
         <div className='space-y-5'>
           {summary && (
             <div className='space-y-2.5 text-center xl:text-start'>
-              <h3 className='text-lg font-semibold'>Summary</h3>
+              <h3 className='text-lg'>Summary</h3>
               <p className='text-muted-foreground leading-relaxed'>{summary}</p>
             </div>
           )}
           {quote && (
-            <blockquote className='flex gap-1 items-center border-s-4 border p-2.5 rounded-md italic text-muted-foreground'>
-              <QuoteIcon className='size-4 rotate-180 '/>
+            <blockquote className='flex gap-1 items-center border-s-4 border border-pink-100 p-2.5 rounded-md italic text-muted-foreground'>
+              <QuoteIcon className='size-4 rotate-180  fill-pink-100 text-pink-300' />
               {quote}
-              <QuoteIcon className='size-4'/>
+              <QuoteIcon className='size-4 fill-pink-100 text-pink-300' />
             </blockquote>
           )}
         </div>
         <Separator />
         <div>
-          <h3 className='text-lg font-semibold mb-4'>Book Details</h3>
+          <h3 className='text-lg mb-4'>Book Details</h3>
           <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 text-sm'>
             {type && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Type</p>
-                <p className='font-medium'>
+                <p>
                   {type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}
                 </p>
               </div>
@@ -177,67 +179,67 @@ const BookDetailsPage = ({ params }: PropType) => {
             {volume && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Volume</p>
-                <p className='font-medium'>{volume}</p>
+                <p>{volume}</p>
               </div>
             )}
             {category && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Category</p>
-                <p className='font-medium'>{category}</p>
+                <p>{category}</p>
               </div>
             )}
             {isbn && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>ISBN</p>
-                <p className='font-medium'>{isbn}</p>
+                <p>{isbn}</p>
               </div>
             )}
             {language && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Language</p>
-                <p className='font-medium'>{language}</p>
+                <p>{language}</p>
               </div>
             )}
             {printing && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Printing</p>
-                <p className='font-medium'>{printing}</p>
+                <p>{printing}</p>
               </div>
             )}
             {publisher && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Publisher</p>
-                <p className='font-medium'>{publisher}</p>
+                <p>{publisher}</p>
               </div>
             )}
             {publicationDate && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Publication Date</p>
-                <p className='font-medium'>{formatDate(publicationDate)}</p>
+                <p>{formatDate(publicationDate)}</p>
               </div>
             )}
             {endDate && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>End Date</p>
-                <p className='font-medium'>{formatDate(endDate)}</p>
+                <p>{formatDate(endDate)}</p>
               </div>
             )}
             {acquiredDate && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Acquired Date</p>
-                <p className='font-medium'>{formatDate(acquiredDate)}</p>
+                <p>{formatDate(acquiredDate)}</p>
               </div>
             )}
             {translator && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Translator</p>
-                <p className='font-medium'>{translator}</p>
+                <p>{translator}</p>
               </div>
             )}
             {illustrator && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Illustrator</p>
-                <p className='font-medium'>{illustrator}</p>
+                <p>{illustrator}</p>
               </div>
             )}
           </div>

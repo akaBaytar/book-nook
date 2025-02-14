@@ -29,7 +29,7 @@ const Navbar = () => {
         appearance={{
           elements: {
             avatarBox: 'size-8 rounded-md',
-            userButtonPopoverCard: 'w-[17rem]',
+            userButtonPopoverCard: 'w-[15rem]',
             userButtonTrigger: 'rounded-md',
           },
         }}

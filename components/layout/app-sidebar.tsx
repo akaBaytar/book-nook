@@ -109,7 +109,7 @@ const AppSidebar = async () => {
             appearance={{
               elements: {
                 avatarBox: 'size-10 rounded-md',
-                userButtonPopoverCard: 'w-[17rem]',
+                userButtonPopoverCard: 'w-[15rem]',
                 userButtonTrigger: 'rounded-md',
               },
             }}

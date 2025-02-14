@@ -33,7 +33,7 @@ const ListsPage = () => {
   return (
     <div className='space-y-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between'>
-        <h1 className='text-2xl font-medium'>My Lists ({filteredLists.length})</h1>
+        <h1 className='text-2xl tracking-[0.015em]'>My Lists ({filteredLists.length})</h1>
         <div className='flex items-center gap-4'>
           <div className='relative'>
             <SearchIcon className='absolute left-2 top-2.5 size-4 text-muted-foreground' />

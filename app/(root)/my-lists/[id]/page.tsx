@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import {
-  BookOpenIcon,
-  LockIcon,
-  GlobeIcon,
-  TrashIcon,
   EditIcon,
+  LockIcon,
+  TrashIcon,
+  UnlockIcon,
+  LibraryBigIcon,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -44,7 +44,7 @@ const ListDetailsPage = () => {
   if (!list) {
     return (
       <div className='flex items-center justify-center h-[calc(100vh-2rem)]'>
-        <p className='text-lg'>List not found</p>
+        <p className='text-xl'>List not found.</p>
       </div>
     );
   }
@@ -53,11 +53,11 @@ const ListDetailsPage = () => {
     <div className='space-y-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-2.5'>
-          <h1 className='text-2xl font-medium'>{list.name}</h1>
+          <h1 className='text-2xl tracking-[0.015em]'>{list.name}</h1>
           {list.privacy === 'PRIVATE' ? (
-            <LockIcon className='size-4 mt-0.5 text-muted-foreground' />
+            <LockIcon className='size-4 mt-0.5 text-pink-300' />
           ) : (
-            <GlobeIcon className='size-4 mt-0.5 text-muted-foreground' />
+            <UnlockIcon className='size-4 mt-0.5 text-pink-400' />
           )}
         </div>
         <div className='flex items-center gap-2'>
@@ -71,12 +71,14 @@ const ListDetailsPage = () => {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle className='text-lg font-medium'>About this list</CardTitle>
+          <CardTitle className='text-lg font-normal tracking-[0.015em]'>
+            About this list
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p className='text-muted-foreground'>{list.description}</p>
-          <div className='mt-5 flex items-center gap-2 text-sm text-muted-foreground'>
-            <BookOpenIcon className='size-4' />
+          <div className='mt-5 flex items-center gap-0.5 text-sm text-muted-foreground'>
+            <LibraryBigIcon className='size-4 text-pink-300' />
             <span>{list.books.length} books</span>
           </div>
         </CardContent>
@@ -85,8 +87,10 @@ const ListDetailsPage = () => {
         {list.books.map((book, index) => (
           <Card key={index}>
             <CardContent className='p-4'>
-              <div className='aspect-[2/3] bg-muted rounded-md' />
-              <h3 className='mt-2 font-medium'>Book {book.toString()}</h3>
+              <div className='aspect-[16/9] bg-muted rounded-md' />
+              <h3 className='mt-2 tracking-[0.015em]'>
+                Book {book.toString()}
+              </h3>
               <p className='text-sm text-muted-foreground'>Author Name</p>
             </CardContent>
           </Card>
@@ -97,7 +101,9 @@ const ListDetailsPage = () => {
         onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want delete this list?</AlertDialogTitle>
+            <AlertDialogTitle>
+              Are you sure you want delete this list?
+            </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete your
               list and remove it from our servers.

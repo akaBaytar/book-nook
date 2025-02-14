@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { LockIcon, UnlockIcon, BookOpenIcon } from 'lucide-react';
+import { LockIcon, UnlockIcon, LibraryBigIcon } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
 import { Card, CardTitle, CardDescription } from '@/components/ui/card';
 
 import { BOOKS } from '@/mock';
@@ -20,20 +22,22 @@ const ListCard = ({ list }: { list: List }) => {
         <div className='flex justify-between items-start'>
           <div className='space-y-2'>
             <div className='flex items-center gap-2'>
-              <CardTitle className='line-clamp-1'>{list.name}</CardTitle>
+              <CardTitle className='line-clamp-1 font-normal tracking-[0.015em]'>
+                {list.name}
+              </CardTitle>
               {list.privacy === 'PRIVATE' ? (
-                <LockIcon className='size-4 text-muted-foreground' />
+                <LockIcon className='size-4 text-pink-400' />
               ) : (
-                <UnlockIcon className='size-4 text-muted-foreground' />
+                <UnlockIcon className='size-4 text-pink-300' />
               )}
             </div>
             <CardDescription className='line-clamp-2'>
               {list.description}
             </CardDescription>
           </div>
-          <div className='flex items-center gap-1'>
-            <BookOpenIcon className='size-4 text-muted-foreground' />
-            <span className='text-sm text-muted-foreground'>
+          <div className='flex items-center gap-0.5'>
+            <LibraryBigIcon className='size-4 text-pink-300' />
+            <span className='text-muted-foreground'>
               {list.books.length}
             </span>
           </div>
@@ -64,11 +68,9 @@ const ListCard = ({ list }: { list: List }) => {
           {Array.from(new Set(listBooks.flatMap((book) => book.genre)))
             .slice(0, 3)
             .map((genre) => (
-              <span
-                key={genre}
-                className='px-2 py-0.5 text-xs bg-gray-100 rounded-full'>
+              <Badge key={genre} variant='secondary'>
                 {genre}
-              </span>
+              </Badge>
             ))}
         </div>
       </Card>

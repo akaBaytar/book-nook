@@ -67,7 +67,7 @@ const EndColumn = () => {
         </Card>
         <Card className='rounded-md size-full'>
           <CardContent className='p-4'>
-            <h3 className='text-lg font-semibold mb-2'>Check List</h3>
+            <h3 className='text-lg mb-2'>Check List</h3>
             {tasks.map((task) => (
               <div key={task.id} className='flex items-center gap-2'>
                 <Checkbox

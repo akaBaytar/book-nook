@@ -3,12 +3,12 @@
 import { useState } from 'react';
 
 import {
+  StarIcon,
   HeartIcon,
   SearchIcon,
   Loader2Icon,
   SparklesIcon,
   CheckCircleIcon,
-  StarIcon,
 } from 'lucide-react';
 
 import { Card } from '@/components/ui/card';
@@ -104,7 +104,7 @@ const TBRGamePage = () => {
   return (
     <div className='flex flex-col gap-5 mt-5 md:mt-0 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex items-center justify-between'>
-        <h1 className='text-2xl font-medium'>TBR Game</h1>
+        <h1 className='text-2xl tracking-[0.015em]'>TBR Game</h1>
         <div className='flex gap-2.5'>
           <Button
             onClick={selectWhatWillRead}
@@ -136,7 +136,7 @@ const TBRGamePage = () => {
         </div>
         <div className='flex gap-2.5 items-center  overflow-x-auto p-2 bg-white border rounded-md'>
           <Badge
-            variant={selectedGenre === 'all' ? 'default' : 'outline'}
+            variant={selectedGenre === 'all' ? 'destructive' : 'secondary'}
             className='cursor-pointer'
             onClick={() => {
               setSelectedGenre('all');
@@ -147,13 +147,11 @@ const TBRGamePage = () => {
           {genres.map((genre) => (
             <Badge
               key={genre}
-              variant={selectedGenre === genre ? 'default' : 'outline'}
-              className={`cursor-pointer ${
-                selectedGenre === genre ? 'bg-black hover:bg-black/90' : ''
-              }`}
+              variant={selectedGenre === genre ? 'destructive' : 'secondary'}
+              className='cursor-pointer'
               onClick={() => {
-                setSelectedGenre(genre)
-                setSelectedIndex(null)
+                setSelectedGenre(genre);
+                setSelectedIndex(null);
               }}>
               {genre.charAt(0).toUpperCase() + genre.slice(1)}
             </Badge>
@@ -161,8 +159,8 @@ const TBRGamePage = () => {
         </div>
       </div>
       {selectedIndex !== null && (
-        <Alert className='border-black bg-slate-50'>
-          <SparklesIcon className='size-4' />
+        <Alert>
+          <SparklesIcon className='size-4 !text-white' />
           <AlertDescription className='mt-1'>
             Your next book to read is{' '}
             <span className='font-bold'>
@@ -180,28 +178,28 @@ const TBRGamePage = () => {
               completedBooks.has(book.id) ? 'opacity-40' : ''
             } ${
               selectedIndex === index
-                ? 'border border-black bg-slate-100 transform'
+                ? 'border border-pink-300 bg-pink-50 transform'
                 : blinkingIndex === index
-                ? 'bg-slate-200 text-black'
+                ? 'bg-pink-100 text-black'
                 : ''
             }`}>
             <div className='flex flex-col gap-2.5'>
               <div className='flex justify-between items-start'>
-                <h3 className='font-medium line-clamp-1'>{book.title}</h3>
+                <h3 className='line-clamp-1'>{book.title}</h3>
                 <div className='flex gap-1.5'>
                   <button
                     onClick={() => toggleFavorite(book.id)}
-                    className='rounded-full bg-slate-100 p-1'>
+                    className='rounded-full bg-pink-50 p-1'>
                     <HeartIcon
-                      className={`size-3 ${
+                      className={`size-3 text-pink-500 ${
                         favorites.has(book.id) ? 'fill-black' : ''
                       }`}
                     />
                   </button>
                   <button
                     onClick={() => toggleCompleted(book.id)}
-                    className='rounded-full bg-slate-100 p-1'>
-                    <CheckCircleIcon className='size-3' />
+                    className='rounded-full bg-pink-50 p-1'>
+                    <CheckCircleIcon className='size-3 text-pink-500' />
                   </button>
                 </div>
               </div>
@@ -209,13 +207,13 @@ const TBRGamePage = () => {
                 {book.description}
               </p>
               <div className='flex justify-between items-center text-sm text-slate-500 mt-auto'>
-                <Badge variant='outline' className='text-xs'>
+                <Badge variant='secondary' className='text-xs'>
                   {book.genre.charAt(0).toUpperCase() + book.genre.slice(1)}
                 </Badge>
                 <div className='flex gap-4'>
                   <span>{book.pages} pages</span>
                   <span className='flex items-center gap-1'>
-                    <StarIcon className='size-3' />
+                    <StarIcon className='size-3 text-pink-300' />
                     {book.rating.toFixed(1)}
                   </span>
                 </div>

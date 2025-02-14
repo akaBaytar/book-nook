@@ -2,13 +2,14 @@ import { Progress } from '@/components/ui/progress';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 import {
-  Book,
-  BookX,
-  Target,
-  Calendar,
-  BookOpen,
-  BookMarked,
-  TrendingUp,
+  BookIcon,
+  BookXIcon,
+  TargetIcon,
+  CalendarIcon,
+  BookCheckIcon,
+  BookHeartIcon,
+  TrendingUpIcon,
+  BookMarkedIcon,
 } from 'lucide-react';
 
 import type { ElementType } from 'react';
@@ -40,12 +41,12 @@ const DashboardGrid = () => {
   }: CardPropType) => (
     <Card className='rounded-md'>
       <CardHeader className='flex flex-row items-center justify-between pb-1'>
-        <h3 className='text-lg font-medium text-gray-700'>{title}</h3>
-        <Icon className={`h-5 w-5 ${color}`} />
+        <h3 className='text-xl text-gray-500'>{title}</h3>
+        <Icon className={`size-5 ${color}`} />
       </CardHeader>
       <CardContent>
         <div className='mt-1'>
-          <p className='text-3xl font-bold'>{value}</p>
+          <p className='text-2xl'>{value}</p>
           {subtitle && <p className='text-sm text-gray-500 mt-1'>{subtitle}</p>}
         </div>
       </CardContent>
@@ -55,32 +56,37 @@ const DashboardGrid = () => {
   return (
     <div className='mt-5'>
       <div className='grid grid-cols-1 gap-5 xl:grid-cols-3'>
-        <StatCard title='Total Books' value={totalBooks} icon={Book} />
+        <StatCard
+          title='Total Books'
+          value={totalBooks}
+          icon={BookIcon}
+          color='text-pink-600'
+        />
         <StatCard
           title='Books Read'
           value={booksRead}
-          icon={BookOpen}
+          icon={BookCheckIcon}
           color='text-green-600'
         />
         <StatCard
           title='Books Remaining'
           value={booksNotReadYet}
-          icon={BookX}
+          icon={BookXIcon}
           color='text-orange-600'
         />
       </div>
       <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5'>
         <Card className='rounded-md'>
           <CardHeader className='flex flex-row items-center justify-between pb-2'>
-            <h3 className='text-lg font-medium text-gray-700'>
+            <h3 className='text-lg tracking-[0.015em] text-gray-700'>
               Reading Goal Progress
             </h3>
-            <Target className='h-5 w-5 text-violet-600' />
+            <TargetIcon className='h-5 w-5 text-violet-600' />
           </CardHeader>
           <CardContent>
             <div className='mt-1'>
               <div className='flex justify-between items-center mb-2'>
-                <span className='text-3xl font-bold'>{booksRead}</span>
+                <span className='text-2xl'>{booksRead}</span>
                 <span className='text-gray-500'>of {readingGoal} books</span>
               </div>
               <Progress
@@ -96,14 +102,14 @@ const DashboardGrid = () => {
         </Card>
         <Card className='rounded-md'>
           <CardHeader className='flex flex-row items-center justify-between pb-2'>
-            <h3 className='text-lg font-medium text-gray-700'>
+            <h3 className='text-lg tracking-[0.015em] text-gray-700'>
               Currently Reading
             </h3>
-            <BookMarked className='h-5 w-5 text-indigo-600' />
+            <BookMarkedIcon className='h-5 w-5 text-blue-500' />
           </CardHeader>
           <CardContent>
             <div className='mt-1'>
-              <p className='text-2xl font-semibold'>{currentlyReading}</p>
+              <p className='text-2xl tracking-[0.015em]'>{currentlyReading}</p>
               <div className='mt-4 flex items-center'>
                 <div className='w-2 h-2 bg-green-500 rounded-full' />
                 <span className='text-sm text-gray-500 ml-2'>
@@ -123,21 +129,21 @@ const DashboardGrid = () => {
           title='Monthly Progress'
           value={booksThisMonth}
           subtitle={`${totalPagesThisMonth} pages read`}
-          icon={Calendar}
-          color='text-indigo-600'
+          icon={CalendarIcon}
+          color='text-rose-800'
         />
         <StatCard
           title='Reading Streak'
           value='15 days'
           subtitle='Personal best: 30 days'
-          icon={TrendingUp}
+          icon={TrendingUpIcon}
           color='text-emerald-600'
         />
         <StatCard
           title='Daily Average'
           value='52 pages'
           subtitle='This week'
-          icon={Book}
+          icon={BookHeartIcon}
           color='text-amber-600'
         />
       </div>

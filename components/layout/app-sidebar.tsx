@@ -65,11 +65,13 @@ const AppSidebar = async () => {
           <Image
             src='/logo.png'
             alt='book nook app logo'
-            height={50}
-            width={50}
+            height={70}
+            width={70}
             priority
           />
-          <p className='min-w-[76px] text-center tracking-wide'>Book Nook</p>
+          <p className='min-w-[76px] text-center tracking-wide text-2xl mt-3 px-2 rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
+            Book Nook
+          </p>
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -98,7 +100,7 @@ const AppSidebar = async () => {
         </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupContent>
-            <ImageCarousel />
+            <ImageCarousel orientation='start' isBoxed={false} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

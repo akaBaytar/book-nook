@@ -17,11 +17,11 @@ const Navbar = () => {
         <Image
           src='/logo.png'
           alt='book nook app logo'
-          height={36}
-          width={36}
+          height={50}
+          width={50}
           priority
         />
-        <p className='min-w-[64px] text-sm text-center tracking-wide'>
+        <p className='min-w-[64px] text-2xl text-center mt-2 tracking-wide px-2 rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
           Book Nook
         </p>
       </div>

@@ -14,31 +14,61 @@ import {
 
 import { CAROUSEL } from '@/mock';
 
-const ImageCarousel = () => {
+type PropTypes = { orientation: 'start' | 'end'; isBoxed?: boolean };
+
+const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
+  const images = orientation === 'start' ? CAROUSEL : [...CAROUSEL].reverse();
+
+  if (isBoxed) {
+    return (
+      <Card className='flex items-center justify-center p-8 rounded-md'>
+        <Carousel
+          opts={{ loop: true }}
+          plugins={[
+            Autoplay({
+              delay: 120000,
+            }),
+          ]}>
+          <CarouselContent>
+            {images.map(({ id, image }) => (
+              <CarouselItem key={id} className='w-full'>
+                <Image
+                  src={image}
+                  width={400}
+                  height={400}
+                  alt='placeholder image'
+                  className='rounded-md w-full max-h-80 object-cover'
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </Card>
+    );
+  }
+
   return (
-    <Card className='flex items-center justify-center p-4 rounded-md'>
-      <Carousel
-        opts={{ loop: true }}
-        plugins={[
-          Autoplay({
-            delay: 120000,
-          }),
-        ]}>
-        <CarouselContent>
-          {CAROUSEL.map(({ id, image }) => (
-            <CarouselItem key={id} className='w-full'>
-              <Image
-                src={image}
-                width={400}
-                height={400}
-                alt='placeholder image'
-                className='rounded-md w-full max-h-80 object-cover'
-              />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-    </Card>
+    <Carousel
+      opts={{ loop: true }}
+      plugins={[
+        Autoplay({
+          delay: 120000,
+        }),
+      ]}>
+      <CarouselContent>
+        {images.map(({ id, image }) => (
+          <CarouselItem key={id} className='w-full'>
+            <Image
+              src={image}
+              width={400}
+              height={400}
+              alt='placeholder image'
+              className='rounded-md w-full max-h-80 object-cover'
+            />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
   );
 };
 

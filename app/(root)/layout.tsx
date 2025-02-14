@@ -10,7 +10,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <Navbar />
       <AppSidebar />
       <div className='w-full flex flex-col lg:flex-row'>
-        <main className='px-4 md:ps-0 mt-[5.5rem] mb-5 md:my-4 w-full lg:w-[calc(100%-20rem)]'>{children}</main>
+        <main className='px-4 md:ps-0 mt-[7rem] mb-5 md:my-4 w-full lg:w-[calc(100%-20rem)]'>{children}</main>
         <EndColumn />
       </div>
     </SidebarProvider>

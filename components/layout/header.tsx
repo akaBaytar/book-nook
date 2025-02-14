@@ -16,7 +16,9 @@ const Header = async () => {
         Your Personal Library, Anytime, Anywhere.
         <p className='mt-5'>
           Welcome to{' '}
-          <span className='bg-[#d7b6cb] px-4 rounded-md'>Book Nook</span>
+          <span className='bg-gradient-to-r from-violet-200 to-pink-200 text-white px-4 rounded-md shadow'>
+            Book Nook
+          </span>
         </p>
       </h1>
       <h3 className='text-base sm:text-xl md:text-2xl font-medium leading-loose text-pretty'>

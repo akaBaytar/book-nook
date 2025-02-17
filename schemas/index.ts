@@ -9,7 +9,7 @@ export const AddBookSchema = z.object({
   pageCount: z.number().int().min(0),
   completed: z.boolean().default(false),
   genre: z.array(z.string()).optional(),
-  image: z.string().url().optional(),
+  image: z.string().optional(),
   translator: z.string().optional(),
   illustrator: z.string().optional(),
   language: z.string().optional(),

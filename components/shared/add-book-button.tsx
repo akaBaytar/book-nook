@@ -16,7 +16,7 @@ const AddBookButton = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size='sm' className='md:w-[206px]'>
+        <Button size='sm'>
           <PlusIcon /> Add New Book
         </Button>
       </DialogTrigger>

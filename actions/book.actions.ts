@@ -8,7 +8,8 @@ import { handleError } from '@/utils';
 import { AddBookSchema } from '@/schemas';
 import { getCurrentUser } from '@/actions/user.actions';
 
-import type { AddBook } from '@/types';
+import type { Prisma } from '@prisma/client';
+import type { AddBook, GetAllBooks } from '@/types';
 
 export const addBook = async (data: AddBook) => {
   const userId = await getCurrentUser();
@@ -34,15 +35,69 @@ export const addBook = async (data: AddBook) => {
   }
 };
 
-export const getAllBooks = async () => {
+export const getAllBooks = async ({
+  search = '',
+  filter = 'all',
+  sortBy = 'recent',
+  genre = 'all',
+  page = 1,
+  limit = 9,
+}: GetAllBooks = {}) => {
   const userId = await getCurrentUser();
 
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
-    const books = await prisma.book.findMany({ where: { userId } });
+    const whereConditions: Prisma.BookWhereInput = {
+      userId,
+      ...(search && {
+        OR: [
+          {
+            name: {
+              contains: search,
+              mode: 'insensitive' as Prisma.QueryMode,
+            },
+          },
+          {
+            author: {
+              contains: search,
+              mode: 'insensitive' as Prisma.QueryMode,
+            },
+          },
+        ],
+      }),
+      ...(filter === 'completed' && { completed: true }),
+      ...(filter === 'unread' && { completed: false }),
+      ...(genre !== 'all' && { genre: { has: genre } }),
+    };
 
-    const count = await prisma.book.count({ where: { userId } });
+    const orderBy: Prisma.BookOrderByWithRelationInput = (() => {
+      switch (sortBy) {
+        case 'oldest':
+          return { createdAt: 'asc' };
+        case 'name':
+          return { name: 'asc' };
+        case 'author':
+          return { author: 'asc' };
+        default:
+          return { createdAt: 'desc' };
+      }
+    })();
+
+    const skip = (page - 1) * limit;
+
+    const [books, count] = await Promise.all([
+      prisma.book.findMany({
+        where: whereConditions,
+        orderBy,
+        skip,
+        take: limit,
+      }),
+
+      prisma.book.count({
+        where: whereConditions,
+      }),
+    ]);
 
     return {
       count,
@@ -56,5 +111,3 @@ export const getAllBooks = async () => {
     };
   }
 };
-
-export const getBook = async () => {};

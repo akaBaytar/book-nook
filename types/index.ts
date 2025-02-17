@@ -72,3 +72,15 @@ export enum BookType {
 // ! DELETE THIS TYPES AFTER SET BACKEND
 
 export type AddBook = z.infer<typeof AddBookSchema>;
+
+export type GetAllBooks = {
+  search?: string;
+  filter?: 'all' | 'completed' | 'unread';
+  sortBy?: 'recent' | 'oldest' | 'name' | 'author';
+  genre?: string;
+  page?: number;
+  limit?: number;
+};
+
+export type Filter = 'all' | 'completed' | 'unread';
+export type Sort = 'recent' | 'oldest' | 'name' | 'author';

@@ -24,3 +24,5 @@ export const ADD_BOOK_DEFAULT_VALUES = {
   startDate: new Date().toISOString(),
   endDate: new Date().toISOString(),
 };
+
+export const BOOKS_PER_PAGE = 9;

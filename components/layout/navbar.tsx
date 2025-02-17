@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 
 import { UserButton } from '@clerk/nextjs';
@@ -13,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className='rounded-md fixed top-4 start-4 end-4 md:hidden p-2 flex justify-between items-center bg-sidebar border border-pink-100 z-10 shadow-md'>
       <SidebarTrigger />
-      <div className='flex items-center'>
+      <Link href='/dashboard' className='flex items-center'>
         <Image
           src='/logo.png'
           alt='book nook app logo'
@@ -24,7 +25,7 @@ const Navbar = () => {
         <p className='min-w-[64px] text-2xl text-center mt-2 tracking-wide px-2 rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
           Book Nook
         </p>
-      </div>
+      </Link>
       <UserButton
         appearance={{
           elements: {

@@ -61,7 +61,7 @@ const AppSidebar = async () => {
   return (
     <Sidebar side='left' variant='floating'>
       <SidebarHeader>
-        <div className='flex items-center'>
+        <Link href='/dashboard' className='flex items-center'>
           <Image
             src='/logo.png'
             alt='book nook app logo'
@@ -72,7 +72,7 @@ const AppSidebar = async () => {
           <p className='min-w-[76px] text-center tracking-wide text-2xl mt-3 px-2 rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
             Book Nook
           </p>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

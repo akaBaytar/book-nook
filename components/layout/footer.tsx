@@ -14,7 +14,7 @@ const Footer = () => {
             width={50}
             priority
           />
-          <p className='min-w-[76px] text-center tracking-wide'>Book Nook</p>
+          <p className='min-w-20 text-center tracking-wide mt-3'>Book Nook</p>
         </div>
         <div className='w-full ms-auto flex items-center justify-end text-muted-foreground'>
           <Button variant='ghost' size='sm'>

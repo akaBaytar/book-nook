@@ -95,4 +95,8 @@
   ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-border border-[1px] border-transparent border-solid bg-clip-padding;
   }
+
+  ::selection {
+    @apply bg-pink-200 text-black;
+  }
 }

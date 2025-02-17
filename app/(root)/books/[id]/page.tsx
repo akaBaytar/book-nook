@@ -11,8 +11,8 @@ import {
   Share2Icon,
   LibraryIcon,
   CalendarIcon,
-  SwatchBookIcon,
   ArrowLeftIcon,
+  SwatchBookIcon,
 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
@@ -74,15 +74,23 @@ const BookDetailsPage = ({ params }: PropType) => {
 
   return (
     <Card className='relative rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
-      <div className='flex items-center justify-center xl:justify-end gap-2.5 mt-4 mx-4'>
-        <Button variant='outline'>
-          <Share2Icon className='size-4' />
-          Share Book
+      <div className='flex items-center justify-between gap-2.5 mt-4 mx-4'>
+        <Button asChild>
+          <Link href='/all-books'>
+            <ArrowLeftIcon className='size-4' />
+            <span className='hidden sm:flex'>All Books</span>
+          </Link>
         </Button>
-        <Button>
-          <LibraryIcon className='me-2 size-4' />
-          Add to List
-        </Button>
+        <div className='space-x-2.5'>
+          <Button variant='outline'>
+            <Share2Icon className='size-4' />
+            <span className='hidden sm:flex'>Share Book</span>
+          </Button>
+          <Button>
+            <LibraryIcon className='size-4' />
+            <span className='hidden sm:flex'>Add to List</span>
+          </Button>
+        </div>
       </div>
       <CardHeader className='flex items-center text-center xl:flex-row xl:items-start gap-5 sm:gap-10'>
         {image && (

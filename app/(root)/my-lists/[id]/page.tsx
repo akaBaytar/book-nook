@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import {
@@ -8,6 +10,7 @@ import {
   LockIcon,
   TrashIcon,
   UnlockIcon,
+  ArrowLeftIcon,
   LibraryBigIcon,
 } from 'lucide-react';
 
@@ -16,13 +19,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import {
   AlertDialog,
+  AlertDialogTitle,
   AlertDialogAction,
   AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialogContent,
+  AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
 
 import { LISTS } from '@/mock';
@@ -53,6 +56,11 @@ const ListDetailsPage = () => {
     <div className='space-y-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-2.5'>
+          <Button size='icon' asChild>
+            <Link href='/my-lists'>
+              <ArrowLeftIcon className='size-4' />
+            </Link>
+          </Button>
           <h1 className='text-2xl tracking-[0.015em]'>{list.name}</h1>
           {list.privacy === 'PRIVATE' ? (
             <LockIcon className='size-4 mt-0.5 text-pink-300' />

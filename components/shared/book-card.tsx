@@ -3,7 +3,10 @@ import Image from 'next/image';
 
 import { BookCheckIcon, BookIcon } from 'lucide-react';
 
+import { Badge } from '@/components/ui/badge';
 import { Card, CardTitle, CardDescription } from '@/components/ui/card';
+
+import { formatDate } from '@/utils';
 
 import type { Book } from '@/types';
 
@@ -34,11 +37,9 @@ const BookCard = ({ book }: { book: Book }) => (
           </CardDescription>
           <div className='flex gap-2 mt-1'>
             {book.genre.slice(0, 2).map((genre) => (
-              <span
-                key={genre}
-                className='px-2 py-0.5 text-xs bg-pink-50 text-gray-400 rounded-md'>
+              <Badge key={genre} variant='secondary' className='truncate'>
                 {genre}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>
@@ -51,10 +52,8 @@ const BookCard = ({ book }: { book: Book }) => (
         ) : (
           <BookIcon className='fill-pink-100 text-pink-300' />
         )}
-        <CardDescription
-          title={book.endDate?.toDateString()}
-          className='text-xs line-clamp-1'>
-          {book.endDate?.toLocaleDateString()}
+        <CardDescription className='text-xs line-clamp-1'>
+          {formatDate(book.endDate as Date)}
         </CardDescription>
       </div>
     </Card>

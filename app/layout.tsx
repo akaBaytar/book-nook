@@ -1,10 +1,12 @@
+import { Sour_Gummy } from 'next/font/google';
+
 import { ClerkProvider } from '@clerk/nextjs';
+
+import { Toaster } from '@/components/ui/toaster';
 
 import type { Metadata } from 'next';
 
 import '../styles/globals.css';
-
-import { Sour_Gummy } from 'next/font/google';
 
 export const metadata: Metadata = {
   title: 'Book Nook - Your Personal Library, Anytime, Anywhere',
@@ -18,7 +20,10 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClerkProvider>
       <html lang='en' className={sourGummy.className}>
-        <body>{children}</body>
+        <body>
+          {children}
+          <Toaster />
+        </body>
       </html>
     </ClerkProvider>
   );

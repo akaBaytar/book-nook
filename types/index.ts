@@ -1,3 +1,7 @@
+import { z } from 'zod';
+
+import { AddBookSchema } from '@/schemas';
+
 // ! DELETE THIS TYPES AFTER SET BACKEND
 export type User = {
   id: string;
@@ -60,9 +64,11 @@ enum Privacy {
   PRIVATE = 'PRIVATE',
 }
 
-enum BookType {
+export enum BookType {
   BOOK = 'BOOK',
   EBOOK = 'EBOOK',
   AUDIO_BOOK = 'AUDIO_BOOK',
 }
 // ! DELETE THIS TYPES AFTER SET BACKEND
+
+export type AddBook = z.infer<typeof AddBookSchema>;

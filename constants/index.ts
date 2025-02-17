@@ -26,3 +26,10 @@ export const ADD_BOOK_DEFAULT_VALUES = {
 };
 
 export const BOOKS_PER_PAGE = 9;
+
+export const SORT_OPTIONS = [
+  { value: 'recent', label: 'Most Recent' },
+  { value: 'oldest', label: 'Oldest First' },
+  { value: 'name', label: 'Title A-Z' },
+  { value: 'author', label: 'Author A-Z' },
+];

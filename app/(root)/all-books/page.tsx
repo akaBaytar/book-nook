@@ -1,17 +1,18 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-
 import {
-  SearchIcon,
-  ChevronDown,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-} from 'lucide-react';
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  useTransition,
+} from 'react';
+
+import { useDebounce } from 'use-debounce';
+import { SearchIcon, ChevronDown } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import {
   Select,
@@ -22,139 +23,119 @@ import {
 
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuContent,
 } from '@/components/ui/dropdown-menu';
 
-import BookCard from '@/components/shared/book-card';
+import Pagination from '@/components/shared/pagination';
 import AddBookButton from '@/components/shared/add-book-button';
+import BookCard, { BookSkeleton } from '@/components/shared/book-card';
 
-import { BOOKS_PER_PAGE } from '@/constants';
-import { getAllBooks } from '@/actions/book.actions';
+import { BOOKS_PER_PAGE, SORT_OPTIONS } from '@/constants';
+import { useToast } from '@/hooks/use-toast';
+import { getAllBooks, getAllGenres } from '@/actions/book.actions';
 
 import type { Book, Filter, Sort } from '@/types';
 
 const AllBooksPage = () => {
+  const [isPending, startTransition] = useTransition();
+
   const [count, setCount] = useState(0);
   const [books, setBooks] = useState<Book[]>([]);
+  const [genres, setGenres] = useState<string[]>(['all']);
+
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [genre, setGenre] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const [genre, setGenre] = useState('all');
   const [filter, setFilter] = useState<Filter>('all');
   const [sortBy, setSortBy] = useState<Sort>('recent');
 
-  const totalPages = Math.ceil(count / BOOKS_PER_PAGE);
+  const { toast } = useToast();
+
+  const [debouncedSearch] = useDebounce(searchQuery, 500);
+
+  const totalPages = useMemo(() => Math.ceil(count / BOOKS_PER_PAGE), [count]);
+
+  const fetchGenres = useCallback(async () => {
+    try {
+      const result = await getAllGenres();
+
+      if (result.success) {
+        setGenres(['all', ...(result.genres as string[])]);
+      }
+    } catch (error) {
+      toast({ description: `Failed to fetch genres. ${error}` });
+    }
+  }, [toast]);
 
   const fetchBooks = useCallback(async () => {
-    setIsLoading(true);
+    try {
+      const result = await getAllBooks({
+        genre,
+        filter,
+        sortBy,
+        page: currentPage,
+        limit: BOOKS_PER_PAGE,
+        search: debouncedSearch,
+      });
 
-    const result = await getAllBooks({
-      genre,
-      filter,
-      sortBy,
-      page: currentPage,
-      search: searchQuery,
-      limit: BOOKS_PER_PAGE,
-    });
-
-    if (result.success) {
-      setBooks(result.books);
-      setCount(result.count as number);
+      if (result.success) {
+        setBooks(result.books);
+        setCount(result.count as number);
+      }
+    } catch (error) {
+      toast({ description: `An error occurred. ${error}` });
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
-  }, [searchQuery, filter, sortBy, genre, currentPage]);
+  }, [genre, filter, sortBy, currentPage, debouncedSearch, toast]);
 
   useEffect(() => {
-    const debounceTimer = setTimeout(() => fetchBooks(), 1000);
+    fetchGenres();
+  }, [fetchGenres]);
 
-    return () => clearTimeout(debounceTimer);
+  useEffect(() => {
+    startTransition(() => fetchBooks());
   }, [fetchBooks]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-
     setCurrentPage(1);
   };
 
   const handleFilter = (newFilter: Filter) => {
     setFilter(newFilter);
-
     setCurrentPage(1);
   };
 
   const handleSort = (newSort: Sort) => {
     setSortBy(newSort);
-
     setCurrentPage(1);
   };
 
   const handleGenreChange = (newGenre: string) => {
     setGenre(newGenre);
-
     setCurrentPage(1);
   };
 
-  const BookSkeleton = () => (
-    <>
-      {[...Array(BOOKS_PER_PAGE)].map((_, index) => (
-        <div
-          key={index}
-          className='flex items-center justify-between gap-5 p-2.5 h-[112px] border rounded-md shadow'>
-          <div className='flex items-center gap-2'>
-            <Skeleton className='w-[60px] h-[90px] rounded-md' />
-            <div className='flex flex-col gap-2'>
-              <Skeleton className='h-3 w-[180px]' />
-              <Skeleton className='h-3 w-[150px]' />
-              <Skeleton className='h-3 w-[120px]' />
-              <div className='flex gap-2 mt-1'>
-                <Skeleton className='h-4 w-16 rounded-md' />
-                <Skeleton className='h-4 w-16 rounded-md' />
-              </div>
-            </div>
-          </div>
-          <div className='flex flex-col items-center justify-center gap-2.5 w-24'>
-            <Skeleton className='h-6 w-6 rounded-md' />
-            <Skeleton className='h-4 w-24 rounded-md' />
-          </div>
-        </div>
-      ))}
-    </>
-  );
-
-  const sortOptions = [
-    { value: 'recent', label: 'Most Recent' },
-    { value: 'oldest', label: 'Oldest First' },
-    { value: 'name', label: 'Title A-Z' },
-    { value: 'author', label: 'Author A-Z' },
-  ];
-
-  const genres = [
-    'all',
-    'fiction',
-    'non-fiction',
-    'mystery',
-    'sci-fi',
-    'fantasy',
-    'biography',
-    'history',
-    'self-help',
-  ];
+  const isFiltering = isPending || isLoading;
 
   return (
-    <div className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
+    <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
-        <div className='flex items-center justify-between'>
-          <h1 className='text-2xl'>All Books ({count})</h1>
+        <header className='flex items-center justify-between'>
+          <h1 className='text-2xl font-bold'>All Books ({count})</h1>
           <AddBookButton />
-        </div>
+        </header>
         <div className='flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between'>
-          <div className='flex flex-col xl:flex-row w-full items-center gap-2.5'>
-            <div className='relative w-full xl:w-1/2'>
+          <div className='flex flex-col xl:flex-row w-full items-center gap-5'>
+            <div className='relative w-full xl:w-1/2 xl:max-w-[400px]'>
               <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
               <Input
+                type='search'
                 placeholder='Search books...'
                 className='ps-7'
                 value={searchQuery}
@@ -162,7 +143,7 @@ const AllBooksPage = () => {
               />
             </div>
             <Select value={genre} onValueChange={handleGenreChange}>
-              <SelectTrigger className='w-full xl:w-1/2'>
+              <SelectTrigger className='w-full xl:w-1/2 xl:max-w-[400px] text-muted-foreground'>
                 Filter by Genres
               </SelectTrigger>
               <SelectContent>
@@ -176,24 +157,15 @@ const AllBooksPage = () => {
           </div>
           <div className='flex flex-col sm:flex-row gap-2.5 items-center'>
             <div className='flex gap-2.5 w-full sm:w-1/2 xl:w-2/3'>
-              <Button
-                variant={filter === 'all' ? 'default' : 'outline'}
-                onClick={() => handleFilter('all')}
-                className='w-1/3'>
-                All
-              </Button>
-              <Button
-                variant={filter === 'completed' ? 'default' : 'outline'}
-                onClick={() => handleFilter('completed')}
-                className='w-1/3 text-xs'>
-                Completed
-              </Button>
-              <Button
-                variant={filter === 'unread' ? 'default' : 'outline'}
-                onClick={() => handleFilter('unread')}
-                className='w-1/3 text-xs'>
-                Unread
-              </Button>
+              {(['all', 'completed', 'unread'] as const).map((filterOption) => (
+                <Button
+                  key={filterOption}
+                  variant={filter === filterOption ? 'default' : 'outline'}
+                  onClick={() => handleFilter(filterOption)}
+                  className='w-1/3 text-xs capitalize'>
+                  {filterOption}
+                </Button>
+              ))}
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger
@@ -204,7 +176,7 @@ const AllBooksPage = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align='end'>
-                {sortOptions.map((option) => (
+                {SORT_OPTIONS.map((option) => (
                   <DropdownMenuItem
                     key={option.value}
                     onClick={() => handleSort(option.value as Sort)}
@@ -218,46 +190,24 @@ const AllBooksPage = () => {
         </div>
       </div>
       <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-        {isLoading ? (
+        {isFiltering ? (
           <BookSkeleton />
         ) : books.length === 0 ? (
           <div className='col-span-full text-center py-10'>
             <p className='text-muted-foreground'>No books found.</p>
           </div>
         ) : (
-          books.map((book: Book) => <BookCard key={book.id} book={book} />)
+          books.map((book) => <BookCard key={book.id} book={book} />)
         )}
       </div>
-      {!isLoading && count > BOOKS_PER_PAGE && (
-        <div className='flex justify-center items-center gap-2.5 mt-5'>
-          <Button
-            variant='outline'
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}>
-            <ArrowLeftIcon />
-            Previous
-          </Button>
-          <div className='flex items-center gap-2'>
-            {[...Array(totalPages)].map((_, i) => (
-              <Button
-                key={i}
-                variant={currentPage === i + 1 ? 'default' : 'outline'}
-                size='icon'
-                onClick={() => setCurrentPage(i + 1)}>
-                {i + 1}
-              </Button>
-            ))}
-          </div>
-          <Button
-            variant='outline'
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}>
-            Next
-            <ArrowRightIcon />
-          </Button>
-        </div>
+      {!isFiltering && count > BOOKS_PER_PAGE && (
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       )}
-    </div>
+    </section>
   );
 };
 

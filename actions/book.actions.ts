@@ -111,3 +111,32 @@ export const getAllBooks = async ({
     };
   }
 };
+
+export const getAllGenres = async () => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const genres = await prisma.book.findMany({
+      where: { userId },
+      select: {
+        genre: true,
+      },
+    });
+
+    const uniqueGenres = [...new Set(genres.flatMap((book) => book.genre))];
+
+    const sortedGenres = uniqueGenres.sort((a, b) => a.localeCompare(b));
+
+    return {
+      success: true,
+      genres: sortedGenres,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};

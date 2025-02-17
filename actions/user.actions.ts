@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 
 import prisma from '@/database';
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<string | null> => {
   const session = await auth();
 
   if (!session.userId) return null;

@@ -74,7 +74,7 @@ const Pagination = ({
         <Button
           size='sm'
           variant='outline'
-          className='w-8'
+          className='size-9'
           disabled
           aria-hidden='true'>
           <MoreHorizontal />
@@ -86,7 +86,7 @@ const Pagination = ({
       <Button
         variant={isCurrentPage ? 'default' : 'outline'}
         size='icon'
-        className='size-8'
+        className='size-9'
         onClick={() => onPageChange(page)}
         aria-label={`Go to page ${page}`}
         aria-current={isCurrentPage ? 'page' : undefined}>
@@ -100,7 +100,6 @@ const Pagination = ({
       variant='outline'
       onClick={onClick}
       disabled={disabled}
-      size='sm'
       className='gap-2.5'
       aria-label={`Go to ${direction} page`}>
       {direction === 'previous' && <ArrowLeftIcon />}
@@ -115,7 +114,7 @@ const Pagination = ({
     <nav
       role='navigation'
       aria-label='Pagination'
-      className='flex justify-center items-center gap-2.5'>
+      className='flex justify-center items-center gap-2.5 2xl:justify-end'>
       <NavigationButton
         direction='previous'
         onClick={() => onPageChange(currentPage - 1)}

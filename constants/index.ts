@@ -25,7 +25,7 @@ export const ADD_BOOK_DEFAULT_VALUES = {
   endDate: new Date().toISOString(),
 };
 
-export const BOOKS_PER_PAGE = 9;
+export const BOOKS_PER_PAGE = 15;
 
 export const SORT_OPTIONS = [
   { value: 'recent', label: 'Most Recent' },

@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 import { AddBookSchema } from '@/schemas';
 
-// ! DELETE THIS TYPES AFTER SET BACKEND
 export type User = {
   id: string;
   clerkId: string;
@@ -69,7 +68,6 @@ export enum BookType {
   EBOOK = 'EBOOK',
   AUDIO_BOOK = 'AUDIO_BOOK',
 }
-// ! DELETE THIS TYPES AFTER SET BACKEND
 
 export type AddBook = z.infer<typeof AddBookSchema>;
 
@@ -77,10 +75,12 @@ export type GetAllBooks = {
   search?: string;
   filter?: 'all' | 'completed' | 'unread';
   sortBy?: 'recent' | 'oldest' | 'name' | 'author';
+  category?: string;
   genre?: string;
   page?: number;
   limit?: number;
 };
 
 export type Filter = 'all' | 'completed' | 'unread';
+
 export type Sort = 'recent' | 'oldest' | 'name' | 'author';

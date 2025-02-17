@@ -151,9 +151,19 @@ const AddBookForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={BookType.BOOK}>Physical Book</SelectItem>
-                    <SelectItem value={BookType.EBOOK}>E-Book</SelectItem>
-                    <SelectItem value={BookType.AUDIO_BOOK}>
+                    <SelectItem
+                      value={BookType.BOOK}
+                      className='cursor-pointer'>
+                      Physical Book
+                    </SelectItem>
+                    <SelectItem
+                      value={BookType.EBOOK}
+                      className='cursor-pointer'>
+                      E-Book
+                    </SelectItem>
+                    <SelectItem
+                      value={BookType.AUDIO_BOOK}
+                      className='cursor-pointer'>
                       Audio Book
                     </SelectItem>
                   </SelectContent>

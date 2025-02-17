@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-  useTransition,
-} from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { useDebounce } from 'use-debounce';
 import { SearchIcon, ChevronDown } from 'lucide-react';
@@ -34,22 +28,27 @@ import BookCard, { BookSkeleton } from '@/components/shared/book-card';
 
 import { BOOKS_PER_PAGE, SORT_OPTIONS } from '@/constants';
 import { useToast } from '@/hooks/use-toast';
-import { getAllBooks, getAllGenres } from '@/actions/book.actions';
+
+import {
+  getAllBooks,
+  getAllGenres,
+  getAllCategories,
+} from '@/actions/book.actions';
 
 import type { Book, Filter, Sort } from '@/types';
 
 const AllBooksPage = () => {
-  const [isPending, startTransition] = useTransition();
-
   const [count, setCount] = useState(0);
   const [books, setBooks] = useState<Book[]>([]);
   const [genres, setGenres] = useState<string[]>(['all']);
+  const [categories, setCategories] = useState<string[]>(['all']);
 
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
 
   const [genre, setGenre] = useState('all');
+  const [category, setCategory] = useState('all');
   const [filter, setFilter] = useState<Filter>('all');
   const [sortBy, setSortBy] = useState<Sort>('recent');
 
@@ -71,12 +70,27 @@ const AllBooksPage = () => {
     }
   }, [toast]);
 
+  const fetchCategories = useCallback(async () => {
+    try {
+      const result = await getAllCategories();
+
+      if (result.success) {
+        setCategories(['all', ...(result.categories as string[])]);
+      }
+    } catch (error) {
+      toast({
+        description: `Failed to fetch categories. ${error}`,
+      });
+    }
+  }, [toast]);
+
   const fetchBooks = useCallback(async () => {
     try {
       const result = await getAllBooks({
         genre,
         filter,
         sortBy,
+        category,
         page: currentPage,
         limit: BOOKS_PER_PAGE,
         search: debouncedSearch,
@@ -91,15 +105,13 @@ const AllBooksPage = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [genre, filter, sortBy, currentPage, debouncedSearch, toast]);
+  }, [genre, filter, sortBy, category, currentPage, debouncedSearch, toast]);
 
   useEffect(() => {
+    fetchBooks();
     fetchGenres();
-  }, [fetchGenres]);
-
-  useEffect(() => {
-    startTransition(() => fetchBooks());
-  }, [fetchBooks]);
+    fetchCategories();
+  }, [fetchBooks, fetchCategories, fetchGenres]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -121,7 +133,10 @@ const AllBooksPage = () => {
     setCurrentPage(1);
   };
 
-  const isFiltering = isPending || isLoading;
+  const handleCategoryChange = (newCategory: string) => {
+    setCategory(newCategory);
+    setCurrentPage(1);
+  };
 
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
@@ -132,7 +147,7 @@ const AllBooksPage = () => {
         </header>
         <div className='flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between'>
           <div className='flex flex-col xl:flex-row w-full items-center gap-5'>
-            <div className='relative w-full xl:w-1/2 xl:max-w-[400px]'>
+            <div className='relative w-full xl:w-1/2'>
               <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
               <Input
                 type='search'
@@ -143,19 +158,31 @@ const AllBooksPage = () => {
               />
             </div>
             <Select value={genre} onValueChange={handleGenreChange}>
-              <SelectTrigger className='w-full xl:w-1/2 xl:max-w-[400px] text-muted-foreground'>
-                Filter by Genres
+              <SelectTrigger className='w-full xl:w-1/2 text-muted-foreground'>
+                {genre === 'all' ? 'Filter by Genres' : genre}
               </SelectTrigger>
               <SelectContent>
                 {genres.map((g) => (
-                  <SelectItem key={g} value={g}>
+                  <SelectItem key={g} value={g} className='cursor-pointer'>
                     {g.charAt(0).toUpperCase() + g.slice(1)}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
+            <Select value={category} onValueChange={handleCategoryChange}>
+              <SelectTrigger className='w-full xl:w-1/2 text-muted-foreground'>
+                {category === 'all' ? 'Filter by Categories' : category}
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((c) => (
+                  <SelectItem key={c} value={c} className='cursor-pointer'>
+                    {c.charAt(0).toUpperCase() + c.slice(1)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div className='flex flex-col sm:flex-row gap-2.5 items-center'>
+          <div className='flex flex-col sm:flex-row gap-5 items-center'>
             <div className='flex gap-2.5 w-full sm:w-1/2 xl:w-2/3'>
               {(['all', 'completed', 'unread'] as const).map((filterOption) => (
                 <Button
@@ -170,7 +197,7 @@ const AllBooksPage = () => {
             <DropdownMenu>
               <DropdownMenuTrigger
                 asChild
-                className='w-full sm:w-1/2 xl:w-1/3 h-9'>
+                className='w-full sm:w-1/2 xl:w-1/3 h-9 mt-2.5 sm:mt-0'>
                 <Button variant='outline' size='sm'>
                   Sort By <ChevronDown className='ms-auto' />
                 </Button>
@@ -180,7 +207,11 @@ const AllBooksPage = () => {
                   <DropdownMenuItem
                     key={option.value}
                     onClick={() => handleSort(option.value as Sort)}
-                    className={sortBy === option.value ? 'bg-accent' : ''}>
+                    className={
+                      sortBy === option.value
+                        ? 'bg-accent cursor-pointer'
+                        : 'cursor-pointer'
+                    }>
                     {option.label}
                   </DropdownMenuItem>
                 ))}
@@ -190,7 +221,7 @@ const AllBooksPage = () => {
         </div>
       </div>
       <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-        {isFiltering ? (
+        {isLoading ? (
           <BookSkeleton />
         ) : books.length === 0 ? (
           <div className='col-span-full text-center py-10'>
@@ -200,7 +231,7 @@ const AllBooksPage = () => {
           books.map((book) => <BookCard key={book.id} book={book} />)
         )}
       </div>
-      {!isFiltering && count > BOOKS_PER_PAGE && (
+      {count > BOOKS_PER_PAGE && (
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

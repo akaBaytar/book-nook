@@ -40,6 +40,7 @@ export const getAllBooks = async ({
   filter = 'all',
   sortBy = 'recent',
   genre = 'all',
+  category = 'all',
   page = 1,
   limit = 9,
 }: GetAllBooks = {}) => {
@@ -69,6 +70,7 @@ export const getAllBooks = async ({
       ...(filter === 'completed' && { completed: true }),
       ...(filter === 'unread' && { completed: false }),
       ...(genre !== 'all' && { genre: { has: genre } }),
+      ...(category !== 'all' && { category: category }),
     };
 
     const orderBy: Prisma.BookOrderByWithRelationInput = (() => {
@@ -132,6 +134,40 @@ export const getAllGenres = async () => {
     return {
       success: true,
       genres: sortedGenres,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const getAllCategories = async () => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const categories = await prisma.book.findMany({
+      where: { userId },
+      select: { category: true },
+    });
+
+    const uniqueCategories = [
+      ...new Set(
+        categories
+          .map((book) => book.category)
+          .filter((c): c is string => c !== null)
+      ),
+    ];
+    const sortedCategories = uniqueCategories.sort((a, b) =>
+      a.localeCompare(b)
+    );
+
+    return {
+      success: true,
+      categories: sortedCategories,
     };
   } catch (error) {
     return {

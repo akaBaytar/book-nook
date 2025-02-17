@@ -39,7 +39,7 @@ model Book {
   language        String?
   quote           String?   @db.Text
   summary         String?   @db.Text
-  category        String?
+  category        String
   volume          Int?
   isbn            String?
   printing        Int?

@@ -1,15 +1,19 @@
 'use client';
 
+import Image from 'next/image';
+
 import { z } from 'zod';
+import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ImagePlusIcon, Loader2Icon, XIcon } from 'lucide-react';
+import { ImagePlusIcon, Loader2Icon, XIcon, CalendarIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
+import { Calendar } from '@/components/ui/calendar';
 
 import {
   Select,
@@ -18,6 +22,12 @@ import {
   SelectContent,
   SelectTrigger,
 } from '@/components/ui/select';
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 import {
   Form,
@@ -29,6 +39,7 @@ import {
   FormDescription,
 } from '@/components/ui/form';
 
+import { cn } from '@/lib/utils';
 import { AddBookSchema } from '@/schemas';
 import { useToast } from '@/hooks/use-toast';
 import { addBook } from '@/actions/book.actions';
@@ -37,7 +48,6 @@ import { ADD_BOOK_DEFAULT_VALUES } from '@/constants';
 
 import { BookType } from '@/types';
 import type { Dispatch, SetStateAction } from 'react';
-import Image from 'next/image';
 
 type PropTypes = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -168,7 +178,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className='bg-transparent'>
                       <SelectValue placeholder='Select book type' />
                     </SelectTrigger>
                   </FormControl>
@@ -360,10 +370,10 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                 <Image
                   priority
                   src={coverImage || '/placeholder.jpg'}
-                  width={1332}
-                  height={750}
+                  width={900}
+                  height={600}
                   alt='book cover'
-                  className='w-full max-h-56 object-contain rounded-md border border-input'
+                  className='w-full max-h-40 p-2.5 object-contain rounded-md border border-input'
                 />
                 <FormControl>
                   <div>
@@ -481,11 +491,35 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
             control={form.control}
             name='publicationDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='flex flex-col'>
                 <FormLabel>Publication Date</FormLabel>
-                <FormControl>
-                  <Input type='date' {...field} />
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full ps-2.5 text-start font-normal',
+                          !field.value && 'text-muted-foreground'
+                        )}>
+                        {field.value ? (
+                          format(new Date(field.value), 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className='ms-auto size-4 opacity-50' />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-auto p-0' align='start'>
+                    <Calendar
+                      mode='single'
+                      selected={field.value ? new Date(field.value) : undefined}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -494,11 +528,35 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
             control={form.control}
             name='acquiredDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='flex flex-col'>
                 <FormLabel>Date Acquired</FormLabel>
-                <FormControl>
-                  <Input type='date' {...field} />
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full ps-2.5 text-start font-normal',
+                          !field.value && 'text-muted-foreground'
+                        )}>
+                        {field.value ? (
+                          format(new Date(field.value), 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className='ms-auto size-4 opacity-50' />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-auto p-0' align='start'>
+                    <Calendar
+                      mode='single'
+                      selected={field.value ? new Date(field.value) : undefined}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -507,11 +565,35 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
             control={form.control}
             name='startDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='flex flex-col'>
                 <FormLabel>Start Date</FormLabel>
-                <FormControl>
-                  <Input type='date' {...field} />
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full ps-2.5 text-start font-normal',
+                          !field.value && 'text-muted-foreground'
+                        )}>
+                        {field.value ? (
+                          format(new Date(field.value), 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className='ms-auto size-4 opacity-50' />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-auto p-0' align='start'>
+                    <Calendar
+                      mode='single'
+                      selected={field.value ? new Date(field.value) : undefined}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -520,11 +602,35 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
             control={form.control}
             name='endDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='flex flex-col'>
                 <FormLabel>End Date</FormLabel>
-                <FormControl>
-                  <Input type='date' {...field} />
-                </FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full ps-2.5 text-start font-normal',
+                          !field.value && 'text-muted-foreground'
+                        )}>
+                        {field.value ? (
+                          format(new Date(field.value), 'PPP')
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className='ms-auto size-4 opacity-50' />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-auto p-0' align='start'>
+                    <Calendar
+                      mode='single'
+                      selected={field.value ? new Date(field.value) : undefined}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}

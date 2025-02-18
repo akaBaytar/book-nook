@@ -11,7 +11,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const Navbar = () => {
   return (
-    <nav className='rounded-md fixed top-4 start-4 end-4 md:hidden p-2 flex justify-between items-center bg-sidebar border border-pink-100 z-10 shadow-md'>
+    <nav className='rounded-md fixed top-4 h-20 start-4 end-4 md:hidden px-4 flex justify-between items-center border z-10 shadow-md border-pink-100 bg-sidebar/50 backdrop-blur-sm'>
       <SidebarTrigger />
       <Link href='/dashboard' className='flex items-center'>
         <p className='text-2xl text-center tracking-wide px-2 h-8 border shadow-sm grid place-content-center rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>

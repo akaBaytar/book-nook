@@ -1,5 +1,9 @@
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
-  return <main className='min-h-screen pt-10 bg-sidebar'>{children}</main>;
+  return (
+    <main className='min-h-screen bg-gradient-to-b from-slate-50 to-slate-100'>
+      {children}
+    </main>
+  );
 };
 
 export default MarketingLayout;

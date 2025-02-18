@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRightIcon } from 'lucide-react';
 
 import { auth } from '@clerk/nextjs/server';
 import { SignInButton } from '@clerk/nextjs';
@@ -11,32 +12,44 @@ const Header = async () => {
   const { userId } = await auth();
 
   return (
-    <header className='max-w-2xl space-y-5'>
-      <h1 className='text-2xl sm:text-4xl md:text-5xl font-semibold text-pretty leading-snug'>
-        Your Personal Library, Anytime, Anywhere.
-        <p className='mt-5'>
-          Welcome to{' '}
-          <span className='bg-gradient-to-r from-violet-200 to-pink-200 text-white px-4 rounded-md shadow'>
-            Book Nook
-          </span>
-        </p>
-      </h1>
-      <h3 className='text-base sm:text-xl md:text-2xl font-medium leading-loose text-pretty'>
-        Track your progress, set reading goals and build your dream library.
-      </h3>
-      {userId && (
-        <Button size='lg' asChild>
-          <Link href='/dashboard'>
-            Enter Book Nook
-            <ArrowRight className='h-4 w-4' />
-          </Link>
-        </Button>
-      )}
-      {!userId && (
-        <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
-          <Button size='lg'>Get Book Nook Free</Button>
-        </SignInButton>
-      )}
+    <header className='w-full border-b border-slate-200 bg-white/50 backdrop-blur-sm fixed top-0 z-50'>
+      <div className='container mx-auto flex items-center justify-between py-4 px-4 md:px-6'>
+        <div className='flex items-center'>
+          <Image
+            src='/logo.png'
+            alt='Book Nook logo'
+            height={36}
+            width={36}
+            priority
+            className='h-9 w-9'
+          />
+          <span className='text-xl tracking-wide'>Book Nook</span>
+        </div>
+        <div className='flex items-center gap-4'>
+          {userId ? (
+            <Button asChild>
+              <Link href='/dashboard'>
+                Go to Dashboard
+                <ArrowRightIcon className='size-4' />
+              </Link>
+            </Button>
+          ) : (
+            <>
+              <SignInButton mode='modal'>
+                <Button variant='ghost' className='hidden sm:flex'>
+                  Log in
+                </Button>
+              </SignInButton>
+              <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
+                <Button>
+                  Get Started
+                  <ArrowRightIcon className='size-4' />
+                </Button>
+              </SignInButton>
+            </>
+          )}
+        </div>
+      </div>
     </header>
   );
 };

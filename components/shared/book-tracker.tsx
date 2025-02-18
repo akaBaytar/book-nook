@@ -14,7 +14,9 @@ const BookTracker = () => {
 
   const handleBoxClick = (row: number, col: number) => {
     const newBoxColors = [...boxColors];
+
     newBoxColors[row][col] = selectedColor;
+
     setBoxColors(newBoxColors);
   };
 
@@ -38,12 +40,13 @@ const BookTracker = () => {
           {Array.from({ length: 12 }).map((_, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className='size-4 rounded-sm border border-gray-300 cursor-pointer hover:opacity-75'
+              className='size-4 rounded-sm border border-gray-300 cursor-pointer hover:opacity-75 text-[11px] grid place-content-center'
               style={{
                 backgroundColor: boxColors[rowIndex][colIndex] || 'white',
               }}
-              onClick={() => handleBoxClick(rowIndex, colIndex)}
-            />
+              onClick={() => handleBoxClick(rowIndex, colIndex)}>
+              {rowIndex + 1}
+            </div>
           ))}
         </div>
       ))}

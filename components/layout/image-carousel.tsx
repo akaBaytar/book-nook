@@ -31,13 +31,13 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ]}>
           <CarouselContent>
             {images.map(({ id, image }) => (
-              <CarouselItem key={id} className='w-full'>
+              <CarouselItem key={id}>
                 <Image
                   src={image}
                   width={400}
                   height={400}
                   alt='placeholder image'
-                  className='rounded-md w-full max-h-80 object-cover'
+                  className='rounded-md size-full object-cover'
                 />
               </CarouselItem>
             ))}
@@ -57,13 +57,13 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
       ]}>
       <CarouselContent>
         {images.map(({ id, image }) => (
-          <CarouselItem key={id} className='w-full'>
+          <CarouselItem key={id}>
             <Image
               src={image}
               width={400}
               height={400}
               alt='placeholder image'
-              className='rounded-md w-full max-h-80 object-cover'
+              className='rounded-md size-full object-cover'
             />
           </CarouselItem>
         ))}

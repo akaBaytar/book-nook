@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/sheet';
 
 import ImageCarousel from './image-carousel';
+import BookTracker from '../shared/book-tracker';
 
 const EndColumn = () => {
   const [tasks, setTasks] = useState([
@@ -40,17 +41,19 @@ const EndColumn = () => {
         <SheetTrigger asChild>
           <Button className='shadow-md'>Open Tracker</Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className='overflow-y-scroll'>
           <SheetHeader>
             <SheetTitle>Book Tracker</SheetTitle>
             <SheetDescription>
               You can track your books and update your tracker.
             </SheetDescription>
           </SheetHeader>
-          <div className='grid gap-5 py-5'></div>
+          <BookTracker />
           <SheetFooter>
             <SheetClose asChild>
-              <Button type='submit'>Save Changes</Button>
+              <Button type='submit' className='w-full'>
+                Save Changes
+              </Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

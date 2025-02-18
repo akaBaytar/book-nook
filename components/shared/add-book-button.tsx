@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import AddBookForm from './add-book-form';
+import BookForm from './book-form';
 
 const AddBookButton = ({ onBookAdded }: { onBookAdded: () => void }) => {
   const router = useRouter();
@@ -41,7 +41,7 @@ const AddBookButton = ({ onBookAdded }: { onBookAdded: () => void }) => {
         <DialogHeader>
           <DialogTitle>Add New Book</DialogTitle>
         </DialogHeader>
-        <AddBookForm setIsOpen={setIsOpen} onBookAdded={handleBookAdded} />
+        <BookForm setIsOpen={setIsOpen} onSuccess={handleBookAdded} />
       </DialogContent>
     </Dialog>
   );

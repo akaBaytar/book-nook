@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 
-import { z } from 'zod';
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -40,53 +39,93 @@ import {
 } from '@/components/ui/form';
 
 import { cn } from '@/lib/utils';
-import { AddBookSchema } from '@/schemas';
+import { BookSchema } from '@/schemas';
 import { useToast } from '@/hooks/use-toast';
-import { addBook } from '@/actions/book.actions';
+import { BOOK_DEFAULT_VALUES } from '@/constants';
 import { UploadButton } from '@/utils/uploadthing';
-import { ADD_BOOK_DEFAULT_VALUES } from '@/constants';
+import { addBook, updateBook } from '@/actions/book.actions';
 
-import { BookType } from '@/types';
+import { BookType, BookData } from '@/types';
 import type { Dispatch, SetStateAction } from 'react';
 
-type PropTypes = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  onBookAdded?: () => void;
-};
+const sanitizeFormData = (data: Partial<BookData> | undefined): BookData => {
+  if (!data) return BOOK_DEFAULT_VALUES;
 
-const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
-  const { toast } = useToast();
+  const sanitized = { ...BOOK_DEFAULT_VALUES };
 
-  const form = useForm<z.infer<typeof AddBookSchema>>({
-    resolver: zodResolver(AddBookSchema),
-    defaultValues: ADD_BOOK_DEFAULT_VALUES,
+  Object.entries(data).forEach(([key, value]) => {
+    if (value !== null) {
+      // @ts-expect-error - dynamic key access
+      sanitized[key] = value;
+    }
   });
 
-  const coverImage = form.getValues('image');
+  return sanitized as BookData;
+};
 
-  const onSubmit = async (values: z.infer<typeof AddBookSchema>) => {
-    const response = await addBook(values);
+type PropTypes = {
+  initialData?: Partial<BookData>;
+  isEdit?: boolean;
+  bookId?: string;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onSuccess?: () => void;
+};
 
-    if (response.success) {
-      toast({ title: response.message });
+const BookForm = ({
+  initialData,
+  isEdit = false,
+  bookId,
+  setIsOpen,
+  onSuccess,
+}: PropTypes) => {
+  const { toast } = useToast();
 
-      if (onBookAdded) {
-        onBookAdded();
+  const formDefaultValues = sanitizeFormData(initialData);
+
+  const form = useForm<BookData>({
+    resolver: zodResolver(BookSchema),
+    defaultValues: {
+      ...formDefaultValues,
+      rating: Number(formDefaultValues.rating),
+    },
+  });
+
+  const coverImage = form.watch('image') || '';
+
+  const onSubmit = async (values: BookData) => {
+    try {
+      const response = isEdit
+        ? await updateBook(bookId as string, values)
+        : await addBook(values);
+
+      if (response.success) {
+        toast({ title: response.message });
+
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          setIsOpen(false);
+        }
       } else {
-        setIsOpen(false);
+        toast({
+          title: 'Error',
+          description: response.message,
+        });
       }
-    } else {
+    } catch {
       toast({
         title: 'Error',
-        description: response.message,
+        description: 'An error occurred.',
       });
     }
   };
 
   const addGenre = (genre: string) => {
+    if (!genre.trim()) return;
+
     const currentGenres = form.getValues('genre') || [];
 
-    if (genre && !currentGenres.includes(genre)) {
+    if (!currentGenres.includes(genre)) {
       form.setValue('genre', [...currentGenres, genre]);
     }
   };
@@ -110,7 +149,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Book Title</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter book title' {...field} />
+                  <Input
+                    placeholder='Enter book title'
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,7 +166,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Author</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter author's name" {...field} />
+                  <Input
+                    placeholder="Enter author's name"
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -136,7 +183,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Translator</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter translator's name" {...field} />
+                  <Input
+                    placeholder="Enter translator's name"
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,7 +200,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Illustrator</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter illustrator's name" {...field} />
+                  <Input
+                    placeholder="Enter illustrator's name"
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -162,7 +217,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Language</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter book language' {...field} />
+                  <Input
+                    placeholder='Enter book language'
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -176,7 +235,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                 <FormLabel>Book Type</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}>
+                  value={field.value || BookType.BOOK}>
                   <FormControl>
                     <SelectTrigger className='bg-transparent'>
                       <SelectValue placeholder='Select book type' />
@@ -213,9 +272,9 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                 <FormControl>
                   <Input
                     type='number'
-                    min='0'
-                    {...field}
+                    min='1'
                     placeholder='Enter page count'
+                    value={field.value ?? 1}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -234,7 +293,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                     type='number'
                     min='0'
                     placeholder='Enter volume number'
-                    {...field}
+                    value={field.value ?? 0}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -253,7 +312,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                     type='number'
                     min='1'
                     placeholder='Enter printing number'
-                    {...field}
+                    value={field.value ?? 1}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -270,11 +329,10 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                 <FormControl>
                   <Input
                     type='number'
-                    min='1'
-                    max='5'
-                    step='0.5'
-                    placeholder='Rate from 1 to 5'
-                    {...field}
+                    min={1}
+                    max={5}
+                    step={0.1}
+                    value={Number(field.value) ?? 5}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -289,7 +347,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Publisher</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter publisher' {...field} />
+                  <Input
+                    placeholder='Enter publisher'
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -302,7 +364,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter book category' {...field} />
+                  <Input
+                    placeholder='Enter book category'
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -341,7 +407,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                     </div>
                   </FormControl>
                   <div className='flex flex-wrap gap-2.5'>
-                    {field.value?.map((genre) => (
+                    {(field.value || []).map((genre) => (
                       <Badge
                         variant='secondary'
                         key={genre}
@@ -429,7 +495,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                 </div>
                 <FormControl>
                   <Switch
-                    checked={field.value}
+                    checked={field.value || false}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
@@ -443,7 +509,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
               <FormItem>
                 <FormLabel>ISBN</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter ISBN' {...field} />
+                  <Input
+                    placeholder='Enter ISBN'
+                    {...field}
+                    value={field.value || ''}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -462,6 +532,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                     placeholder='Enter book summary'
                     className='h-16 resize-none'
                     {...field}
+                    value={field.value || ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -479,6 +550,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                     placeholder='Enter your favorite quote from the book'
                     className='h-16 resize-none'
                     {...field}
+                    value={field.value || ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -637,11 +709,11 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
           />
         </div>
         <Button type='submit' className='w-full'>
-          Add New Book
+          {isEdit ? 'Update Book' : 'Add New Book'}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default AddBookForm;
+export default BookForm;

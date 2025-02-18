@@ -8,19 +8,19 @@ import { utapi } from '@/server/uploadthing';
 import prisma from '@/database';
 
 import { handleError } from '@/utils';
-import { AddBookSchema } from '@/schemas';
+import { BookSchema } from '@/schemas';
 import { getCurrentUser } from '@/actions/user.actions';
 
 import type { Prisma } from '@prisma/client';
-import type { AddBook, GetAllBooks } from '@/types';
+import type { BookData, GetAllBooks } from '@/types';
 
-export const addBook = async (data: AddBook) => {
+export const addBook = async (data: BookData) => {
   const userId = await getCurrentUser();
 
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
-    const book = AddBookSchema.parse(data);
+    const book = BookSchema.parse(data);
 
     await prisma.book.create({ data: { ...book, userId } });
 
@@ -219,6 +219,30 @@ export const removeBook = async (id: string) => {
     await prisma.book.delete({ where: { id: book.id } });
 
     redirect('/all-books');
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const updateBook = async (id: string, data: BookData) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const book = BookSchema.parse(data);
+
+    await prisma.book.update({ where: { userId, id }, data: book });
+
+    revalidatePath(`/books/${id}`);
+
+    return {
+      success: true,
+      message: 'Book updated successfully.',
+    };
   } catch (error) {
     return {
       success: false,

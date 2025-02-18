@@ -17,6 +17,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import RemoveBook from '@/components/shared/remove-book';
+import UpdateBookButton from '@/components/shared/update-book-button';
 
 import { formatDate } from '@/utils';
 import { getBook } from '@/actions/book.actions';
@@ -87,6 +88,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
             <LibraryIcon className='size-4' />
             <span className='hidden sm:flex'>Add to List</span>
           </Button>
+          <UpdateBookButton bookId={id} book={book} />
           <RemoveBook id={id} />
         </div>
       </div>

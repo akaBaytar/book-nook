@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { AddBookSchema } from '@/schemas';
+import { BookSchema } from '@/schemas';
 
 export type User = {
   id: string;
@@ -69,7 +69,7 @@ export enum BookType {
   AUDIO_BOOK = 'AUDIO_BOOK',
 }
 
-export type AddBook = z.infer<typeof AddBookSchema>;
+export type BookData = z.infer<typeof BookSchema>;
 
 export type GetAllBooks = {
   search?: string;

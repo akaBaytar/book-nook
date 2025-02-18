@@ -1,6 +1,6 @@
 import { BookType } from '@/types';
 
-export const ADD_BOOK_DEFAULT_VALUES = {
+export const BOOK_DEFAULT_VALUES = {
   name: '',
   author: '',
   publisher: '',

@@ -16,6 +16,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
+import RemoveBook from '@/components/shared/remove-book';
+
 import { formatDate } from '@/utils';
 import { getBook } from '@/actions/book.actions';
 
@@ -77,7 +79,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
           </Link>
         </Button>
         <div className='space-x-2.5'>
-          <Button variant='outline'>
+          <Button>
             <Share2Icon className='size-4' />
             <span className='hidden sm:flex'>Share Book</span>
           </Button>
@@ -85,6 +87,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
             <LibraryIcon className='size-4' />
             <span className='hidden sm:flex'>Add to List</span>
           </Button>
+          <RemoveBook id={id} />
         </div>
       </div>
       <CardHeader className='flex items-center text-center xl:flex-row xl:items-start gap-5 sm:gap-10'>

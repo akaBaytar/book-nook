@@ -1,6 +1,9 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+
+import { utapi } from '@/server/uploadthing';
 
 import prisma from '@/database';
 
@@ -191,6 +194,31 @@ export const getAllCategories = async () => {
       success: true,
       categories: sortedCategories,
     };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const removeBook = async (id: string) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const book = await prisma.book.findUnique({ where: { userId, id } });
+
+    if (!book) throw new Error('Book not found.');
+
+    const bookCover = book.image?.split('/').pop();
+
+    if (bookCover) await utapi.deleteFiles(bookCover);
+
+    await prisma.book.delete({ where: { id: book.id } });
+
+    redirect('/all-books');
   } catch (error) {
     return {
       success: false,

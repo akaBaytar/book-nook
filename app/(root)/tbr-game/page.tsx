@@ -24,7 +24,7 @@ const TBRGamePage = () => {
 
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState('all');
-  
+
   const [favorites, setFavorites] = useState(new Set());
   const [completedBooks, setCompletedBooks] = useState(new Set());
 
@@ -43,7 +43,6 @@ const TBRGamePage = () => {
 
     return matchesSearch && matchesGenre;
   }).sort((a, b) => {
-
     const aIsFavorite = favorites.has(a.id);
     const bIsFavorite = favorites.has(b.id);
 
@@ -98,7 +97,6 @@ const TBRGamePage = () => {
         const speedFactor = Math.max(1, (remaining / blinkDuration) * 3);
 
         if (Math.random() < speedFactor) {
-
           const nonCompletedIndices = filteredBooks
             .map((book, index) => (!completedBooks.has(book.id) ? index : -1))
             .filter((index) => index !== -1);
@@ -179,7 +177,7 @@ const TBRGamePage = () => {
       <div className='bg-white p-2.5 rounded-md border flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
           <div className='flex items-center gap-2'>
-            <span className='font-medium'>
+            <span>
               {completedCount}/{totalBooks} completed
             </span>
             <Badge variant='outline'>{completionPercentage}%</Badge>

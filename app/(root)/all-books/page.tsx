@@ -166,7 +166,7 @@ const AllBooksPage = () => {
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
         <header className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold'>All Books ({count})</h1>
+          <h1 className='text-2xl tracking-[0.015em]'>All Books ({count})</h1>
           <AddBookButton onBookAdded={handleBookAdded} />
         </header>
         <div className='flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between'>

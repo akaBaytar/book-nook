@@ -32,11 +32,12 @@ import {
 import { AddBookSchema } from '@/schemas';
 import { useToast } from '@/hooks/use-toast';
 import { addBook } from '@/actions/book.actions';
-import { UploadDropzone } from '@/utils/uploadthing';
+import { UploadButton } from '@/utils/uploadthing';
 import { ADD_BOOK_DEFAULT_VALUES } from '@/constants';
 
 import { BookType } from '@/types';
 import type { Dispatch, SetStateAction } from 'react';
+import Image from 'next/image';
 
 type PropTypes = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -50,6 +51,8 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
     resolver: zodResolver(AddBookSchema),
     defaultValues: ADD_BOOK_DEFAULT_VALUES,
   });
+
+  const coverImage = form.getValues('image');
 
   const onSubmit = async (values: z.infer<typeof AddBookSchema>) => {
     const response = await addBook(values);
@@ -309,9 +312,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
                             e.preventDefault();
-
                             addGenre((e.target as HTMLInputElement).value);
-
                             (e.target as HTMLInputElement).value = '';
                           }
                         }}
@@ -322,9 +323,7 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
                           const input = document.querySelector(
                             'input[placeholder="Add a genre"]'
                           ) as HTMLInputElement;
-
                           addGenre(input.value);
-
                           input.value = '';
                         }}>
                         Add
@@ -358,51 +357,50 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
             render={() => (
               <FormItem className='col-span-2'>
                 <FormLabel>Book Cover</FormLabel>
+                <Image
+                  priority
+                  src={coverImage || '/placeholder.jpg'}
+                  width={1332}
+                  height={750}
+                  alt='book cover'
+                  className='w-full max-h-56 object-contain rounded-md border border-input'
+                />
                 <FormControl>
-                  <UploadDropzone
-                    endpoint='imageUploader'
-                    content={{
-                      button({ ready }) {
-                        if (ready)
+                  <div>
+                    <UploadButton
+                      endpoint='imageUploader'
+                      content={{
+                        button({ ready }) {
+                          if (ready)
+                            return (
+                              <div className='flex items-center gap-2'>
+                                <ImagePlusIcon className='size-4' />
+                                Upload Cover
+                              </div>
+                            );
                           return (
-                            <p className='flex items-center gap-2'>
-                              <ImagePlusIcon className='size-4' />
-                              Upload
-                            </p>
+                            <Loader2Icon className='size-4 animate-spin' />
                           );
-
-                        return <Loader2Icon className='size-4 animate-spin' />;
-                      },
-                      label({ ready }) {
-                        if (ready)
-                          return (
-                            <p className='text-xs'>
-                              Choose file and then upload
-                            </p>
-                          );
-
-                        return <Loader2Icon className='size-4 animate-spin' />;
-                      },
-                      allowedContent() {
-                        return (
-                          <p className='text-muted-foreground'>
-                            Images up to 4MB, max 1.
-                          </p>
-                        );
-                      },
-                    }}
-                    onClientUploadComplete={(res: { url: string }[]) => {
-                      form.setValue('image', res[0].url);
-
-                      toast({
-                        description: 'Book cover uploaded successfully.',
-                      });
-                    }}
-                    onUploadError={(err: Error) => {
-                      toast({ description: err.message });
-                    }}
-                    className='border-double border-input ut-button:bg-gradient-to-r from-violet-200 to-pink-200 ut-button:text-primary ut-button:text-sm ut-label:text-muted-foreground ut-button:shadow'
-                  />
+                        },
+                      }}
+                      appearance={{
+                        container: { padding: 0, margin: 0 },
+                        allowedContent: { display: 'none' },
+                      }}
+                      onClientUploadComplete={async (
+                        res: { url: string }[]
+                      ) => {
+                        form.setValue('image', res[0].url);
+                        toast({
+                          description: 'Book cover uploaded successfully.',
+                        });
+                      }}
+                      onUploadError={(err: Error) => {
+                        toast({ description: err.message });
+                      }}
+                      className='ut-button:border ut-button:border-input ut-button:bg-gradient-to-r from-violet-200 to-pink-200 ut-button:text-sm ut-button:font-medium ut-button:h-9 ut-button:ut-uploading:bg-secondary ut-button:w-full'
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

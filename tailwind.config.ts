@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { withUt } from 'uploadthing/tw';
+
 import type { Config } from 'tailwindcss';
 
-export default {
+export default withUt({
   darkMode: ['class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -91,4 +94,4 @@ export default {
     },
   },
   plugins: [require('tailwindcss-animate')],
-} satisfies Config;
+} satisfies Config);

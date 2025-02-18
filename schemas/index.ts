@@ -9,7 +9,6 @@ export const AddBookSchema = z.object({
   pageCount: z.number().int().min(1, 'Page count is required'),
   completed: z.boolean().default(false),
   genre: z.array(z.string()).min(1, 'At least one genre is required'),
-  image: z.string().optional(),
   translator: z.string().optional(),
   illustrator: z.string().optional(),
   language: z.string().optional(),
@@ -23,4 +22,8 @@ export const AddBookSchema = z.object({
   acquiredDate: z.string().datetime().optional(),
   startDate: z.string().datetime().optional(),
   endDate: z.string().datetime().optional(),
+  image:
+    process.env.NODE_ENV === 'production'
+      ? z.string().url().optional()
+      : z.string().optional(),
 });

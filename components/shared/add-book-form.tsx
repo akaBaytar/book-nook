@@ -1,10 +1,9 @@
 'use client';
 
 import { z } from 'zod';
-import { XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ImagePlusIcon, Loader2Icon, XIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +30,9 @@ import {
 } from '@/components/ui/form';
 
 import { AddBookSchema } from '@/schemas';
+import { useToast } from '@/hooks/use-toast';
 import { addBook } from '@/actions/book.actions';
+import { UploadDropzone } from '@/utils/uploadthing';
 import { ADD_BOOK_DEFAULT_VALUES } from '@/constants';
 
 import { BookType } from '@/types';
@@ -354,11 +355,54 @@ const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
           <FormField
             control={form.control}
             name='image'
-            render={({ field }) => (
+            render={() => (
               <FormItem className='col-span-2'>
-                <FormLabel>Book Image URL</FormLabel>
+                <FormLabel>Book Cover</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter image URL' {...field} />
+                  <UploadDropzone
+                    endpoint='imageUploader'
+                    content={{
+                      button({ ready }) {
+                        if (ready)
+                          return (
+                            <p className='flex items-center gap-2'>
+                              <ImagePlusIcon className='size-4' />
+                              Upload
+                            </p>
+                          );
+
+                        return <Loader2Icon className='size-4 animate-spin' />;
+                      },
+                      label({ ready }) {
+                        if (ready)
+                          return (
+                            <p className='text-xs'>
+                              Choose file and then upload
+                            </p>
+                          );
+
+                        return <Loader2Icon className='size-4 animate-spin' />;
+                      },
+                      allowedContent() {
+                        return (
+                          <p className='text-muted-foreground'>
+                            Images up to 4MB, max 1.
+                          </p>
+                        );
+                      },
+                    }}
+                    onClientUploadComplete={(res: { url: string }[]) => {
+                      form.setValue('image', res[0].url);
+
+                      toast({
+                        description: 'Book cover uploaded successfully.',
+                      });
+                    }}
+                    onUploadError={(err: Error) => {
+                      toast({ description: err.message });
+                    }}
+                    className='border-double border-input ut-button:bg-gradient-to-r from-violet-200 to-pink-200 ut-button:text-primary ut-button:text-sm ut-label:text-muted-foreground ut-button:shadow'
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

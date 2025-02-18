@@ -91,7 +91,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
         {image && (
           <div className='relative min-w-[200px]'>
             <Image
-              src={image}
+              src={image || '/placeholder.jpg'}
               alt={name}
               width={200}
               height={300}

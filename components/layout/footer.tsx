@@ -4,19 +4,19 @@ import { Button } from '../ui/button';
 
 const Footer = () => {
   return (
-    <footer className='flex items-center w-full'>
+    <footer className='flex items-center w-full px-5 pb-5'>
       <div className='container mx-auto flex justify-between items-center'>
         <div className='flex items-center'>
           <Image
             src='/logo.png'
             alt='book nook app logo'
-            height={50}
-            width={50}
+            height={32}
+            width={32}
             priority
           />
-          <p className='min-w-20 text-center tracking-wide mt-3'>Book Nook</p>
+          <p className='truncate text-xs text-muted-foreground min-w-fit font-medium'>Book Nook</p>
         </div>
-        <div className='w-full ms-auto flex items-center justify-end text-muted-foreground'>
+        <div className='w-full flex items-center justify-end gap-1 text-muted-foreground'>
           <Button variant='ghost' size='sm'>
             Privacy Policy
           </Button>

@@ -18,7 +18,7 @@ const sourGummy = Sour_Gummy({ subsets: ['latin-ext'] });
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl='/'>
       <html lang='en' className={sourGummy.className}>
         <body>
           {children}

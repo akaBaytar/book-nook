@@ -15,7 +15,7 @@ import type { Book } from '@/types';
 const BookCard = ({ book }: { book: Book }) => {
   return (
     <Link href={`/books/${book.id}`}>
-      <Card className='flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>
+      <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>
         <div className='flex items-center gap-2.5'>
           <Image
             src={book.image || '/placeholder.jpg'}
@@ -48,17 +48,14 @@ const BookCard = ({ book }: { book: Book }) => {
           </div>
         </div>
         <div
-          title={book.completed ? 'Completed' : 'Not completed'}
-          className='flex flex-col items-center justify-center gap-3 w-24'>
+          title={
+            book.completed ? formatDate(book.endDate as Date) : 'Not completed'
+          }
+          className='absolute end-2.5 top-2.5'>
           {book.completed ? (
             <BookCheckIcon className='fill-pink-100 text-pink-500' />
           ) : (
             <BookIcon className='fill-pink-100 text-pink-300' />
-          )}
-          {book.completed && (
-            <CardDescription className='text-xs line-clamp-1'>
-              {formatDate(book.endDate as Date)}
-            </CardDescription>
           )}
         </div>
       </Card>
@@ -72,23 +69,20 @@ export const BookSkeleton = () => {
       {[...Array(BOOKS_PER_PAGE)].map((_, index) => (
         <div
           key={index}
-          className='flex items-center justify-between gap-5 p-2.5 h-[112px] border rounded-md shadow'>
+          className='relative flex items-center justify-between gap-5 p-2.5 h-[112px] border rounded-md shadow'>
           <div className='flex items-center gap-2'>
             <Skeleton className='w-[60px] h-[90px] rounded-md' />
-            <div className='flex flex-col gap-2'>
-              <Skeleton className='h-3 w-[180px]' />
-              <Skeleton className='h-3 w-[150px]' />
+            <div className='flex flex-col gap-1'>
+              <Skeleton className='h-5 w-[140px]' />
+              <Skeleton className='h-4 w-[120px]' />
               <Skeleton className='h-3 w-[120px]' />
               <div className='flex gap-2 mt-1'>
-                <Skeleton className='h-4 w-16 rounded-md' />
-                <Skeleton className='h-4 w-16 rounded-md' />
+                <Skeleton className='h-5 w-12 rounded-md' />
+                <Skeleton className='h-5 w-12 rounded-md' />
               </div>
             </div>
           </div>
-          <div className='flex flex-col items-center justify-center gap-2.5 xl:hidden'>
-            <Skeleton className='h-6 w-6 rounded-md' />
-            <Skeleton className='h-4 w-24 rounded-md' />
-          </div>
+          <Skeleton className='absolute end-2.5 top-2.5 h-7 w-6 rounded-md' />
         </div>
       ))}
     </>

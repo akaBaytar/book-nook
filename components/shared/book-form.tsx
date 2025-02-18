@@ -176,6 +176,8 @@ const BookForm = ({
               </FormItem>
             )}
           />
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
           <FormField
             control={form.control}
             name='translator'
@@ -210,6 +212,8 @@ const BookForm = ({
               </FormItem>
             )}
           />
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
           <FormField
             control={form.control}
             name='language'
@@ -263,6 +267,8 @@ const BookForm = ({
               </FormItem>
             )}
           />
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
           <FormField
             control={form.control}
             name='pageCount'
@@ -340,6 +346,8 @@ const BookForm = ({
               </FormItem>
             )}
           />
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
           <FormField
             control={form.control}
             name='publisher'
@@ -374,114 +382,113 @@ const BookForm = ({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name='genre'
-            render={({ field }) => (
-              <FormItem className='col-span-2'>
-                <FormLabel>Genres</FormLabel>
-                <div className='space-y-2.5'>
-                  <FormControl>
-                    <div className='flex gap-2'>
-                      <Input
-                        placeholder='Add a genre'
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            addGenre((e.target as HTMLInputElement).value);
-                            (e.target as HTMLInputElement).value = '';
-                          }
-                        }}
-                      />
-                      <Button
-                        type='button'
-                        onClick={() => {
-                          const input = document.querySelector(
-                            'input[placeholder="Add a genre"]'
-                          ) as HTMLInputElement;
-                          addGenre(input.value);
-                          input.value = '';
-                        }}>
-                        Add
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <div className='flex flex-wrap gap-2.5'>
-                    {(field.value || []).map((genre) => (
-                      <Badge
-                        variant='secondary'
-                        key={genre}
-                        className='flex items-center gap-1'>
-                        {genre}
-                        <button
-                          type='button'
-                          onClick={() => removeGenre(genre)}
-                          className='text-xs'>
-                          <XIcon className='size-3' />
-                        </button>
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='image'
-            render={() => (
-              <FormItem className='col-span-2'>
-                <FormLabel>Book Cover</FormLabel>
-                <Image
-                  priority
-                  src={coverImage || '/placeholder.jpg'}
-                  width={900}
-                  height={600}
-                  alt='book cover'
-                  className='w-full max-h-40 p-2.5 object-contain rounded-md border border-input'
-                />
+        </div>
+
+        <FormField
+          control={form.control}
+          name='genre'
+          render={({ field }) => (
+            <FormItem className='col-span-2'>
+              <FormLabel>Genres</FormLabel>
+              <div className='space-y-2.5'>
                 <FormControl>
-                  <div>
-                    <UploadButton
-                      endpoint='imageUploader'
-                      content={{
-                        button({ ready }) {
-                          if (ready)
-                            return (
-                              <div className='flex items-center gap-2'>
-                                <ImagePlusIcon className='size-4' />
-                                Upload Cover
-                              </div>
-                            );
-                          return (
-                            <Loader2Icon className='size-4 animate-spin' />
-                          );
-                        },
+                  <div className='flex gap-2'>
+                    <Input
+                      placeholder='Add a genre'
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addGenre((e.target as HTMLInputElement).value);
+                          (e.target as HTMLInputElement).value = '';
+                        }
                       }}
-                      appearance={{
-                        container: { padding: 0, margin: 0 },
-                        allowedContent: { display: 'none' },
-                      }}
-                      onClientUploadComplete={async (
-                        res: { url: string }[]
-                      ) => {
-                        form.setValue('image', res[0].url);
-                        toast({
-                          description: 'Book cover uploaded successfully.',
-                        });
-                      }}
-                      onUploadError={(err: Error) => {
-                        toast({ description: err.message });
-                      }}
-                      className='ut-button:border ut-button:border-input ut-button:bg-gradient-to-r from-violet-200 to-pink-200 ut-button:text-sm ut-button:font-medium ut-button:h-9 ut-button:ut-uploading:bg-secondary ut-button:w-full'
                     />
+                    <Button
+                      type='button'
+                      onClick={() => {
+                        const input = document.querySelector(
+                          'input[placeholder="Add a genre"]'
+                        ) as HTMLInputElement;
+                        addGenre(input.value);
+                        input.value = '';
+                      }}>
+                      Add
+                    </Button>
                   </div>
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                <div className='flex flex-wrap gap-2.5'>
+                  {(field.value || []).map((genre) => (
+                    <Badge
+                      variant='secondary'
+                      key={genre}
+                      className='flex items-center gap-1'>
+                      {genre}
+                      <button
+                        type='button'
+                        onClick={() => removeGenre(genre)}
+                        className='text-xs'>
+                        <XIcon className='size-3' />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='image'
+          render={() => (
+            <FormItem className='col-span-2'>
+              <FormLabel>Book Cover</FormLabel>
+              <Image
+                priority
+                src={coverImage || '/placeholder.jpg'}
+                width={900}
+                height={600}
+                alt='book cover'
+                className='w-full max-h-40 p-2.5 object-contain rounded-md border border-input'
+              />
+              <FormControl>
+                <div>
+                  <UploadButton
+                    endpoint='imageUploader'
+                    content={{
+                      button({ ready }) {
+                        if (ready)
+                          return (
+                            <div className='flex items-center gap-2'>
+                              <ImagePlusIcon className='size-4' />
+                              Upload Cover
+                            </div>
+                          );
+                        return <Loader2Icon className='size-4 animate-spin' />;
+                      },
+                    }}
+                    appearance={{
+                      container: { padding: 0, margin: 0 },
+                      allowedContent: { display: 'none' },
+                    }}
+                    onClientUploadComplete={async (res: { url: string }[]) => {
+                      form.setValue('image', res[0].url);
+                      toast({
+                        description: 'Book cover uploaded successfully.',
+                      });
+                    }}
+                    onUploadError={(err: Error) => {
+                      toast({ description: err.message });
+                    }}
+                    className='ut-button:border ut-button:border-input ut-button:bg-gradient-to-r from-violet-200 to-pink-200 ut-button:text-sm ut-button:font-medium ut-button:h-9 ut-button:ut-uploading:bg-secondary ut-button:w-full'
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
           <FormField
             control={form.control}
             name='completed'

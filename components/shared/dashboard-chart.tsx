@@ -58,7 +58,7 @@ const DashboardChart = () => {
         <CardTitle className='text-2xl font-normal tracking-[0.015em]'>My Book Chart</CardTitle>
         <CardDescription>Monthly and yearly book data</CardDescription>
       </CardHeader>
-      <CardContent className='flex-1 pb-0'>
+      <CardContent className='flex-1 mt-5'>
         <ChartContainer
           config={chartConfig}
           className='mx-auto aspect-square max-h-[300px] my-1'>

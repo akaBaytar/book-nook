@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { UserButton } from '@clerk/nextjs';
 import { ClerkLoading } from '@clerk/nextjs';
@@ -15,14 +14,7 @@ const Navbar = () => {
     <nav className='rounded-md fixed top-4 start-4 end-4 md:hidden p-2 flex justify-between items-center bg-sidebar border border-pink-100 z-10 shadow-md'>
       <SidebarTrigger />
       <Link href='/dashboard' className='flex items-center'>
-        <Image
-          src='/logo.png'
-          alt='book nook app logo'
-          height={50}
-          width={50}
-          priority
-        />
-        <p className='min-w-[64px] text-2xl text-center mt-2 tracking-wide px-2 rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
+        <p className='text-2xl text-center tracking-wide px-2 h-8 border shadow-sm grid place-content-center rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
           Book Nook
         </p>
       </Link>

@@ -1,7 +1,3 @@
-'use client';
-
-import { use } from 'react';
-
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -21,17 +17,16 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { formatDate } from '@/utils';
-
-import { BOOKS } from '@/mock';
+import { getBook } from '@/actions/book.actions';
 
 type PropType = {
-  params: Promise<{ id: number }>;
+  params: Promise<{ id: string }>;
 };
 
-const BookDetailsPage = ({ params }: PropType) => {
-  const { id } = use(params);
+const BookDetailsPage = async ({ params }: PropType) => {
+  const { id } = await params;
 
-  const book = BOOKS[id - 1];
+  const { book } = await getBook(id);
 
   const {
     type,

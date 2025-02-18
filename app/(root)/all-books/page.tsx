@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { useDebounce } from 'use-debounce';
 import { SearchIcon, ChevronDown } from 'lucide-react';
@@ -26,8 +27,8 @@ import Pagination from '@/components/shared/pagination';
 import AddBookButton from '@/components/shared/add-book-button';
 import BookCard, { BookSkeleton } from '@/components/shared/book-card';
 
-import { BOOKS_PER_PAGE, SORT_OPTIONS } from '@/constants';
 import { useToast } from '@/hooks/use-toast';
+import { BOOKS_PER_PAGE, SORT_OPTIONS } from '@/constants';
 
 import {
   getAllBooks,
@@ -38,21 +39,24 @@ import {
 import type { Book, Filter, Sort } from '@/types';
 
 const AllBooksPage = () => {
+  const router = useRouter();
+
+  const { toast } = useToast();
+
   const [count, setCount] = useState(0);
+  const [genre, setGenre] = useState('all');
+  const [category, setCategory] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
+
   const [books, setBooks] = useState<Book[]>([]);
   const [genres, setGenres] = useState<string[]>(['all']);
   const [categories, setCategories] = useState<string[]>(['all']);
 
-  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [genre, setGenre] = useState('all');
-  const [category, setCategory] = useState('all');
   const [filter, setFilter] = useState<Filter>('all');
   const [sortBy, setSortBy] = useState<Sort>('recent');
-
-  const { toast } = useToast();
 
   const [debouncedSearch] = useDebounce(searchQuery, 500);
 
@@ -62,9 +66,7 @@ const AllBooksPage = () => {
     try {
       const result = await getAllGenres();
 
-      if (result.success) {
-        setGenres(['all', ...(result.genres as string[])]);
-      }
+      if (result.success) setGenres(['all', ...(result.genres as string[])]);
     } catch (error) {
       toast({ description: `Failed to fetch genres. ${error}` });
     }
@@ -84,34 +86,51 @@ const AllBooksPage = () => {
     }
   }, [toast]);
 
-  const fetchBooks = useCallback(async () => {
-    try {
-      const result = await getAllBooks({
-        genre,
-        filter,
-        sortBy,
-        category,
-        page: currentPage,
-        limit: BOOKS_PER_PAGE,
-        search: debouncedSearch,
-      });
+  const fetchBooks = useCallback(
+    async (force = false) => {
+      setIsLoading(true);
 
-      if (result.success) {
-        setBooks(result.books);
-        setCount(result.count as number);
+      try {
+        const result = await getAllBooks({
+          genre,
+          filter,
+          sortBy,
+          category,
+          page: currentPage,
+          limit: BOOKS_PER_PAGE,
+          search: force ? searchQuery : debouncedSearch,
+        });
+
+        if (result.success) {
+          setBooks(result.books);
+          setCount(result.count as number);
+        }
+      } catch (error) {
+        toast({ description: `An error occurred. ${error}` });
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      toast({ description: `An error occurred. ${error}` });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [genre, filter, sortBy, category, currentPage, debouncedSearch, toast]);
+    },
+    [
+      toast,
+      genre,
+      filter,
+      sortBy,
+      category,
+      currentPage,
+      searchQuery,
+      debouncedSearch,
+    ]
+  );
 
   useEffect(() => {
     fetchBooks();
+  }, [fetchBooks]);
+
+  useEffect(() => {
     fetchGenres();
     fetchCategories();
-  }, [fetchBooks, fetchCategories, fetchGenres]);
+  }, [fetchGenres, fetchCategories]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -138,12 +157,17 @@ const AllBooksPage = () => {
     setCurrentPage(1);
   };
 
+  const handleBookAdded = useCallback(() => {
+    router.refresh(); 
+    fetchBooks(true);
+  }, [router, fetchBooks]);
+
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
         <header className='flex items-center justify-between'>
           <h1 className='text-2xl font-bold'>All Books ({count})</h1>
-          <AddBookButton />
+          <AddBookButton onBookAdded={handleBookAdded} />
         </header>
         <div className='flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between'>
           <div className='flex flex-col xl:flex-row w-full items-center gap-5'>

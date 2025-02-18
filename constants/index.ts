@@ -6,7 +6,7 @@ export const ADD_BOOK_DEFAULT_VALUES = {
   publisher: '',
   rating: 5,
   type: BookType.BOOK,
-  pageCount: 0,
+  pageCount: 1,
   completed: false,
   genre: [],
   image: '/placeholder.jpg',
@@ -16,13 +16,13 @@ export const ADD_BOOK_DEFAULT_VALUES = {
   quote: '',
   summary: '',
   category: '',
-  volume: 0,
+  volume: 1,
   isbn: '',
   printing: 1,
-  publicationDate: new Date().toISOString(),
-  acquiredDate: new Date().toISOString(),
-  startDate: new Date().toISOString(),
-  endDate: new Date().toISOString(),
+  publicationDate: undefined,
+  acquiredDate: undefined,
+  startDate: undefined,
+  endDate: undefined,
 };
 
 export const BOOKS_PER_PAGE = 15;

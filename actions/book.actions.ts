@@ -35,6 +35,28 @@ export const addBook = async (data: AddBook) => {
   }
 };
 
+export const getBook = async (id: string) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const book = await prisma.book.findUnique({ where: { userId, id } });
+
+    if (!book) throw new Error('Book not found.');
+
+    return {
+      book: JSON.parse(JSON.stringify(book)),
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
 export const getAllBooks = async ({
   search = '',
   filter = 'all',

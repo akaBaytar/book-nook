@@ -55,9 +55,11 @@ const BookCard = ({ book }: { book: Book }) => {
           ) : (
             <BookIcon className='fill-pink-100 text-pink-300' />
           )}
-          <CardDescription className='text-xs line-clamp-1'>
-            {formatDate(book.endDate as Date)}
-          </CardDescription>
+          {book.completed && (
+            <CardDescription className='text-xs line-clamp-1'>
+              {formatDate(book.endDate as Date)}
+            </CardDescription>
+          )}
         </div>
       </Card>
     </Link>

@@ -14,10 +14,10 @@ import { Textarea } from '@/components/ui/textarea';
 
 import {
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectTrigger,
 } from '@/components/ui/select';
 
 import {
@@ -30,12 +30,19 @@ import {
   FormDescription,
 } from '@/components/ui/form';
 
-import { BookType } from '@/types';
 import { AddBookSchema } from '@/schemas';
 import { addBook } from '@/actions/book.actions';
 import { ADD_BOOK_DEFAULT_VALUES } from '@/constants';
 
-const AddBookForm = () => {
+import { BookType } from '@/types';
+import type { Dispatch, SetStateAction } from 'react';
+
+type PropTypes = {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onBookAdded?: () => void;
+};
+
+const AddBookForm = ({ setIsOpen, onBookAdded }: PropTypes) => {
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof AddBookSchema>>({
@@ -46,9 +53,20 @@ const AddBookForm = () => {
   const onSubmit = async (values: z.infer<typeof AddBookSchema>) => {
     const response = await addBook(values);
 
-    toast({ title: response.message });
+    if (response.success) {
+      toast({ title: response.message });
 
-    console.log(response.message);
+      if (onBookAdded) {
+        onBookAdded();
+      } else {
+        setIsOpen(false);
+      }
+    } else {
+      toast({
+        title: 'Error',
+        description: response.message,
+      });
+    }
   };
 
   const addGenre = (genre: string) => {

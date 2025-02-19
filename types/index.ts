@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { BookSchema } from '@/schemas';
+import { BookSchema, CheckListItemSchema, CheckListSchema } from '@/schemas';
 
 export type User = {
   id: string;
@@ -84,3 +84,7 @@ export type GetAllBooks = {
 export type Filter = 'all' | 'completed' | 'unread';
 
 export type Sort = 'recent' | 'oldest' | 'name' | 'author';
+
+export type CheckList = z.infer<typeof CheckListSchema>;
+
+export type CheckListItem = z.infer<typeof CheckListItemSchema>;

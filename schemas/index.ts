@@ -36,3 +36,13 @@ export const TBRSchema = z.object({
   completed: z.boolean().default(false),
   favorite: z.boolean().default(false),
 });
+
+export const CheckListItemSchema = z.object({
+  name: z.string().min(1, { message: 'Item is required' }),
+  completed: z.boolean().default(false),
+});
+
+export const CheckListSchema = z.object({
+  name: z.string().min(1, { message: 'List name is required' }),
+  items: z.array(CheckListItemSchema),
+});

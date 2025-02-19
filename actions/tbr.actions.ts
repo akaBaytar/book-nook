@@ -17,8 +17,6 @@ export const addTBR = async (data: z.infer<typeof TBRSchema>) => {
   try {
     const tbr = TBRSchema.parse(data);
 
-    console.log(tbr);
-
     await prisma.tbr.create({ data: { name: tbr.name, userId } });
 
     revalidatePath('/tbr-game');

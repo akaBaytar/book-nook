@@ -34,6 +34,7 @@ model Book {
   pageCount       Int
   completed       Boolean   @default(false)
   favorite        Boolean   @default(false)
+  readingNow      Boolean   @default(false)
   genre           String[]
   image           String?   @db.Text
   translator      String?

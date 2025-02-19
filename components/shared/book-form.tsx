@@ -496,7 +496,7 @@ const BookForm = ({
               <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
                 <div className='space-y-0.5'>
                   <FormLabel>Completed</FormLabel>
-                  <FormDescription>
+                  <FormDescription className='text-xs'>
                     Mark if you&apos;ve finished
                   </FormDescription>
                 </div>
@@ -511,22 +511,42 @@ const BookForm = ({
           />
           <FormField
             control={form.control}
-            name='isbn'
+            name='readingNow'
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>ISBN</FormLabel>
+              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
+                <div className='space-y-0.5'>
+                  <FormLabel>Reading Now</FormLabel>
+                  <FormDescription className='text-xs'>
+                    Mark if you&apos;re reading now
+                  </FormDescription>
+                </div>
                 <FormControl>
-                  <Input
-                    placeholder='Enter ISBN'
-                    {...field}
-                    value={field.value || ''}
+                  <Switch
+                    checked={field.value || false}
+                    onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name='isbn'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ISBN</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder='Enter ISBN'
+                  {...field}
+                  value={field.value || ''}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className='space-y-5'>
           <FormField
             control={form.control}

@@ -18,6 +18,7 @@ export const BookSchema = z.object({
   image: z.string().optional(),
   completed: z.boolean().default(false),
   favorite: z.boolean().default(false),
+  readingNow: z.boolean().default(false),
   isbn: z.string().optional(),
   summary: z.string().optional(),
   quote: z.string().optional(),

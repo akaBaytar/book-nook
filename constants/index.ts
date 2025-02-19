@@ -9,6 +9,7 @@ export const BOOK_DEFAULT_VALUES = {
   pageCount: 1,
   completed: false,
   favorite: false,
+  readingNow: false,
   genre: [],
   image: '/placeholder.jpg',
   translator: '',

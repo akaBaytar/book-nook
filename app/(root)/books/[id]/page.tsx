@@ -50,6 +50,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
     completed,
     publisher,
     startDate,
+    readingNow,
     translator,
     illustrator,
     acquiredDate,
@@ -108,10 +109,15 @@ const BookDetailsPage = async ({ params }: PropType) => {
           <div>
             {name && (
               <CardTitle className='text-2xl font-medium tracking-[0.015em] flex items-center gap-2.5'>
-                {name}{' '}
+                {name}
                 {completed && (
                   <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
                     Completed
+                  </Badge>
+                )}
+                {readingNow && !completed && (
+                  <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
+                    Currently Reading
                   </Badge>
                 )}
               </CardTitle>

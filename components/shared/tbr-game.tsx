@@ -3,7 +3,7 @@
 import { useState, useEffect, useTransition } from 'react';
 
 import {
-  CogIcon,
+  MousePointerClickIcon,
   HeartIcon,
   SnailIcon,
   TrashIcon,
@@ -14,6 +14,8 @@ import {
   SparklesIcon,
   CheckCircleIcon,
 } from 'lucide-react';
+
+import { motion } from 'framer-motion';
 
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -223,9 +225,9 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
           <span className='hidden lg:block'>To Be Read</span>
         </h1>
         <div className='flex gap-2.5'>
-          {mode === 'list' && !isSelectMode && (
+          {mode === 'list' && !isSelectMode && totalBooks !== 0 && (
             <Button variant='outline' onClick={() => setIsSelectMode(true)}>
-              <CogIcon className='size-4' />
+              <MousePointerClickIcon className='size-4' />
               <span className='hidden sm:block lg:hidden xl:block'>
                 Select TBRs
               </span>
@@ -359,55 +361,66 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
         )}
       <div className='grid sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-5'>
         {filteredBooks.map((book, index) => (
-          <Card
+          <motion.div
             key={book.id}
-            className={`p-5 flex rounded-md transition-all duration-300 hover:shadow-lg ${
-              book.completed ? 'opacity-40' : ''
-            } ${
-              selectedIndex === index
-                ? 'border border-pink-300 bg-pink-50 transform'
-                : blinkingIndex === index
-                ? 'bg-pink-100 text-black'
-                : book.favorite && !book.completed
-                ? 'border-pink-200'
-                : ''
-            } ${
-              selectedBooks.has(book.id) ? 'border-pink-300 bg-pink-50' : ''
-            }`}
-            onClick={() => handleToggleSelect(book.id)}
-            style={{ cursor: isSelectMode ? 'pointer' : 'default' }}>
-            <div className='flex flex-col gap-2.5 w-full'>
-              <div className='flex justify-between items-start'>
-                <h3 className='line-clamp-1'>{book.name}</h3>
-                {!isSelectMode && (
-                  <div className='flex gap-1.5'>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleToggleFavorite(book.id);
-                      }}
-                      disabled={isPending}
-                      className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
-                      <HeartIcon
-                        className={`size-3 text-pink-500 ${
-                          book.favorite ? 'fill-pink-500' : ''
-                        }`}
-                      />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleToggleCompleted(book.id);
-                      }}
-                      disabled={isPending}
-                      className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
-                      <CheckCircleIcon className='size-3 text-pink-500' />
-                    </button>
-                  </div>
-                )}
+            initial={{ rotate: 0 }}
+            animate={
+              isSelectMode ? { rotate: [0, -1, 1, -1, 1, 0] } : { rotate: 0 }
+            }
+            transition={
+              isSelectMode
+                ? { duration: 0.5, repeat: Infinity, repeatType: 'mirror' }
+                : {}
+            }>
+            <Card
+              className={`p-5 flex rounded-md transition-all duration-300 hover:shadow-lg ${
+                book.completed ? 'opacity-40' : ''
+              } ${
+                selectedIndex === index
+                  ? 'border border-pink-300 bg-pink-50 transform'
+                  : blinkingIndex === index
+                  ? 'bg-pink-100 text-black'
+                  : book.favorite && !book.completed
+                  ? 'border-pink-200'
+                  : ''
+              } ${
+                selectedBooks.has(book.id) ? 'border-pink-300 bg-pink-50' : ''
+              }`}
+              onClick={() => handleToggleSelect(book.id)}
+              style={{ cursor: isSelectMode ? 'pointer' : 'default' }}>
+              <div className='flex flex-col gap-2.5 w-full'>
+                <div className='flex justify-between items-start'>
+                  <h3 className='line-clamp-1'>{book.name}</h3>
+                  {!isSelectMode && (
+                    <div className='flex gap-1.5'>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleFavorite(book.id);
+                        }}
+                        disabled={isPending}
+                        className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
+                        <HeartIcon
+                          className={`size-3 text-pink-500 ${
+                            book.favorite ? 'fill-pink-500' : ''
+                          }`}
+                        />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleCompleted(book.id);
+                        }}
+                        disabled={isPending}
+                        className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
+                        <CheckCircleIcon className='size-3 text-pink-500' />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </motion.div>
         ))}
       </div>
     </div>

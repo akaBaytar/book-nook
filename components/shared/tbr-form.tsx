@@ -32,12 +32,16 @@ const TBRForm = ({ setIsOpen, onSuccess }: PropTypes) => {
 
   const form = useForm<z.infer<typeof TBRSchema>>({
     resolver: zodResolver(TBRSchema),
-    defaultValues: { name: '' },
+    defaultValues: { name: '', completed: false, favorite: false },
   });
 
   const onSubmit = async ({ name }: { name: string }) => {
     try {
-      const response = await addTBR({ name });
+      const response = await addTBR({
+        name,
+        favorite: false,
+        completed: false,
+      });
 
       if (response.success) {
         toast({ description: response.message });
@@ -72,7 +76,7 @@ const TBRForm = ({ setIsOpen, onSuccess }: PropTypes) => {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='Enter TBR name'
+                  placeholder='e.g.: "Classic Literature"'
                   {...field}
                   value={field.value || ''}
                 />

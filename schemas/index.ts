@@ -29,3 +29,9 @@ export const BookSchema = z.object({
     required_error: 'Please select a book type',
   }),
 });
+
+export const TBRSchema = z.object({
+  name: z.string().min(1, { message: 'TBR name is required' }),
+  completed: z.boolean().default(false),
+  favorite: z.boolean().default(false),
+});

@@ -99,7 +99,7 @@ const BookForm = ({
         : await addBook(values);
 
       if (response.success) {
-        toast({ title: response.message });
+        toast({ description: response.message });
 
         if (onSuccess) {
           onSuccess();

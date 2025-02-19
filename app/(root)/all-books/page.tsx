@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useDebounce } from 'use-debounce';
-import { SearchIcon, ChevronDown } from 'lucide-react';
+import { SearchIcon, ChevronDown, LibraryBigIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -158,7 +158,7 @@ const AllBooksPage = () => {
   };
 
   const handleBookAdded = useCallback(() => {
-    router.refresh(); 
+    router.refresh();
     fetchBooks(true);
   }, [router, fetchBooks]);
 
@@ -166,7 +166,10 @@ const AllBooksPage = () => {
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
         <header className='flex items-center justify-between'>
-          <h1 className='text-2xl tracking-[0.015em]'>All Books ({count})</h1>
+          <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
+            <LibraryBigIcon className='size-5' />
+            All Books ({count})
+          </h1>
           <AddBookButton onBookAdded={handleBookAdded} />
         </header>
         <div className='flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between'>

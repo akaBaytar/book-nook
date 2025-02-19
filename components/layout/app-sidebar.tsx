@@ -5,9 +5,9 @@ import { UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 
 import {
-  DicesIcon,
   SearchIcon,
   ListTreeIcon,
+  SparklesIcon,
   LibraryBigIcon,
   LayoutDashboardIcon,
 } from 'lucide-react';
@@ -49,9 +49,9 @@ const items = [
     icon: SearchIcon,
   },
   {
-    title: 'TBR Game',
+    title: 'To Be Read',
     url: '/tbr-game',
-    icon: DicesIcon,
+    icon: SparklesIcon,
   },
 ];
 

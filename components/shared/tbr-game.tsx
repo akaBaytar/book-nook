@@ -3,9 +3,10 @@
 import { useState, useEffect, useTransition } from 'react';
 
 import {
-  PlusIcon,
   HeartIcon,
+  SnailIcon,
   SearchIcon,
+  OrigamiIcon,
   Loader2Icon,
   SparklesIcon,
   CheckCircleIcon,
@@ -16,15 +17,24 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+import AddTBRButton from './add-tbr-button';
 
 import { toggleFavorite, toggleCompleted } from '@/actions/book.actions';
+import { toggleTBRCompleted, toggleTBRFavorite } from '@/actions/tbr.actions';
 
+type TBR = { id: string; name: string; favorite: boolean; completed: boolean };
 type Book = { id: string; name: string; favorite: boolean; completed: boolean };
 
-const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
+type PropTypes = { initialBooks: Book[]; initialTBRs: TBR[] };
+
+const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
   const [isPending, startTransition] = useTransition();
 
-  const [books, setBooks] = useState<Book[]>(initialBooks || []);
+  const [books, setBooks] = useState<Book[] | TBR[]>(
+    initialBooks || initialTBRs || []
+  );
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isSelecting, setIsSelecting] = useState(false);
@@ -32,9 +42,15 @@ const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [blinkingIndex, setBlinkingIndex] = useState<number | null>(null);
 
+  const [mode, setMode] = useState<'library' | 'list'>('library');
+
   useEffect(() => {
-    setBooks(initialBooks);
-  }, [initialBooks]);
+    if (mode === 'library') {
+      setBooks(initialBooks);
+    } else {
+      setBooks(initialTBRs);
+    }
+  }, [initialBooks, initialTBRs, mode]);
 
   const filteredBooks = books
     .filter((book) =>
@@ -108,7 +124,13 @@ const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
       )
     );
 
-    startTransition(() => toggleFavorite(id));
+    startTransition(() => {
+      if (mode === 'library') {
+        toggleFavorite(id);
+      } else {
+        toggleTBRFavorite(id);
+      }
+    });
   };
 
   const handleToggleCompleted = (id: string) => {
@@ -130,7 +152,13 @@ const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
       setSelectedIndex(null);
     }
 
-    startTransition(() => toggleCompleted(id));
+    startTransition(() => {
+      if (mode === 'library') {
+        toggleCompleted(id);
+      } else {
+        toggleTBRCompleted(id);
+      }
+    });
   };
 
   const totalBooks = books.length;
@@ -144,12 +172,13 @@ const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
 
   return (
     <div className='flex flex-col gap-5 mt-5 md:mt-0 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
-      <div className='flex items-center justify-between'>
-        <h1 className='text-2xl tracking-[0.015em]'>TBR Game</h1>
+      <div className='flex flex-col sm:flex-row gap-5 items-center justify-between'>
+        <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
+          <SparklesIcon className='size-5 mt-0.5' />
+          To Be Read
+        </h1>
         <div className='flex gap-2.5'>
-          <Button size='icon' variant='outline'>
-            <PlusIcon className='size-4' />
-          </Button>
+          {mode === 'list' && <AddTBRButton />}
           <Button
             onClick={selectWhatWillRead}
             disabled={
@@ -170,17 +199,16 @@ const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
           </Button>
         </div>
       </div>
-      <div className='bg-white p-3 rounded-md border flex flex-col sm:flex-row justify-between items-center'>
+      <div className='bg-white p-3 rounded-md border flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
-          <span className='text-sm text-slate-500'>Reading Progress</span>
-          <div className='flex items-center gap-2'>
-            <span className='font-medium'>
+          <div className='flex items-center gap-1'>
+            <span className='text-sm'>
               {completedCount}/{totalBooks} completed
             </span>
             <Badge variant='outline'>{completionPercentage}%</Badge>
           </div>
         </div>
-        <div className='flex gap-2 mt-2 sm:mt-0'>
+        <div className='flex gap-1'>
           <Badge variant='secondary' className='flex items-center gap-1'>
             <HeartIcon className='size-3 fill-pink-500 text-pink-500' />
             {favoritesCount}
@@ -191,15 +219,35 @@ const TBRGame = ({ initialBooks }: { initialBooks: Book[] }) => {
           </Badge>
         </div>
       </div>
-      <div className='flex flex-col gap-5 xl:flex-row xl:items-center'>
-        <div className='relative flex-1 min-w-48'>
-          <SearchIcon className='absolute start-2 top-2.5 size-4 text-slate-500' />
-          <Input
-            placeholder='Search...'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className='ps-8 bg-white'
-          />
+      <div className='flex flex-col gap-5 md:flex-row-reverse lg:flex-col xl:flex-row-reverse'>
+        <Tabs
+          defaultValue='library'
+          className='w-full'
+          onValueChange={(value) => {
+            setMode(value as 'library' | 'list');
+            setSelectedIndex(null);
+          }}>
+          <TabsList className='grid w-full grid-cols-2'>
+            <TabsTrigger value='library' className='flex gap-2'>
+              <OrigamiIcon className='size-4' />
+              Library
+            </TabsTrigger>
+            <TabsTrigger value='list' className='flex gap-2'>
+              <SnailIcon className='size-4' />
+              TBR
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <div className='flex flex-col gap-5 xl:flex-row xl:items-center w-full'>
+          <div className='relative flex-1 min-w-48'>
+            <SearchIcon className='absolute start-2.5 top-3 size-4 text-slate-500' />
+            <Input
+              placeholder='Search...'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className='ps-8 bg-white h-10'
+            />
+          </div>
         </div>
       </div>
       {availableForSelection.length === 0 && (

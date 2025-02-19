@@ -1,5 +1,6 @@
-import { Webhook } from 'svix';
 import { headers } from 'next/headers';
+
+import { Webhook } from 'svix';
 
 import prisma from '@/database';
 
@@ -11,6 +12,7 @@ export const POST = async (req: Request) => {
   const wh = new Webhook(SIGNING_SECRET);
 
   const headerPayload = await headers();
+
   const svix_id = headerPayload.get('svix-id');
   const svix_timestamp = headerPayload.get('svix-timestamp');
   const svix_signature = headerPayload.get('svix-signature');
@@ -46,49 +48,19 @@ export const POST = async (req: Request) => {
     const { id, email_addresses, first_name, last_name } = evt.data;
 
     try {
-      await prisma.$transaction(async (tx) => {
-        const user = await tx.user.create({
-          data: {
-            clerkId: id,
-            email: email_addresses?.[0]?.email_address || null,
-            firstName: first_name || null,
-            lastName: last_name || null,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any,
-        });
-
-        const checkList = await tx.checkList.create({
-          data: {
-            userId: user.id,
-            name: 'Checklist',
-          },
-        });
-
-        const updatedUser = await tx.user.update({
-          where: { id: user.id },
-          data: { checkListId: checkList.id },
-          include: {
-            checkList: {
-              include: {
-                items: true,
-              },
-            },
-          },
-        });
-
-        return updatedUser;
+      await prisma.user.create({
+        data: {
+          clerkId: id,
+          email: email_addresses?.[0]?.email_address || null,
+          firstName: first_name || null,
+          lastName: last_name || null,
+        },
       });
 
-      console.log(
-        `User with Clerk ID ${id} and checklist created in database.`
-      );
-
-      return new Response('User and checklist created successfully', {
-        status: 200,
-      });
+      console.log(`User with Clerk ID ${id} created in database.`);
     } catch (error) {
-      console.error('Error creating user and checklist in database:', error);
-      return new Response('Error creating user and checklist', { status: 500 });
+      console.error('Error creating user in database:', error);
+      return new Response('Error creating user', { status: 500 });
     }
   }
 

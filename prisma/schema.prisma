@@ -8,18 +8,17 @@ datasource db {
 }
 
 model User {
-  id          String     @id @default(uuid())
-  clerkId     String     @unique
-  checkListId String     @unique
-  email       String?    @unique
-  firstName   String?
-  lastName    String?
-  tbr         Tbr[]
-  books       Book[]
-  lists       List[]
-  checkList   CheckList?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id        String     @id @default(uuid())
+  clerkId   String     @unique
+  email     String?    @unique
+  firstName String?
+  lastName  String?
+  tbr       Tbr[]
+  books     Book[]
+  lists     List[]
+  checkList CheckList?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@index([clerkId])
 }
@@ -46,7 +45,7 @@ model Book {
   summary         String?   @db.Text
   category        String
   volume          Int?
-  isbn            String?
+  isbn            String?   @unique
   printing        Int?
   publicationDate DateTime?
   acquiredDate    DateTime?
@@ -90,24 +89,24 @@ model Tbr {
 
 model CheckList {
   id        String          @id @default(uuid())
-  userId    String          @unique
+  userId    String         @unique
   name      String
   items     CheckListItem[]
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model CheckListItem {
   id          String    @id @default(uuid())
-  name        String
   checkListId String
+  name        String
   completed   Boolean   @default(false)
+  checkList   CheckList @relation(fields: [checkListId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  list        CheckList @relation(fields: [checkListId], references: [id], onDelete: Cascade)
 
   @@index([checkListId])
 }

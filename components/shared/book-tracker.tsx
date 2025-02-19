@@ -37,7 +37,8 @@ const BookTracker = () => {
               role='button'
               key={index}
               className={`size-4 rounded-sm ${
-                selectedColor === color && `scale-110 outline outline-1 outline-offset-1 outline-gray-500`
+                selectedColor === color &&
+                `scale-110 outline outline-1 outline-offset-1 outline-gray-500`
               }`}
               style={{ backgroundColor: color }}
               onClick={() => setSelectedColor(color)}
@@ -45,19 +46,19 @@ const BookTracker = () => {
           ))}
         </div>
       </div>
-      <div className='text-xs flex items-center gap-[0.865rem] ms-5'>
-        <span>J</span>
-        <span>F</span>
-        <span>M</span>
-        <span>A</span>
-        <span>M</span>
-        <span>J</span>
-        <span>J</span>
-        <span>A</span>
-        <span>S</span>
-        <span>O</span>
-        <span>N</span>
-        <span>D</span>
+      <div className='text-[11px] flex items-center justify-between ps-5 pe-1 w-full'>
+        <p>J</p>
+        <p>F</p>
+        <p>M</p>
+        <p>A</p>
+        <p>M</p>
+        <p>J</p>
+        <p>J</p>
+        <p>A</p>
+        <p>S</p>
+        <p>O</p>
+        <p>N</p>
+        <p>D</p>
       </div>
       {Array.from({ length: 31 }).map((_, rowIndex) => (
         <div key={`row-${rowIndex}`} className='flex mb-1 justify-between'>

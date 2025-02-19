@@ -3,7 +3,6 @@
 import { useState, useEffect, useTransition } from 'react';
 
 import {
-  MousePointerClickIcon,
   HeartIcon,
   SnailIcon,
   TrashIcon,
@@ -13,6 +12,7 @@ import {
   Loader2Icon,
   SparklesIcon,
   CheckCircleIcon,
+  MousePointerClickIcon,
 } from 'lucide-react';
 
 import { motion } from 'framer-motion';

@@ -2,9 +2,9 @@ import { Progress } from '@/components/ui/progress';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 import {
-  BookIcon,
   BookXIcon,
   TargetIcon,
+  RainbowIcon,
   CalendarIcon,
   BookCheckIcon,
   BookHeartIcon,
@@ -59,7 +59,7 @@ const DashboardGrid = () => {
         <StatCard
           title='Total Books'
           value={totalBooks}
-          icon={BookIcon}
+          icon={RainbowIcon}
           color='text-pink-600'
         />
         <StatCard

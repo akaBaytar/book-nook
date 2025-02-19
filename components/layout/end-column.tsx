@@ -43,8 +43,8 @@ const EndColumn = () => {
         </SheetTrigger>
         <SheetContent className='overflow-y-scroll'>
           <SheetHeader>
-            <SheetTitle>Book Tracker</SheetTitle>
-            <SheetDescription>
+            <SheetTitle className='text-center'>Book Tracker</SheetTitle>
+            <SheetDescription className='text-center'>
               You can track your books and update your tracker.
             </SheetDescription>
           </SheetHeader>

@@ -6,8 +6,10 @@ import {
   CogIcon,
   HeartIcon,
   SnailIcon,
+  TrashIcon,
   SearchIcon,
   OrigamiIcon,
+  XCircleIcon,
   Loader2Icon,
   SparklesIcon,
   CheckCircleIcon,
@@ -23,7 +25,12 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AddTBRButton from './add-tbr-button';
 
 import { toggleFavorite, toggleCompleted } from '@/actions/book.actions';
-import { toggleTBRCompleted, toggleTBRFavorite } from '@/actions/tbr.actions';
+
+import {
+  removeTBRs,
+  toggleTBRCompleted,
+  toggleTBRFavorite,
+} from '@/actions/tbr.actions';
 
 type TBR = { id: string; name: string; favorite: boolean; completed: boolean };
 type Book = { id: string; name: string; favorite: boolean; completed: boolean };
@@ -39,6 +46,9 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isSelecting, setIsSelecting] = useState(false);
+
+  const [isSelectMode, setIsSelectMode] = useState(false);
+  const [selectedBooks, setSelectedBooks] = useState<Set<string>>(new Set());
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [blinkingIndex, setBlinkingIndex] = useState<number | null>(null);
@@ -119,6 +129,8 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
   };
 
   const handleToggleFavorite = (id: string) => {
+    if (isSelectMode) return;
+
     setBooks((prev) =>
       prev.map((book) =>
         book.id === id ? { ...book, favorite: !book.favorite } : book
@@ -135,6 +147,8 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
   };
 
   const handleToggleCompleted = (id: string) => {
+    if (isSelectMode) return;
+
     const book = books.find((b) => b.id === id);
 
     const isCurrentlyCompleted = book?.completed ?? false;
@@ -162,6 +176,35 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
     });
   };
 
+  const handleToggleSelect = (id: string) => {
+    if (!isSelectMode) return;
+
+    setSelectedBooks((prev) => {
+      const newSelected = new Set(prev);
+
+      if (newSelected.has(id)) {
+        newSelected.delete(id);
+      } else {
+        newSelected.add(id);
+      }
+
+      return newSelected;
+    });
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedBooks.size === 0) return;
+
+    startTransition(() => {
+      removeTBRs(Array.from(selectedBooks));
+    });
+
+    setBooks((prev) => prev.filter((book) => !selectedBooks.has(book.id)));
+
+    setSelectedBooks(new Set());
+    setIsSelectMode(false);
+  };
+
   const totalBooks = books.length;
 
   const completedCount = books.filter((book) => book.completed).length;
@@ -180,35 +223,63 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
           <span className='hidden lg:block'>To Be Read</span>
         </h1>
         <div className='flex gap-2.5'>
-          {mode === 'list' && (
-            <Button variant='outline'>
-              <CogIcon />
-              <span className='hidden sm:block lg:hidden xl:block'>Select TBRs</span>
+          {mode === 'list' && !isSelectMode && (
+            <Button variant='outline' onClick={() => setIsSelectMode(true)}>
+              <CogIcon className='size-4' />
+              <span className='hidden sm:block lg:hidden xl:block'>
+                Select TBRs
+              </span>
             </Button>
           )}
-          {mode === 'list' && <AddTBRButton />}
-          <Button
-            onClick={selectWhatWillRead}
-            disabled={
-              isPending || isSelecting || availableForSelection.length === 0
-            }
-            className='sm:w-[170px] lg:w-auto xl:w-[170px] disabled:bg-black/90'>
-            {isSelecting ? (
-              <>
-                <Loader2Icon className='size-4 animate-spin' />
+          {mode === 'list' && isSelectMode && (
+            <>
+              <Button
+                variant='outline'
+                onClick={handleDeleteSelected}
+                disabled={selectedBooks.size === 0 || isPending}>
+                <TrashIcon className='size-4' />
                 <span className='hidden sm:block lg:hidden xl:block'>
-                  Choosing...
+                  Remove TBRs
                 </span>
-              </>
-            ) : (
-              <>
-                <SparklesIcon className='size-4' />
+              </Button>
+              <Button
+                variant='outline'
+                onClick={() => {
+                  setIsSelectMode(false);
+                  setSelectedBooks(new Set());
+                }}>
+                <XCircleIcon className='size-4' />
                 <span className='hidden sm:block lg:hidden xl:block'>
-                  Choose Next Read
+                  Cancel
                 </span>
-              </>
-            )}
-          </Button>
+              </Button>
+            </>
+          )}
+          {mode === 'list' && !isSelectMode && <AddTBRButton />}
+          {!isSelectMode && (
+            <Button
+              onClick={selectWhatWillRead}
+              disabled={
+                isPending || isSelecting || availableForSelection.length === 0
+              }
+              className='sm:w-[170px] lg:w-auto xl:w-[170px] disabled:bg-black/90'>
+              {isSelecting ? (
+                <>
+                  <Loader2Icon className='size-4 animate-spin' />
+                  <span className='hidden sm:block lg:hidden xl:block'>
+                    Choosing...
+                  </span>
+                </>
+              ) : (
+                <>
+                  <SparklesIcon className='size-4' />
+                  <span className='hidden sm:block lg:hidden xl:block'>
+                    Choose Next Read
+                  </span>
+                </>
+              )}
+            </Button>
+          )}
         </div>
       </div>
       <div className='bg-white p-3 rounded-md border flex justify-between items-center'>
@@ -238,6 +309,8 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
           onValueChange={(value) => {
             setMode(value as 'library' | 'list');
             setSelectedIndex(null);
+            setIsSelectMode(false);
+            setSelectedBooks(new Set());
           }}>
           <TabsList className='grid w-full grid-cols-2'>
             <TabsTrigger value='library' className='flex gap-2'>
@@ -262,26 +335,28 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
           </div>
         </div>
       </div>
-      {availableForSelection.length === 0 && (
+      {availableForSelection.length === 0 && !isSelectMode && (
         <Alert>
-          <AlertDescription className='mt-1'>
+          <AlertDescription>
             No unread books available with current filters. Try different
             filters or mark some books as not completed.
           </AlertDescription>
         </Alert>
       )}
-      {selectedIndex !== null && filteredBooks[selectedIndex] && (
-        <Alert>
-          <SparklesIcon className='size-4 !text-white' />
-          <AlertDescription className='mt-1'>
-            Your next book to read is{' '}
-            <span className='font-bold'>
-              {filteredBooks[selectedIndex].name}
-            </span>
-            .
-          </AlertDescription>
-        </Alert>
-      )}
+      {selectedIndex !== null &&
+        filteredBooks[selectedIndex] &&
+        !isSelectMode && (
+          <Alert>
+            <SparklesIcon className='size-4 !text-white' />
+            <AlertDescription className='mt-1'>
+              Your next book to read is{' '}
+              <span className='font-bold'>
+                {filteredBooks[selectedIndex].name}
+              </span>
+              .
+            </AlertDescription>
+          </Alert>
+        )}
       <div className='grid sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-5'>
         {filteredBooks.map((book, index) => (
           <Card
@@ -296,28 +371,40 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                 : book.favorite && !book.completed
                 ? 'border-pink-200'
                 : ''
-            }`}>
+            } ${
+              selectedBooks.has(book.id) ? 'border-pink-300 bg-pink-50' : ''
+            }`}
+            onClick={() => handleToggleSelect(book.id)}
+            style={{ cursor: isSelectMode ? 'pointer' : 'default' }}>
             <div className='flex flex-col gap-2.5 w-full'>
               <div className='flex justify-between items-start'>
                 <h3 className='line-clamp-1'>{book.name}</h3>
-                <div className='flex gap-1.5'>
-                  <button
-                    onClick={() => handleToggleFavorite(book.id)}
-                    disabled={isPending}
-                    className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
-                    <HeartIcon
-                      className={`size-3 text-pink-500 ${
-                        book.favorite ? 'fill-pink-500' : ''
-                      }`}
-                    />
-                  </button>
-                  <button
-                    onClick={() => handleToggleCompleted(book.id)}
-                    disabled={isPending}
-                    className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
-                    <CheckCircleIcon className='size-3 text-pink-500' />
-                  </button>
-                </div>
+                {!isSelectMode && (
+                  <div className='flex gap-1.5'>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleFavorite(book.id);
+                      }}
+                      disabled={isPending}
+                      className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
+                      <HeartIcon
+                        className={`size-3 text-pink-500 ${
+                          book.favorite ? 'fill-pink-500' : ''
+                        }`}
+                      />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleCompleted(book.id);
+                      }}
+                      disabled={isPending}
+                      className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
+                      <CheckCircleIcon className='size-3 text-pink-500' />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </Card>

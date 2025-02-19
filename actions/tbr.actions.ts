@@ -88,3 +88,26 @@ export const toggleTBRCompleted = async (id: string) => {
 
   revalidatePath('/tbr-game');
 };
+
+export const removeTBRs = async (ids: string[]) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const deletedTbr = await prisma.tbr.deleteMany({
+      where: { id: { in: ids }, userId },
+    });
+
+    if (deletedTbr.count === 0) throw new Error('No matching TBRs found.');
+
+    revalidatePath('/tbr-game');
+
+    return { success: true, message: 'Selected TBRs removed successfully.' };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};

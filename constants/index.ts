@@ -8,6 +8,7 @@ export const BOOK_DEFAULT_VALUES = {
   type: BookType.BOOK,
   pageCount: 1,
   completed: false,
+  favorite: false,
   genre: [],
   image: '/placeholder.jpg',
   translator: '',

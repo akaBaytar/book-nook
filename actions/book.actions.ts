@@ -250,3 +250,59 @@ export const updateBook = async (id: string, data: BookData) => {
     };
   }
 };
+
+export const getAllBooksForTBR = async () => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const books = await prisma.book.findMany({
+      where: { userId },
+      select: { id: true, name: true, favorite: true, completed: true },
+    });
+    return {
+      success: true,
+      books: JSON.parse(JSON.stringify(books)),
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const toggleFavorite = async (id: string) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  const book = await prisma.book.findUnique({ where: { id } });
+
+  if (!book) throw new Error('Book not found.');
+
+  await prisma.book.update({
+    where: { id: book.id },
+    data: { favorite: !book.favorite },
+  });
+
+  revalidatePath('/tbr-game');
+};
+
+export const toggleCompleted = async (id: string) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  const book = await prisma.book.findUnique({ where: { id } });
+
+  if (!book) throw new Error('Book not found.');
+
+  await prisma.book.update({
+    where: { id },
+    data: { completed: !book.completed },
+  });
+
+  revalidatePath('/tbr-game');
+};

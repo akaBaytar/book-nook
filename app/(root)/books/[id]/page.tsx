@@ -226,7 +226,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
                 <p>{formatDate(publicationDate)}</p>
               </div>
             )}
-            {endDate && (
+            {completed && endDate && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>End Date</p>
                 <p>{formatDate(endDate)}</p>

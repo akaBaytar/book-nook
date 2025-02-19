@@ -10,7 +10,7 @@ const Footer = () => {
 
   return (
     <footer className='bg-slate-50 border-t border-slate-200'>
-      <div className='container mx-auto px-4 py-8'>
+      <div className='container mx-auto px-4 py-8 md:px-10'>
         <div className='flex flex-col sm:flex-row justify-between items-center gap-4'>
           <div className='flex items-center'>
             <Image

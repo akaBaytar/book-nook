@@ -13,7 +13,7 @@ const Header = async () => {
 
   return (
     <header className='w-full border-b border-slate-200 bg-white/50 backdrop-blur-sm fixed top-0 z-50'>
-      <div className='container mx-auto flex items-center justify-between py-4 px-4 md:px-6'>
+      <div className='container mx-auto flex items-center justify-between p-4 md:px-10'>
         <div className='flex items-center'>
           <Image
             src='/logo.png'

@@ -32,7 +32,8 @@ const AddTBRButton = () => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant='outline'>
-          <PlusIcon /> Add TBR
+          <PlusIcon />
+          <span className='hidden sm:block lg:hidden xl:block'>Add TBR</span>
         </Button>
       </DialogTrigger>
       <DialogContent>

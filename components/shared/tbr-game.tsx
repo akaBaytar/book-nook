@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition } from 'react';
 
 import {
+  CogIcon,
   HeartIcon,
   SnailIcon,
   SearchIcon,
@@ -172,28 +173,39 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
 
   return (
     <div className='flex flex-col gap-5 mt-5 md:mt-0 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
-      <div className='flex flex-col sm:flex-row gap-5 items-center justify-between'>
+      <div className='flex gap-5 items-center justify-between'>
         <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
           <SparklesIcon className='size-5 mt-0.5' />
-          To Be Read
+          <span className='block lg:hidden'>TBR</span>
+          <span className='hidden lg:block'>To Be Read</span>
         </h1>
         <div className='flex gap-2.5'>
+          {mode === 'list' && (
+            <Button variant='outline'>
+              <CogIcon />
+              <span className='hidden sm:block lg:hidden xl:block'>Select TBRs</span>
+            </Button>
+          )}
           {mode === 'list' && <AddTBRButton />}
           <Button
             onClick={selectWhatWillRead}
             disabled={
               isPending || isSelecting || availableForSelection.length === 0
             }
-            className='w-[170px] disabled:bg-black/90'>
+            className='sm:w-[170px] lg:w-auto xl:w-[170px] disabled:bg-black/90'>
             {isSelecting ? (
               <>
                 <Loader2Icon className='size-4 animate-spin' />
-                Choosing...
+                <span className='hidden sm:block lg:hidden xl:block'>
+                  Choosing...
+                </span>
               </>
             ) : (
               <>
                 <SparklesIcon className='size-4' />
-                Choose Next Read
+                <span className='hidden sm:block lg:hidden xl:block'>
+                  Choose Next Read
+                </span>
               </>
             )}
           </Button>

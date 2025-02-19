@@ -41,7 +41,7 @@ const EndColumn = () => {
         <SheetTrigger asChild>
           <Button className='shadow-md'>Open Tracker</Button>
         </SheetTrigger>
-        <SheetContent className='overflow-y-scroll'>
+        <SheetContent className='overflow-y-scroll pb-20 sm:pb-5'>
           <SheetHeader>
             <SheetTitle className='text-center'>Book Tracker</SheetTitle>
             <SheetDescription className='text-center'>

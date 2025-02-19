@@ -54,7 +54,7 @@ const RemoveBook = ({ id }: { id: string }) => {
       <AlertDialogTrigger asChild>
         <Button variant='outline'>
           <TrashIcon className='size-4' />
-          <span className='hidden md:flex'>Remove Book</span>
+          <span className='hidden 2xl:flex'>Remove Book</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

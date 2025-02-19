@@ -77,17 +77,17 @@ const BookDetailsPage = async ({ params }: PropType) => {
         <Button asChild>
           <Link href='/all-books'>
             <ArrowLeftIcon className='size-4' />
-            <span className='hidden sm:flex'>All Books</span>
+            <span className='hidden 2xl:flex'>All Books</span>
           </Link>
         </Button>
         <div className='space-x-2.5'>
           <Button>
             <Share2Icon className='size-4' />
-            <span className='hidden sm:flex'>Share Book</span>
+            <span className='hidden 2xl:flex'>Share Book</span>
           </Button>
           <Button>
             <LibraryIcon className='size-4' />
-            <span className='hidden sm:flex'>Add to List</span>
+            <span className='hidden 2xl:flex'>Add to List</span>
           </Button>
           <UpdateBookButton bookId={id} book={book} />
           <RemoveBook id={id} />
@@ -108,7 +108,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
         <div className='flex flex-col items-center text-center xl:text-start xl:items-start space-y-5'>
           <div>
             {name && (
-              <CardTitle className='text-2xl font-medium tracking-[0.015em] flex items-center gap-2.5'>
+              <CardTitle className='text-2xl font-medium tracking-[0.015em] flex flex-col sm:flex-row mb-2.5 sm:mb-0 items-center gap-2.5 truncate'>
                 {name}
                 {completed && (
                   <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>

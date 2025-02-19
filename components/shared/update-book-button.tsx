@@ -34,7 +34,7 @@ const UpdateBookButton = ({ book, bookId }: PropTypes) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button>
-          <PenIcon /> <span className='hidden md:flex'>Update Book</span>
+          <PenIcon /> <span className='hidden 2xl:flex'>Update Book</span>
         </Button>
       </DialogTrigger>
       <DialogContent className='h-full md:h-[calc(100%-2.5rem)] overflow-y-scroll'>

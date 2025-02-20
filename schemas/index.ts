@@ -49,3 +49,10 @@ export const CheckListSchema = z.object({
   name: z.string().min(1, { message: 'List name is required' }),
   items: z.array(CheckListItemSchema).optional(),
 });
+
+export const ListSchema = z.object({
+  name: z.string().min(1, { message: 'List name is required' }),
+  description: z.string().optional(),
+  books: z.array(z.string()).optional(),
+  private: z.boolean(),
+});

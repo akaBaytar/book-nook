@@ -1,6 +1,11 @@
 import { z } from 'zod';
 
-import { BookSchema, CheckListItemSchema, CheckListSchema } from '@/schemas';
+import {
+  ListSchema,
+  BookSchema,
+  CheckListSchema,
+  CheckListItemSchema,
+} from '@/schemas';
 
 export type User = {
   id: string;
@@ -46,31 +51,6 @@ export type Book = {
   updatedAt: Date;
 };
 
-export type List = {
-  id: string;
-  userId: string;
-  name: string;
-  description?: string | null;
-  books: Book[] | string[];
-  privacy: Privacy | string;
-  user?: User | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-enum Privacy {
-  PUBLIC = 'PUBLIC',
-  PRIVATE = 'PRIVATE',
-}
-
-export enum BookType {
-  BOOK = 'BOOK',
-  EBOOK = 'EBOOK',
-  AUDIO_BOOK = 'AUDIO_BOOK',
-}
-
-export type BookData = z.infer<typeof BookSchema>;
-
 export type GetAllBooks = {
   search?: string;
   filter?: 'all' | 'completed' | 'unread';
@@ -81,6 +61,8 @@ export type GetAllBooks = {
   limit?: number;
 };
 
+export type BookData = z.infer<typeof BookSchema>;
+
 export type Filter = 'all' | 'completed' | 'unread';
 
 export type Sort = 'recent' | 'oldest' | 'name' | 'author';
@@ -88,3 +70,11 @@ export type Sort = 'recent' | 'oldest' | 'name' | 'author';
 export type CheckList = z.infer<typeof CheckListSchema>;
 
 export type CheckListItem = z.infer<typeof CheckListItemSchema>;
+
+export type List = z.infer<typeof ListSchema>;
+
+export enum BookType {
+  BOOK = 'BOOK',
+  EBOOK = 'EBOOK',
+  AUDIO_BOOK = 'AUDIO_BOOK',
+}

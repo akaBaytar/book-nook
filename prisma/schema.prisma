@@ -52,7 +52,6 @@ model Book {
   startDate       DateTime?
   endDate         DateTime?
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  list            List?     @relation(fields: [listId], references: [id])
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -65,8 +64,8 @@ model List {
   userId      String
   name        String
   description String?  @db.Text
-  books       Book[]
-  privacy     Privacy  @default(PUBLIC)
+  books       String[]
+  private     Boolean  @default(false)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -109,11 +108,6 @@ model CheckListItem {
   updatedAt   DateTime  @updatedAt
 
   @@index([checkListId])
-}
-
-enum Privacy {
-  PUBLIC
-  PRIVATE
 }
 
 enum BookType {

@@ -1,9 +1,5 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import Image from 'next/image';
 
 import {
   EditIcon,
@@ -14,6 +10,7 @@ import {
   LibraryBigIcon,
 } from 'lucide-react';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -28,21 +25,27 @@ import {
   AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
 
-import { LISTS } from '@/mock';
+import { getList } from '@/actions/list.actions';
+import { getBooks } from '@/actions/book.actions';
 
-import type { List } from '@/types';
+type PropType = {
+  params: Promise<{ id: string }>;
+};
 
-const ListDetailsPage = () => {
-  const { id } = useParams();
+type Book = {
+  id: string;
+  name: string;
+  image: string;
+  author: string;
+  genre: string[];
+};
 
-  const [list, setList] = useState<null | List>(null);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+const ListDetailsPage = async ({ params }: PropType) => {
+  const { id } = await params;
 
-  useEffect(() => {
-    const foundList = LISTS.find((l) => l.id === id);
+  const { list } = await getList(id);
 
-    setList(foundList as List);
-  }, [id]);
+  const { books } = await getBooks(list.books);
 
   if (!list) {
     return (
@@ -62,7 +65,7 @@ const ListDetailsPage = () => {
             </Link>
           </Button>
           <h1 className='text-2xl tracking-[0.015em]'>{list.name}</h1>
-          {list.privacy === 'PRIVATE' ? (
+          {list.private ? (
             <LockIcon className='size-4 mt-0.5 text-pink-300' />
           ) : (
             <UnlockIcon className='size-4 mt-0.5 text-pink-400' />
@@ -72,12 +75,12 @@ const ListDetailsPage = () => {
           <Button size='icon'>
             <EditIcon />
           </Button>
-          <Button size='icon' onClick={() => setIsDeleteDialogOpen(true)}>
+          <Button size='icon'>
             <TrashIcon />
           </Button>
         </div>
       </div>
-      <Card>
+      <Card className='rounded-md'>
         <CardHeader>
           <CardTitle className='text-lg font-normal tracking-[0.015em]'>
             About this list
@@ -87,26 +90,45 @@ const ListDetailsPage = () => {
           <p className='text-muted-foreground'>{list.description}</p>
           <div className='mt-5 flex items-center gap-0.5 text-sm text-muted-foreground'>
             <LibraryBigIcon className='size-4 text-pink-300' />
-            <span>{list.books.length} books</span>
+            <span>
+              {books.length} {list.books.length < 2 ? 'book' : 'books'}
+            </span>
           </div>
         </CardContent>
       </Card>
-      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {list.books.map((book, index) => (
-          <Card key={index}>
-            <CardContent className='p-4'>
-              <div className='aspect-[16/9] bg-muted rounded-md' />
-              <h3 className='mt-2 tracking-[0.015em]'>
-                Book {book.toString()}
-              </h3>
-              <p className='text-sm text-muted-foreground'>Author Name</p>
-            </CardContent>
-          </Card>
+      {/* //TODO fix grid layout after all backend is done  */}
+      <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+        {books.map((book: Book) => (
+          <Link key={book.id} href={`/books/${book.id}`}>
+            <Card className='rounded-md'>
+              <CardContent className='p-4'>
+                <Image
+                  src={book.image}
+                  alt={book.name}
+                  width={300}
+                  height={200}
+                  className='rounded-md object-contain w-full'
+                />
+                <h3 className='mt-2 tracking-[0.015em]'>{book.name}</h3>
+                <p className='text-sm text-muted-foreground'>{book.author}</p>
+                {book.genre && book.genre.length > 0 && (
+                  <div className='flex items-center gap-2.5 mt-1'>
+                    {book.genre.map((g: string) => (
+                      <Badge
+                        key={g}
+                        variant='secondary'
+                        className='border border-input'>
+                        {g}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
-      <AlertDialog
-        open={isDeleteDialogOpen}
-        onOpenChange={setIsDeleteDialogOpen}>
+      <AlertDialog>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>

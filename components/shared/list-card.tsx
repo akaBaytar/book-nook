@@ -11,10 +11,9 @@ import { BOOKS } from '@/mock';
 import type { List } from '@/types';
 
 const ListCard = ({ list }: { list: List }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const listBooks = BOOKS.filter((book) => list.books.includes(book.id as any));
+  const books = BOOKS.map((book) => ({ ...book, id: (Math.random() * 10000).toFixed() }));
 
-  const previewBooks = listBooks.slice(0, 6);
+  const previewBooks = books.slice(0, 6);
 
   return (
     <Link href={`/my-lists/${list.id}`}>
@@ -37,9 +36,7 @@ const ListCard = ({ list }: { list: List }) => {
           </div>
           <div className='flex items-center gap-0.5'>
             <LibraryBigIcon className='size-4 text-pink-300' />
-            <span className='text-muted-foreground'>
-              {list.books.length}
-            </span>
+            <span className='text-muted-foreground'>{list.books.length}</span>
           </div>
         </div>
         <div className='mt-4'>
@@ -65,7 +62,7 @@ const ListCard = ({ list }: { list: List }) => {
           </div>
         </div>
         <div className='mt-4 flex flex-wrap gap-2'>
-          {Array.from(new Set(listBooks.flatMap((book) => book.genre)))
+          {Array.from(new Set(books.flatMap((book) => book.genre)))
             .slice(0, 3)
             .map((genre) => (
               <Badge key={genre} variant='secondary'>

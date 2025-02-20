@@ -9,13 +9,22 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
+import { useToast } from '@/hooks/use-toast';
+import { getBooks } from '@/actions/book.actions';
+import { getAllList } from '@/actions/list.actions';
+
 import ListCard from '@/components/shared/list-card';
 import AddListButton from '@/components/shared/add-list-button';
 
-import { useToast } from '@/hooks/use-toast';
-import { getAllList } from '@/actions/list.actions';
-
 import type { List } from '@/types';
+
+type Book = {
+  id: string;
+  name: string;
+  author: string;
+  image: string;
+  genre: string[];
+};
 
 const ListsSkeleton = () => {
   return (
@@ -34,9 +43,9 @@ const ListsSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
+      <div className='grid gap-5'>
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Skeleton key={i} className='h-[200px] w-full rounded-lg' />
+          <Skeleton key={i} className='h-[233px] w-full rounded-md' />
         ))}
       </div>
     </>
@@ -44,28 +53,66 @@ const ListsSkeleton = () => {
 };
 
 const ListsPage = () => {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState<List[]>([]);
+  const [booksData, setBooksData] = useState<Record<string, Book[]>>({});
+
   const [loading, setLoading] = useState(true);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [privacyFilter, setPrivacyFilter] = useState('all');
 
   const { toast } = useToast();
 
+  const fetchBooks = useCallback(
+    async (lists: List[]) => {
+      try {
+        const allBookIds = Array.from(
+          new Set(lists.flatMap((list) => list.books?.filter(Boolean) || []))
+        );
+
+        if (allBookIds.length === 0) return;
+
+        const { success, books } = await getBooks(allBookIds);
+
+        if (success) {
+          const booksMapping = lists.reduce<Record<string, Book[]>>(
+            (acc, list) => {
+              if (list.id) {
+                acc[list.id] = books.filter((book: Book) =>
+                  list.books?.includes(book.id)
+                );
+              }
+              return acc;
+            },
+            {}
+          );
+          setBooksData(booksMapping);
+        }
+      } catch {
+        toast({ description: 'An error occurred.' });
+      }
+    },
+    [toast]
+  );
+
   const fetchLists = useCallback(async () => {
     setLoading(true);
+
     try {
-      const response = await getAllList();
-      if (response.success) {
-        setLists(response.lists);
+      const { success, lists, message } = await getAllList();
+      if (success) {
+        setLists(lists);
+
+        await fetchBooks(lists);
       } else {
-        toast({ title: 'Error', description: response.message });
+        toast({ description: message });
       }
     } catch {
       toast({ description: 'An error occurred.' });
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, [toast, fetchBooks]);
 
   useEffect(() => {
     fetchLists();
@@ -85,9 +132,6 @@ const ListsPage = () => {
 
     return matchesSearch && matchesPrivacy;
   });
-
-  console.log({lists});
-  
 
   return (
     <div className='space-y-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
@@ -142,9 +186,9 @@ const ListsPage = () => {
               </AlertDescription>
             </Alert>
           )}
-          <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-            {filteredLists.map((list, index) => (
-              <ListCard key={index} list={list as List} />
+          <div className='grid gap-5'>
+            {filteredLists.map((list) => (
+              <ListCard key={list.id} list={list} books={booksData[list.id]} />
             ))}
           </div>
         </>

@@ -75,3 +75,49 @@ export const getList = async (id: string) => {
     };
   }
 };
+
+export const removeList = async (id: string) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    await prisma.list.delete({ where: { id, userId } });
+
+    revalidatePath('/my-lists');
+
+    return { success: true, message: 'List removed successfully.' };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const updateList = async (data: List) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    const listData = ListSchema.parse(data);
+
+    await prisma.list.update({
+      where: { userId, id: data.id },
+      data: listData,
+    });
+
+    revalidatePath(`/my-lists/${data.id}`);
+
+    return {
+      success: true,
+      message: 'Your list updated successfully.',
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};

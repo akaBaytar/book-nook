@@ -71,7 +71,7 @@ export type CheckList = z.infer<typeof CheckListSchema>;
 
 export type CheckListItem = z.infer<typeof CheckListItemSchema>;
 
-export type List = z.infer<typeof ListSchema>;
+export type List = z.infer<typeof ListSchema> & { id: string };
 
 export enum BookType {
   BOOK = 'BOOK',

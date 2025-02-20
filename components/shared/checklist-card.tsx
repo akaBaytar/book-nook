@@ -77,22 +77,24 @@ const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
   };
 
   return (
-    <div className='flex items-center gap-1'>
-      <button onClick={onClick} disabled={isUpdating}>
-        {isCompleted ? (
-          <CircleCheckBigIcon className='size-3 text-pink-500' />
-        ) : (
-          <CircleIcon className='size-3 text-gray-500' />
-        )}
-      </button>
-      <button
-        onClick={onClick}
-        disabled={isUpdating}
-        className={
-          isCompleted ? 'line-through text-gray-300 truncate' : 'truncate'
-        }>
-        {name}
-      </button>
+    <div className='flex items-center justify-between gap-2.5'>
+      <div className='flex items-center gap-1'>
+        <button onClick={onClick} disabled={isUpdating}>
+          {isCompleted ? (
+            <CircleCheckBigIcon className='size-3 text-pink-500' />
+          ) : (
+            <CircleIcon className='size-3 text-gray-500' />
+          )}
+        </button>
+        <button
+          onClick={onClick}
+          disabled={isUpdating}
+          className={
+            isCompleted ? 'line-through text-gray-300 truncate' : 'truncate'
+          }>
+          {name}
+        </button>
+      </div>
       <Popover>
         <PopoverTrigger>
           <EllipsisIcon
@@ -147,17 +149,17 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
   };
 
   return (
-    <Card>
+    <Card className='rounded-md'>
       <CardHeader>
-        <CardTitle className='text-lg font-normal tracking-wide flex items-center gap-1'>
-          <span className='truncate'>{checkList.name}</span>
+        <CardTitle className='text-lg font-normal tracking-wide flex items-center justify-between gap-1'>
+          <p className='truncate'>{checkList.name}</p>
           <div className='flex items-center gap-2'>
             <Popover>
               <PopoverTrigger>
                 <EllipsisIcon className='size-4 text-gray-500' />
               </PopoverTrigger>
               <PopoverContent
-                side='bottom'
+                side='right'
                 className='p-1 max-w-fit border-pink-100 flex flex-col items-center gap-1'>
                 <Button
                   size='sm'

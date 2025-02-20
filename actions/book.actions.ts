@@ -68,7 +68,14 @@ export const getBooks = async (ids: string[]) => {
   try {
     const books = await prisma.book.findMany({
       where: { userId, id: { in: ids } },
-      select: { id: true, author: true, name: true, image: true, genre: true },
+      select: {
+        id: true,
+        name: true,
+        image: true,
+        genre: true,
+        author: true,
+        publisher: true,
+      },
     });
 
     if (!books) throw new Error('Books not found.');

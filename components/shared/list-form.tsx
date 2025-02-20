@@ -20,38 +20,39 @@ import {
 
 import { ListSchema } from '@/schemas';
 import { useToast } from '@/hooks/use-toast';
-import { createList } from '@/actions/list.actions';
-
+import { createList, updateList } from '@/actions/list.actions';
 
 import type { Dispatch, SetStateAction } from 'react';
 import type { List } from '@/types';
 
 type PropTypes = {
-  listName?: string;
+  list?: List;
   isEdit?: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   onSuccess?: () => void;
 };
 
-const ListForm = ({ isEdit, setIsOpen, onSuccess, listName }: PropTypes) => {
+const ListForm = ({ isEdit, setIsOpen, onSuccess, list }: PropTypes) => {
   const { toast } = useToast();
 
   const form = useForm<List>({
     resolver: zodResolver(ListSchema),
     defaultValues: {
-      name: isEdit ? listName : '',
-      books: [],
-      description: '',
-      private: false,
+      name: isEdit ? list?.name : '',
+      books: isEdit ? list?.books : [],
+      description: isEdit ? list?.description : '',
+      private: isEdit ? list?.private : false,
     },
   });
 
   const onSubmit = async (values: List) => {
     try {
-      const response = await createList(values);
+      const { message, success } = isEdit
+        ? await updateList({ ...values, id: list!.id })
+        : await createList(values);
 
-      if (response.success) {
-        toast({ description: response.message });
+      if (success) {
+        toast({ description: message });
 
         if (onSuccess) {
           onSuccess();
@@ -61,7 +62,7 @@ const ListForm = ({ isEdit, setIsOpen, onSuccess, listName }: PropTypes) => {
       } else {
         toast({
           title: 'Error',
-          description: response.message,
+          description: message,
         });
       }
     } catch {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { PlusIcon } from 'lucide-react';
+import { EditIcon, PlusIcon } from 'lucide-react';
 
 import { Button } from '../ui/button';
 
@@ -16,27 +16,41 @@ import {
 
 import ListForm from './list-form';
 
-const AddListButton = ({ onAdd }: { onAdd: () => void }) => {
+import type { List } from '@/types';
+
+type PropTypes = {
+  list?: List;
+  isEdit?: boolean;
+  onAdd?: () => void;
+};
+
+const AddListButton = ({ onAdd, isEdit, list }: PropTypes) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSuccess = () => {
     setIsOpen(false);
 
-    onAdd();
+    if (onAdd) onAdd();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size='sm'>
-          <PlusIcon /> Add New List
+        <Button size={isEdit ? 'icon' : 'sm'}>
+          {isEdit ? <EditIcon /> : <PlusIcon />}
+          {!isEdit && <span>Add New List</span>}
         </Button>
       </DialogTrigger>
       <DialogContent className=''>
         <DialogHeader>
-          <DialogTitle>Add New List</DialogTitle>
+          <DialogTitle>{isEdit ? 'Update List' : 'Add New List'}</DialogTitle>
         </DialogHeader>
-        <ListForm setIsOpen={setIsOpen} onSuccess={onSuccess} />
+        <ListForm
+          list={list}
+          isEdit={isEdit}
+          setIsOpen={setIsOpen}
+          onSuccess={onSuccess}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -27,7 +27,7 @@ const EndColumn = async () => {
 
   return (
     <div className='bg-sidebar rounded-md border p-4 mx-4 md:mx-0 mb-5 lg:mb-4 flex flex-col gap-5 lg:w-[19rem] lg:fixed lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:overflow-y-auto'>
-      <Card className='grid p-4 min-h-[76px] items-center'>
+      <Card className='grid p-4 min-h-[76px] items-center rounded-md'>
         <Sheet>
           <SheetTrigger asChild>
             <Button className='shadow-md'>Open Tracker</Button>
@@ -53,7 +53,7 @@ const EndColumn = async () => {
       {checkList ? (
         <CheckListCard checkList={checkList as CheckList} id={checkList.id} />
       ) : (
-        <Card className='grid p-4 min-h-[76px] items-center'>
+        <Card className='grid p-4 min-h-[76px] items-center rounded-md'>
           <AddCheckListButton />
         </Card>
       )}

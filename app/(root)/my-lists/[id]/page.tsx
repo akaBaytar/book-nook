@@ -2,9 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import {
-  EditIcon,
   LockIcon,
-  TrashIcon,
   UnlockIcon,
   ArrowLeftIcon,
   LibraryBigIcon,
@@ -12,21 +10,20 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
 import {
-  AlertDialog,
-  AlertDialogTitle,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogDescription,
-} from '@/components/ui/alert-dialog';
+  Card,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from '@/components/ui/card';
+
+import RemoveList from '@/components/shared/remove-list';
+import AddListButton from '@/components/shared/add-list-button';
 
 import { getList } from '@/actions/list.actions';
 import { getBooks } from '@/actions/book.actions';
+
+import type { List } from '@/types';
 
 type PropType = {
   params: Promise<{ id: string }>;
@@ -37,6 +34,7 @@ type Book = {
   name: string;
   image: string;
   author: string;
+  publisher: string;
   genre: string[];
 };
 
@@ -64,31 +62,36 @@ const ListDetailsPage = async ({ params }: PropType) => {
               <ArrowLeftIcon className='size-4' />
             </Link>
           </Button>
-          <h1 className='text-2xl tracking-[0.015em]'>{list.name}</h1>
-          {list.private ? (
-            <LockIcon className='size-4 mt-0.5 text-pink-300' />
-          ) : (
-            <UnlockIcon className='size-4 mt-0.5 text-pink-400' />
-          )}
+          <div className='hidden sm:flex items-center justify-between md:hidden xl:flex'>
+            <h1 className='text-xl tracking-[0.015em] line-clamp-1'>
+              {list.name}
+            </h1>
+            {list.private ? (
+              <LockIcon className='!size-4 mt-0.5 ms-2.5 me-5 text-pink-300' />
+            ) : (
+              <UnlockIcon className='!size-4 mt-0.5 ms-2.5 me-5 text-pink-400' />
+            )}
+          </div>
         </div>
         <div className='flex items-center gap-2'>
-          <Button size='icon'>
-            <EditIcon />
-          </Button>
-          <Button size='icon'>
-            <TrashIcon />
-          </Button>
+          <AddListButton isEdit={true} list={list as List} />
+          <RemoveList id={id} />
         </div>
       </div>
-      <Card className='rounded-md'>
-        <CardHeader>
-          <CardTitle className='text-lg font-normal tracking-[0.015em]'>
-            About this list
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className='sm:hidden flex items-center gap-2.5 justify-between md:flex xl:hidden'>
+        <h1 className='text-xl tracking-[0.015em] line-clamp-1'>
+          {list.name}
+        </h1>
+        {list.private ? (
+          <LockIcon className='size-4 mt-0.5 text-pink-300' />
+        ) : (
+          <UnlockIcon className='size-4 mt-0.5 text-pink-400' />
+        )}
+      </div>
+      <Card className='rounded-md p-4'>
+        <CardContent className='p-0'>
           <p className='text-muted-foreground'>{list.description}</p>
-          <div className='mt-5 flex items-center gap-0.5 text-sm text-muted-foreground'>
+          <div className='mt-2.5 flex items-center gap-0.5 text-sm text-muted-foreground'>
             <LibraryBigIcon className='size-4 text-pink-300' />
             <span>
               {books.length} {list.books.length < 2 ? 'book' : 'books'}
@@ -96,57 +99,48 @@ const ListDetailsPage = async ({ params }: PropType) => {
           </div>
         </CardContent>
       </Card>
-      {/* //TODO fix grid layout after all backend is done  */}
-      <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3'>
         {books.map((book: Book) => (
           <Link key={book.id} href={`/books/${book.id}`}>
-            <Card className='rounded-md'>
-              <CardContent className='p-4'>
+            <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>
+              <div className='flex items-center gap-2.5'>
                 <Image
-                  src={book.image}
+                  src={book.image || '/placeholder.jpg'}
+                  width={60}
+                  height={90}
                   alt={book.name}
-                  width={300}
-                  height={200}
-                  className='rounded-md object-contain w-full'
+                  className='object-cover rounded-md aspect-[2/3]'
                 />
-                <h3 className='mt-2 tracking-[0.015em]'>{book.name}</h3>
-                <p className='text-sm text-muted-foreground'>{book.author}</p>
-                {book.genre && book.genre.length > 0 && (
-                  <div className='flex items-center gap-2.5 mt-1'>
-                    {book.genre.map((g: string) => (
+                <div className='flex flex-col'>
+                  <CardTitle
+                    title={book.name}
+                    className='line-clamp-1 font-normal tracking-[0.015em]'>
+                    {book.name}
+                  </CardTitle>
+                  <CardDescription title={book.author} className='line-clamp-1'>
+                    {book.author}
+                  </CardDescription>
+                  <CardDescription
+                    title={book.publisher}
+                    className='text-xs font-light line-clamp-1'>
+                    {book.publisher}
+                  </CardDescription>
+                  <div className='flex gap-2 mt-1'>
+                    {book.genre.slice(0, 2).map((genre) => (
                       <Badge
-                        key={g}
+                        key={genre}
                         variant='secondary'
-                        className='border border-input'>
-                        {g}
+                        className='truncate'>
+                        {genre}
                       </Badge>
                     ))}
                   </div>
-                )}
-              </CardContent>
+                </div>
+              </div>
             </Card>
           </Link>
         ))}
       </div>
-      <AlertDialog>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Are you sure you want delete this list?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              list and remove it from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction className='bg-destructive text-destructive-foreground hover:bg-destructive/90'>
-              Delete List
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 };

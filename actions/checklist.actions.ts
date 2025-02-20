@@ -142,3 +142,19 @@ export const toggleCheckListItem = async (id: string) => {
     return { success: false, message: handleError(error) };
   }
 };
+
+export const removeCheckListItem = async (id: string) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  try {
+    await prisma.checkListItem.delete({ where: { id } });
+
+    revalidatePath('/', 'layout');
+
+    return { success: true, message: 'Item removed successfully.' };
+  } catch (error) {
+    return { success: false, message: handleError(error) };
+  }
+};

@@ -2,7 +2,19 @@
 
 import { useState } from 'react';
 
-import { CheckSquare, PlusIcon, Square } from 'lucide-react';
+import {
+  PlusIcon,
+  TrashIcon,
+  CircleIcon,
+  EllipsisIcon,
+  CircleCheckBigIcon,
+} from 'lucide-react';
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -16,6 +28,7 @@ import { useToast } from '@/hooks/use-toast';
 import {
   addCheckListItem,
   toggleCheckListItem,
+  removeCheckListItem,
 } from '@/actions/checklist.actions';
 
 import type { CheckList } from '@/types';
@@ -37,7 +50,7 @@ const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isCompleted, setIsCompleted] = useState(completed);
 
-  const handleToggle = async () => {
+  const onClick = async () => {
     try {
       setIsUpdating(true);
 
@@ -51,25 +64,55 @@ const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      setIsUpdating(true);
+
+      await removeCheckListItem(id);
+    } catch {
+      toast({ description: 'Failed to update.' });
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <div className='flex items-center gap-1'>
-      <button onClick={handleToggle} disabled={isUpdating}>
+      <button onClick={onClick} disabled={isUpdating}>
         {isCompleted ? (
-          <CheckSquare className='size-4 text-pink-500' />
+          <CircleCheckBigIcon className='size-3 text-pink-500' />
         ) : (
-          <Square className='size-4 text-pink-500' />
+          <CircleIcon className='size-3 text-gray-500' />
         )}
       </button>
       <button
-        onClick={handleToggle}
+        onClick={onClick}
         disabled={isUpdating}
         className={
-          isCompleted
-            ? 'line-through text-gray-400 line-clamp-1'
-            : 'line-clamp-1'
+          isCompleted ? 'line-through text-gray-300 truncate' : 'truncate'
         }>
         {name}
       </button>
+      <Popover>
+        <PopoverTrigger>
+          <EllipsisIcon
+            className={`size-4 ${
+              isCompleted ? 'text-gray-300' : 'text-gray-500'
+            }`}
+          />
+        </PopoverTrigger>
+        <PopoverContent
+          side='right'
+          className='p-0 max-w-fit border-pink-100 hover:bg-pink-50'>
+          <button
+            onClick={onDelete}
+            disabled={isUpdating}
+            className='flex items-center justify-center gap-0.5 p-2'>
+            <TrashIcon className='size-4 text-gray-500' />
+            <span className='text-xs'>Remove</span>
+          </button>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };
@@ -107,27 +150,37 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
     <Card>
       <CardHeader>
         <CardTitle className='text-lg font-normal tracking-wide flex items-center justify-between'>
-          <span className='line-clamp-1'>{checkList.name}</span>
+          <span className='truncate'>{checkList.name}</span>
           <div className='flex items-center gap-2'>
-            <Button
-              size='sm'
-              variant='outline'
-              className='size-6'
-              onClick={() => setIsAddingNew(true)}>
-              <PlusIcon className='!size-3' />
-            </Button>
-            <AddCheckListButton isEdit={true} name={checkList.name} />
-            <RemoveCheckList id={id} />
+            <Popover>
+              <PopoverTrigger>
+                <EllipsisIcon className='size-4 text-gray-500' />
+              </PopoverTrigger>
+              <PopoverContent
+                side='bottom'
+                className='p-1 max-w-fit me-14 border-pink-100 flex flex-col items-center gap-1'>
+                <Button
+                  size='sm'
+                  variant='ghost'
+                  className='h-6 w-full border border-pink-100'
+                  onClick={() => setIsAddingNew(true)}>
+                  <PlusIcon className='!size-3' />
+                  <span>Add Item</span>
+                </Button>
+                <AddCheckListButton isEdit={true} name={checkList.name} />
+                <RemoveCheckList id={id} />
+              </PopoverContent>
+            </Popover>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
         {checkList.items && (
           <div className='space-y-2'>
-            {checkList.items.map((item, index) => (
+            {checkList.items.map((item) => (
               <CheckListItem
-                key={index}
-                id={id}
+                key={item.id}
+                id={item.id as string}
                 name={item.name}
                 completed={item.completed}
               />
@@ -141,8 +194,9 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
               onChange={(e) => setNewItem(e.target.value)}
               placeholder='Enter item'
               onKeyDown={(e) => e.key === 'Enter' && onClick()}
+              className='h-6 text-sm'
             />
-            <Button onClick={onClick} disabled={isAdding}>
+            <Button onClick={onClick} disabled={isAdding} className='h-6'>
               Add
             </Button>
           </div>

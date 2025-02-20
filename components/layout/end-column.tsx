@@ -20,6 +20,8 @@ import AddCheckListButton from '../shared/add-checklist-button';
 
 import { getCheckList } from '@/actions/checklist.actions';
 
+import type { CheckList } from '@/types';
+
 const EndColumn = async () => {
   const { checkList } = await getCheckList();
 
@@ -49,7 +51,7 @@ const EndColumn = async () => {
         </Sheet>
       </Card>
       {checkList ? (
-        <CheckListCard checkList={checkList} id={checkList.id} />
+        <CheckListCard checkList={checkList as CheckList} id={checkList.id} />
       ) : (
         <Card className='grid p-4 min-h-[76px] items-center'>
           <AddCheckListButton />

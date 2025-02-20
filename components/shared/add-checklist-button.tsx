@@ -37,8 +37,9 @@ const AddCheckListButton = ({ isEdit, name }: PropTypes) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {isEdit ? (
-          <Button variant='outline' size='icon' className='size-6'>
+          <Button variant='ghost' size='sm' className='h-6 w-full border border-pink-100'>
             <EditIcon className='!size-3'/>
+            <span>Edit Name</span>
           </Button>
         ) : (
           <Button>Create a Checklist</Button>

@@ -48,7 +48,7 @@ const RemoveCheckList = ({ id }: { id: string }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='ghost' size='sm' className='h-6 w-full border border-pink-100'>
+        <Button variant='ghost' size='sm' className='h-6 w-full border border-pink-100 justify-between'>
           <TrashIcon className='!size-3' />
           <span>Remove</span>
         </Button>

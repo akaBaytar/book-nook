@@ -149,7 +149,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className='text-lg font-normal tracking-wide flex items-center justify-between'>
+        <CardTitle className='text-lg font-normal tracking-wide flex items-center gap-1'>
           <span className='truncate'>{checkList.name}</span>
           <div className='flex items-center gap-2'>
             <Popover>
@@ -157,12 +157,12 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
                 <EllipsisIcon className='size-4 text-gray-500' />
               </PopoverTrigger>
               <PopoverContent
-                side='right'
-                className='p-1 max-w-fit me-14 border-pink-100 flex flex-col items-center gap-1'>
+                side='bottom'
+                className='p-1 max-w-fit border-pink-100 flex flex-col items-center gap-1'>
                 <Button
                   size='sm'
                   variant='ghost'
-                  className='h-6 w-full border border-pink-100'
+                  className='h-6 w-full border border-pink-100 justify-between'
                   onClick={() => setIsAddingNew(true)}>
                   <PlusIcon className='!size-3' />
                   <span>Add Item</span>
@@ -188,7 +188,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
           </div>
         )}
         {isAddingNew ? (
-          <div className='mt-4 flex gap-2'>
+          <div className='flex gap-2'>
             <Input
               value={newItem}
               onChange={(e) => setNewItem(e.target.value)}
@@ -201,7 +201,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
             </Button>
           </div>
         ) : (
-          <p>{checkList.items?.length === 0 ? 'There are no items. ' : ''}</p>
+          <p className='text-sm'>{checkList.items?.length === 0 ? 'There are no items. ' : ''}</p>
         )}
       </CardContent>
     </Card>

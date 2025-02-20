@@ -147,7 +147,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
             </Button>
           </div>
         ) : (
-          <p>{checkList.items?.length === 0 ? 'There are no items, ' : ''}</p>
+          <p>{checkList.items?.length === 0 ? 'There are no items. ' : ''}</p>
         )}
       </CardContent>
     </Card>

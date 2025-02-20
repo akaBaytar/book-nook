@@ -157,7 +157,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
                 <EllipsisIcon className='size-4 text-gray-500' />
               </PopoverTrigger>
               <PopoverContent
-                side='left'
+                side='right'
                 className='p-1 max-w-fit me-14 border-pink-100 flex flex-col items-center gap-1'>
                 <Button
                   size='sm'

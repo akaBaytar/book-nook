@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 import { Loader2Icon, TrashIcon } from 'lucide-react';
 
@@ -20,11 +19,9 @@ import {
 } from '@/components/ui/alert-dialog';
 
 import { useToast } from '@/hooks/use-toast';
-import { removeBook } from '@/actions/book.actions';
+import { removeCheckList } from '@/actions/checklist.actions';
 
-const RemoveBook = ({ id }: { id: string }) => {
-  const router = useRouter();
-  
+const RemoveCheckList = ({ id }: { id: string }) => {
   const { toast } = useToast();
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,18 +29,16 @@ const RemoveBook = ({ id }: { id: string }) => {
   const onRemove = async () => {
     try {
       setIsDeleting(true);
-      
-      await removeBook(id);
+
+      await removeCheckList(id);
 
       toast({
-        description: 'Book removed successfully.',
+        description: 'Checklist removed successfully.',
       });
-
-      router.push('/all-books');
     } catch {
       toast({
         title: 'Error',
-        description: 'An error occurred while removing the book.',
+        description: 'An error occurred while removing the checklist.',
       });
     } finally {
       setIsDeleting(false);
@@ -53,19 +48,18 @@ const RemoveBook = ({ id }: { id: string }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='outline'>
-          <TrashIcon className='size-4' />
-          <span className='hidden 2xl:flex'>Remove Book</span>
+        <Button variant='outline' size='icon' className='size-6'>
+          <TrashIcon className='!size-3' />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className='text-pretty'>
-            Are you absolutely sure you want to remove this book?
+            Are you absolutely sure you want to remove this checklist?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently remove this book
-            and remove book data from our servers.
+            This action cannot be undone. This will permanently remove this checklist
+            and remove checklist data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -88,4 +82,4 @@ const RemoveBook = ({ id }: { id: string }) => {
   );
 };
 
-export default RemoveBook;
+export default RemoveCheckList;

@@ -38,11 +38,12 @@ export const TBRSchema = z.object({
 });
 
 export const CheckListItemSchema = z.object({
+  checkListId: z.string(),
   name: z.string().min(1, { message: 'Item is required' }),
   completed: z.boolean().default(false),
 });
 
 export const CheckListSchema = z.object({
   name: z.string().min(1, { message: 'List name is required' }),
-  items: z.array(CheckListItemSchema),
+  items: z.array(CheckListItemSchema).optional(),
 });

@@ -73,6 +73,14 @@ export type CheckListItem = z.infer<typeof CheckListItemSchema>;
 
 export type List = z.infer<typeof ListSchema> & { id: string };
 
+
+export type ShareContent = {
+  id: string;
+  name: string;
+  author?: string;
+  description?: string;
+};
+
 export enum BookType {
   BOOK = 'BOOK',
   EBOOK = 'EBOOK',

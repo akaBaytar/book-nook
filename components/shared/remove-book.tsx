@@ -53,9 +53,8 @@ const RemoveBook = ({ id }: { id: string }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='outline'>
+        <Button variant='outline' size='icon'>
           <TrashIcon className='size-4' />
-          <span className='hidden 2xl:flex'>Remove Book</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

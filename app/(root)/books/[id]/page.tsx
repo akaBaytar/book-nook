@@ -4,7 +4,6 @@ import Image from 'next/image';
 import {
   StarIcon,
   QuoteIcon,
-  Share2Icon,
   LibraryIcon,
   CalendarIcon,
   ArrowLeftIcon,
@@ -17,6 +16,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import RemoveBook from '@/components/shared/remove-book';
+import ShareButton from '@/components/shared/share-button';
 import UpdateBookButton from '@/components/shared/update-book-button';
 
 import { formatDate } from '@/utils';
@@ -82,14 +82,11 @@ const BookDetailsPage = async ({ params }: PropType) => {
         </Button>
         <div className='space-x-2.5'>
           <Button>
-            <Share2Icon className='size-4' />
-            <span className='hidden 2xl:flex'>Share Book</span>
-          </Button>
-          <Button>
             <LibraryIcon className='size-4' />
             <span className='hidden 2xl:flex'>Add to List</span>
           </Button>
           <UpdateBookButton bookId={id} book={book} />
+          <ShareButton content={book} type='book' />
           <RemoveBook id={id} />
         </div>
       </div>

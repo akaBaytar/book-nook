@@ -10,6 +10,7 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+
 import {
   Card,
   CardTitle,
@@ -24,6 +25,7 @@ import { getList } from '@/actions/list.actions';
 import { getBooks } from '@/actions/book.actions';
 
 import type { List } from '@/types';
+import ShareButton from '@/components/shared/share-button';
 
 type PropType = {
   params: Promise<{ id: string }>;
@@ -74,14 +76,13 @@ const ListDetailsPage = async ({ params }: PropType) => {
           </div>
         </div>
         <div className='flex items-center gap-2'>
+          {!list.private && <ShareButton content={list} type='list'/>}
           <AddListButton isEdit={true} list={list as List} />
           <RemoveList id={id} />
         </div>
       </div>
       <div className='sm:hidden flex items-center gap-2.5 justify-between md:flex xl:hidden'>
-        <h1 className='text-xl tracking-[0.015em] line-clamp-1'>
-          {list.name}
-        </h1>
+        <h1 className='text-xl tracking-[0.015em] line-clamp-1'>{list.name}</h1>
         {list.private ? (
           <LockIcon className='size-4 mt-0.5 text-pink-300' />
         ) : (

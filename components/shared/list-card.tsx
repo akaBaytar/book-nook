@@ -6,8 +6,8 @@ import Image from 'next/image';
 import {
   LockIcon,
   UnlockIcon,
-  BookOpenIcon,
   ChevronUpIcon,
+  LibraryBigIcon,
   ChevronDownIcon,
 } from 'lucide-react';
 
@@ -61,7 +61,7 @@ const ListCard = ({ list, books = [] }: PropType) => {
             </div>
           </div>
           <div className='flex items-center gap-1 text-muted-foreground'>
-            <BookOpenIcon className='size-4 mt-0.5' />
+            <LibraryBigIcon className='size-4 mt-0.5' />
             <span className='text-sm'>
               {books.length} {books.length < 2 ? 'book' : 'books'}
             </span>

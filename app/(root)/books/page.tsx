@@ -172,7 +172,7 @@ const AllBooksPage = () => {
           </h1>
           <AddBookButton onBookAdded={handleBookAdded} />
         </header>
-        <div className='flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between'>
+        <div className='flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between'>
           <div className='flex flex-col xl:flex-row w-full items-center gap-5'>
             <div className='relative w-full xl:w-1/2'>
               <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />

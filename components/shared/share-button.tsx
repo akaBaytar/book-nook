@@ -11,12 +11,12 @@ import {
 } from 'react-share';
 
 import {
-  XIcon,
-  EmailIcon,
-  RedditIcon,
-  WhatsappIcon,
-  TelegramIcon,
-} from 'react-share';
+  RiTwitterXLine,
+  RiMailLine,
+  RiRedditLine,
+  RiWhatsappLine,
+  RiTelegram2Line,
+} from 'react-icons/ri';
 
 import {
   Popover,
@@ -35,7 +35,7 @@ type PropTypes = {
 
 const ShareButton = ({ content, type }: PropTypes) => {
   const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${
-    type === 'book' ? 'all-books' : 'my-lists'
+    type === 'book' ? 'all-books' : 'lists'
   }/${content.id}`;
 
   const getShareTitle = () => {
@@ -52,28 +52,27 @@ const ShareButton = ({ content, type }: PropTypes) => {
   };
 
   const title = getShareTitle();
-  const iconSize = 28;
 
   const shareButtons = [
     {
       component: EmailShareButton,
-      icon: EmailIcon,
+      icon: RiMailLine,
     },
     {
       component: WhatsappShareButton,
-      icon: WhatsappIcon,
+      icon: RiWhatsappLine,
     },
     {
       component: TelegramShareButton,
-      icon: TelegramIcon,
+      icon: RiTelegram2Line,
     },
     {
       component: RedditShareButton,
-      icon: RedditIcon,
+      icon: RiRedditLine,
     },
     {
       component: TwitterShareButton,
-      icon: XIcon,
+      icon: RiTwitterXLine,
     },
   ];
 
@@ -87,16 +86,14 @@ const ShareButton = ({ content, type }: PropTypes) => {
       <PopoverContent align='end' className='min-h-9'>
         <div className='flex items-center gap-1.5'>
           {shareButtons.map(({ component: Component, icon: Icon }, idx) => (
-            <div
-              key={idx}
-              className='flex flex-col items-center gap-2 hover:bg-popover hover:shadow-none'>
+            <Button key={idx} size='icon' variant='outline' asChild>
               <Component
                 url={shareUrl}
                 title={title}
                 className='hover:opacity-80 transition-opacity'>
-                <Icon size={iconSize} round />
+                <Icon />
               </Component>
-            </div>
+            </Button>
           ))}
         </div>
       </PopoverContent>

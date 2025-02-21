@@ -60,9 +60,39 @@ export const getList = async (id: string) => {
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
-    const list = await prisma.list.findUnique({ where: { userId, id } });
+    const list = await prisma.list.findFirst({
+      where: {
+        id,
+        OR: [{ userId }, { private: false }],
+      },
+    });
 
     if (!list) throw new Error('List not found.');
+
+    return {
+      list: JSON.parse(JSON.stringify(list)),
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const getPublicList = async (id: string) => {
+  try {
+    const list = await prisma.list.findFirst({
+      where: {
+        id,
+        private: false,
+      },
+    });
+
+    if (!list) {
+      throw new Error('List is not public.');
+    }
 
     return {
       list: JSON.parse(JSON.stringify(list)),

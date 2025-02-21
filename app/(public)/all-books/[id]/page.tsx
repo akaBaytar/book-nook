@@ -1,30 +1,27 @@
-import Link from 'next/link';
 import Image from 'next/image';
 
 import {
   StarIcon,
   QuoteIcon,
   CalendarIcon,
-  ArrowLeftIcon,
   SwatchBookIcon,
 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { formatDate } from '@/utils';
-import { getBook } from '@/actions/book.actions';
+import { getPublicBook } from '@/actions/book.actions';
 
 type PropType = {
   params: Promise<{ id: string }>;
 };
 
-const BookDetailsPage = async ({ params }: PropType) => {
+const PublicBookDetailPage = async ({ params }: PropType) => {
   const { id } = await params;
 
-  const { book } = await getBook(id);
+  const { book } = await getPublicBook(id);
 
   const {
     type,
@@ -54,14 +51,8 @@ const BookDetailsPage = async ({ params }: PropType) => {
 
   if (!book) {
     return (
-      <div className='flex flex-col items-center justify-center h-screen gap-5'>
-        <p className='text-xl text-muted-foreground'>Book not found.</p>
-        <Link href='/all-books'>
-          <Button variant='outline'>
-            <ArrowLeftIcon className='mr-2 size-4' />
-            Back to Books
-          </Button>
-        </Link>
+      <div className='flex items-center justify-center h-screen'>
+        <p className='text-xl'>List not found.</p>
       </div>
     );
   }
@@ -237,4 +228,4 @@ const BookDetailsPage = async ({ params }: PropType) => {
   );
 };
 
-export default BookDetailsPage;
+export default PublicBookDetailPage;

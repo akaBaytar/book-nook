@@ -95,6 +95,26 @@ export const getBooks = async (ids: string[]) => {
   }
 };
 
+export const getPublicBooks = async (ids: string[]) => {
+  try {
+    const books = await prisma.book.findMany({
+      where: { id: { in: ids }, private: false },
+    });
+
+    if (!books) throw new Error('Books not found.');
+
+    return {
+      books: JSON.parse(JSON.stringify(books)),
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
 export const getAllBooks = async ({
   search = '',
   filter = 'all',

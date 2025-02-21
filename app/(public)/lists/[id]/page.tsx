@@ -12,8 +12,8 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 
-import { getBooks } from '@/actions/book.actions';
 import { getPublicList } from '@/actions/list.actions';
+import { getPublicBooks } from '@/actions/book.actions';
 
 type PropType = {
   params: Promise<{ id: string }>;
@@ -33,7 +33,7 @@ const PublicListDetailsPage = async ({ params }: PropType) => {
 
   const { list } = await getPublicList(id);
 
-  const { books } = await getBooks(list.books);
+  const { books } = await getPublicBooks(list.books);
 
   if (!list) {
     return (
@@ -55,7 +55,9 @@ const PublicListDetailsPage = async ({ params }: PropType) => {
       </div>
       <Card className='rounded-md p-4'>
         <CardContent className='p-0'>
-          <p className='text-muted-foreground text-center'>{list.description}</p>
+          <p className='text-muted-foreground text-center'>
+            {list.description}
+          </p>
           <div className='mt-2.5 flex items-center justify-center gap-0.5 text-sm text-muted-foreground'>
             <LibraryBigIcon className='size-4 text-pink-300' />
             <span>

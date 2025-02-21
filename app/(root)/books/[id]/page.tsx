@@ -20,16 +20,16 @@ import ShareButton from '@/components/shared/share-button';
 import UpdateBookButton from '@/components/shared/update-book-button';
 
 import { formatDate } from '@/utils';
-import { getPublicBook } from '@/actions/book.actions';
+import { getBook } from '@/actions/book.actions';
 
 type PropType = {
   params: Promise<{ id: string }>;
 };
 
-const PublicBookDetailsPage = async ({ params }: PropType) => {
+const BookDetailsPage = async ({ params }: PropType) => {
   const { id } = await params;
 
-  const { book } = await getPublicBook(id);
+  const { book } = await getBook(id);
 
   const {
     type,
@@ -78,7 +78,7 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
         <Button asChild>
           <Link href='/books'>
             <ArrowLeftIcon className='size-4' />
-            <span>All Books</span>
+            <span>My Books</span>
           </Link>
         </Button>
         <div className='space-x-2.5'>
@@ -260,4 +260,4 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
   );
 };
 
-export default PublicBookDetailsPage;
+export default BookDetailsPage;

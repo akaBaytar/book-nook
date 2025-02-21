@@ -72,7 +72,7 @@ const ListCard = ({ list, books = [] }: PropType) => {
                 {books.slice(0, 1).map((book: Book) => (
                   <div
                     key={book.id}
-                    className='flex items-center gap-2.5 p-2 rounded-md bg-muted'>
+                    className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border border-pink-100'>
                     <Image
                       src={book.image}
                       alt={book.name}
@@ -106,11 +106,11 @@ const ListCard = ({ list, books = [] }: PropType) => {
               {books.length > 1 && (
                 <>
                   {isExpanded && (
-                    <div className='space-y-2.5 animate-in fade-in slide-in-from-top-1'>
+                    <div className='space-y-2.5 animate-in fade-in'>
                       {books.slice(1).map((book: Book) => (
                         <div
                           key={book.id}
-                          className='flex items-center gap-1 p-2 rounded-md bg-muted'>
+                          className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border border-pink-100'>
                           <Image
                             src={book.image}
                             alt={book.name}
@@ -118,22 +118,26 @@ const ListCard = ({ list, books = [] }: PropType) => {
                             height={48}
                             className='rounded-sm object-contain'
                           />
-                          <div className='flex-1 min-w-0'>
-                            <h4 className='text-sm font-medium truncate'>
-                              {book.name}
-                            </h4>
-                            <p className='text-xs text-muted-foreground truncate'>
-                              {book.author}
-                            </p>
+                          <div className='w-full flex flex-col justify-between gap-1 sm:flex-row lg:flex-col xl:flex-row'>
+                            <div className='flex-1 min-w-0'>
+                              <h4 className='text-sm font-medium truncate'>
+                                {book.name}
+                              </h4>
+                              <p className='text-xs text-muted-foreground truncate'>
+                                {book.author}
+                              </p>
+                            </div>
+                            <div className='flex items-center gap-1'>
+                              {book.genre.map((g, i) => (
+                                <Badge
+                                  key={i}
+                                  variant='secondary'
+                                  className='text-xs font-light p-0.5 px-1'>
+                                  {g}
+                                </Badge>
+                              ))}
+                            </div>
                           </div>
-                          {book.genre.map((g, i) => (
-                            <Badge
-                              key={i}
-                              variant='secondary'
-                              className='text-xs'>
-                              {g}
-                            </Badge>
-                          ))}
                         </div>
                       ))}
                     </div>

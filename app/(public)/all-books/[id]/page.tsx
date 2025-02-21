@@ -4,7 +4,6 @@ import Image from 'next/image';
 import {
   StarIcon,
   QuoteIcon,
-  LibraryIcon,
   CalendarIcon,
   ArrowLeftIcon,
   SwatchBookIcon,
@@ -15,21 +14,17 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import RemoveBook from '@/components/shared/remove-book';
-import ShareButton from '@/components/shared/share-button';
-import UpdateBookButton from '@/components/shared/update-book-button';
-
 import { formatDate } from '@/utils';
-import { getPublicBook } from '@/actions/book.actions';
+import { getBook } from '@/actions/book.actions';
 
 type PropType = {
   params: Promise<{ id: string }>;
 };
 
-const PublicBookDetailsPage = async ({ params }: PropType) => {
+const BookDetailsPage = async ({ params }: PropType) => {
   const { id } = await params;
 
-  const { book } = await getPublicBook(id);
+  const { book } = await getBook(id);
 
   const {
     type,
@@ -43,7 +38,6 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
     volume,
     summary,
     endDate,
-    private: isPrivate,
     language,
     printing,
     category,
@@ -60,9 +54,9 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
 
   if (!book) {
     return (
-      <div className='flex flex-col items-center justify-center h-[calc(100vh-2rem)] gap-5'>
+      <div className='flex flex-col items-center justify-center h-screen gap-5'>
         <p className='text-xl text-muted-foreground'>Book not found.</p>
-        <Link href='/books'>
+        <Link href='/all-books'>
           <Button variant='outline'>
             <ArrowLeftIcon className='mr-2 size-4' />
             Back to Books
@@ -73,24 +67,8 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
   }
 
   return (
-    <Card className='relative rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
-      <div className='flex items-center justify-between gap-2.5 mt-4 mx-4'>
-        <Button asChild>
-          <Link href='/books'>
-            <ArrowLeftIcon className='size-4' />
-            <span>All Books</span>
-          </Link>
-        </Button>
-        <div className='space-x-2.5'>
-          <Button size='icon'>
-            <LibraryIcon className='size-4' />
-          </Button>
-          <UpdateBookButton bookId={id} book={book} />
-          {!isPrivate && <ShareButton content={book} type='book' />}
-          <RemoveBook id={id} />
-        </div>
-      </div>
-      <CardHeader className='flex items-center text-center xl:flex-row xl:items-start gap-5 sm:gap-10'>
+    <Card className='relative rounded-md bg-sidebar min-h-screen'>
+      <CardHeader className='flex items-center text-center gap-5'>
         {image && (
           <div className='relative min-w-[200px]'>
             <Image
@@ -102,10 +80,10 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
             />
           </div>
         )}
-        <div className='flex flex-col items-center text-center xl:text-start xl:items-start space-y-5'>
+        <div className='flex flex-col items-center text-center space-y-5'>
           <div>
             {name && (
-              <CardTitle className='text-2xl font-medium tracking-[0.015em] flex flex-col sm:flex-row mb-2.5 sm:mb-0 items-center gap-2.5 truncate'>
+              <CardTitle className='text-2xl font-medium tracking-[0.015em] flex flex-col sm:flex-row mb-2.5 items-center gap-2.5 truncate'>
                 {name}
                 {completed && (
                   <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
@@ -144,13 +122,13 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
           {(pageCount || startDate || endDate) && (
             <div className='flex flex-wrap gap-5'>
               {pageCount && (
-                <div className='flex items-center justify-center xl:justify-start w-full gap-1'>
+                <div className='flex items-center justify-center w-full gap-1'>
                   <SwatchBookIcon className='fill-pink-100 text-pink-400 size-5' />
                   <span>{pageCount} pages</span>
                 </div>
               )}
               {startDate && (
-                <div className='flex items-center justify-center xl:justify-start w-full gap-1'>
+                <div className='flex items-center justify-center w-full gap-1'>
                   <CalendarIcon className='fill-pink-100 text-pink-400 size-5' />
                   <span>Started {formatDate(startDate)}</span>
                 </div>
@@ -162,13 +140,13 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
       <CardContent className='space-y-10'>
         <div className='space-y-5'>
           {summary && (
-            <div className='space-y-2.5 text-center xl:text-start'>
+            <div className='space-y-2.5 text-center text-pretty'>
               <h3 className='text-lg'>Summary</h3>
               <p className='text-muted-foreground leading-relaxed'>{summary}</p>
             </div>
           )}
           {quote && (
-            <blockquote className='flex gap-1 items-center border-s-4 border border-pink-100 p-2.5 rounded-md italic text-muted-foreground'>
+            <blockquote className='flex gap-1 items-center justify-center border-s-4 border border-pink-100 p-2.5 rounded-md italic text-muted-foreground'>
               <QuoteIcon className='size-4 rotate-180  fill-pink-100 text-pink-300' />
               {quote}
               <QuoteIcon className='size-4 fill-pink-100 text-pink-300' />
@@ -177,8 +155,7 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
         </div>
         <Separator />
         <div>
-          <h3 className='text-lg mb-4'>Book Details</h3>
-          <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 text-sm'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 text-sm text-center'>
             {type && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Type</p>
@@ -260,4 +237,4 @@ const PublicBookDetailsPage = async ({ params }: PropType) => {
   );
 };
 
-export default PublicBookDetailsPage;
+export default BookDetailsPage;

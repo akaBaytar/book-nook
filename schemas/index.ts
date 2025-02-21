@@ -17,6 +17,7 @@ export const BookSchema = z.object({
   genre: z.array(z.string()).min(1, 'At least one genre is required'),
   image: z.string().optional(),
   completed: z.boolean().default(false),
+  private: z.boolean().default(false),
   favorite: z.boolean().default(false),
   readingNow: z.boolean().default(false),
   isbn: z.string().optional(),

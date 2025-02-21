@@ -33,6 +33,7 @@ model Book {
   rating          Decimal   @default(5) @db.Decimal(3, 1)
   type            BookType  @default(BOOK)
   pageCount       Int
+  private         Boolean   @default(false)
   completed       Boolean   @default(false)
   favorite        Boolean   @default(false)
   readingNow      Boolean   @default(false)

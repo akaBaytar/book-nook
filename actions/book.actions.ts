@@ -41,10 +41,13 @@ export const addBook = async (data: BookData) => {
 export const getBook = async (id: string) => {
   const userId = await getCurrentUser();
 
-  if (!userId) throw new Error('User is not authenticated.');
-
   try {
-    const book = await prisma.book.findUnique({ where: { userId, id } });
+    const book = await prisma.book.findFirst({
+      where: {
+        id,
+        OR: [{ userId: userId as string }, { private: false }],
+      },
+    });
 
     if (!book) throw new Error('Book not found.');
 
@@ -337,4 +340,29 @@ export const toggleCompleted = async (id: string) => {
   });
 
   revalidatePath('/tbr-game');
+};
+
+export const getPublicBook = async (id: string) => {
+  try {
+    const book = await prisma.book.findFirst({
+      where: {
+        id,
+        private: false,
+      },
+    });
+
+    if (!book) {
+      throw new Error('Book is not public.');
+    }
+
+    return {
+      book: JSON.parse(JSON.stringify(book)),
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
 };

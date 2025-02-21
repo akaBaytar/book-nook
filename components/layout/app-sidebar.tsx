@@ -34,8 +34,8 @@ const items = [
     icon: LayoutDashboardIcon,
   },
   {
-    title: 'All Books',
-    url: '/all-books',
+    title: 'My Books',
+    url: '/books',
     icon: LibraryBigIcon,
   },
   {

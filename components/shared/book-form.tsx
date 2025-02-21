@@ -530,23 +530,45 @@ const BookForm = ({
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name='isbn'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>ISBN</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder='Enter ISBN'
-                  {...field}
-                  value={field.value || ''}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className='grid grid-cols-1 md:grid-cols-2 items-end gap-5'>
+          <FormField
+            control={form.control}
+            name='private'
+            render={({ field }) => (
+              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
+                <div className='space-y-0.5'>
+                  <FormLabel>Private</FormLabel>
+                  <FormDescription className='text-xs'>
+                    Mark if you want your book to be visible only to you
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value || false}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='isbn'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ISBN</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Enter ISBN'
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <div className='space-y-5'>
           <FormField
             control={form.control}

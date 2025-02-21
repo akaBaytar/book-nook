@@ -35,7 +35,7 @@ type PropTypes = {
 
 const ShareButton = ({ content, type }: PropTypes) => {
   const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${
-    type === 'book' ? 'books' : 'my-lists'
+    type === 'book' ? 'all-books' : 'my-lists'
   }/${content.id}`;
 
   const getShareTitle = () => {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { PenIcon } from 'lucide-react';
+import { EditIcon } from 'lucide-react';
 
 import { Button } from '../ui/button';
 
@@ -33,8 +33,8 @@ const UpdateBookButton = ({ book, bookId }: PropTypes) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PenIcon /> <span className='hidden 2xl:flex'>Update Book</span>
+        <Button size='icon'>
+          <EditIcon />
         </Button>
       </DialogTrigger>
       <DialogContent className='h-full md:h-[calc(100%-2.5rem)] overflow-y-scroll'>

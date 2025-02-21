@@ -168,7 +168,7 @@ const AllBooksPage = () => {
         <header className='flex items-center justify-between'>
           <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
             <LibraryBigIcon className='size-5' />
-            All Books ({count})
+            My Books ({count})
           </h1>
           <AddBookButton onBookAdded={handleBookAdded} />
         </header>

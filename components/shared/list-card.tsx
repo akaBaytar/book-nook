@@ -154,7 +154,9 @@ const ListCard = ({ list, books = [] }: PropType) => {
                     )}
                     {isExpanded
                       ? 'Show less'
-                      : `Show ${books.length - 1} more books`}
+                      : `Show ${books.length - 1} ${
+                          books.length - 1 < 2 ? 'more book' : 'more books'
+                        }`}
                   </Button>
                 </>
               )}

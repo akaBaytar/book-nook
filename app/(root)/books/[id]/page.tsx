@@ -4,7 +4,6 @@ import Image from 'next/image';
 import {
   StarIcon,
   QuoteIcon,
-  LibraryIcon,
   CalendarIcon,
   ArrowLeftIcon,
   SwatchBookIcon,
@@ -82,9 +81,6 @@ const BookDetailsPage = async ({ params }: PropType) => {
           </Link>
         </Button>
         <div className='space-x-2.5'>
-          <Button size='icon'>
-            <LibraryIcon className='size-4' />
-          </Button>
           <UpdateBookButton bookId={id} book={book} />
           {!isPrivate && <ShareButton content={book} type='book' />}
           <RemoveBook id={id} />

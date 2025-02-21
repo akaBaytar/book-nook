@@ -18,6 +18,8 @@ import {
   FormDescription,
 } from '@/components/ui/form';
 
+import BookSelector from '@/components/shared/book-selector';
+
 import { ListSchema } from '@/schemas';
 import { useToast } from '@/hooks/use-toast';
 import { createList, updateList } from '@/actions/list.actions';
@@ -105,6 +107,22 @@ const ListForm = ({ isEdit, setIsOpen, onSuccess, list }: PropTypes) => {
                   {...field}
                   value={field.value || ''}
                   className='h-16 resize-none'
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='books'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Books</FormLabel>
+              <FormControl>
+                <BookSelector
+                  selectedBooks={field.value}
+                  onSelect={field.onChange}
                 />
               </FormControl>
               <FormMessage />

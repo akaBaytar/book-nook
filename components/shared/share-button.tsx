@@ -91,7 +91,7 @@ const ShareButton = ({ content, type }: PropTypes) => {
                 url={shareUrl}
                 title={title}
                 className='hover:opacity-80 transition-opacity'>
-                <Icon />
+                <Icon className='!size-5' />
               </Component>
             </Button>
           ))}

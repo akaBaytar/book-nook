@@ -38,10 +38,10 @@ const AddListButton = ({ onAdd, isEdit, list }: PropTypes) => {
       <DialogTrigger asChild>
         <Button size={isEdit ? 'icon' : 'sm'}>
           {isEdit ? <EditIcon /> : <PlusIcon />}
-          {!isEdit && <span>Add New List</span>}
+          {!isEdit && <span>Add List</span>}
         </Button>
       </DialogTrigger>
-      <DialogContent className=''>
+      <DialogContent className='max-h-[calc(100%-2.5rem)] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle>{isEdit ? 'Update List' : 'Add New List'}</DialogTitle>
         </DialogHeader>

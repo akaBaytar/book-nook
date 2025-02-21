@@ -32,7 +32,7 @@ const EndColumn = async () => {
           <SheetTrigger asChild>
             <Button className='shadow-md'>Open Tracker</Button>
           </SheetTrigger>
-          <SheetContent className='overflow-y-scroll pb-20 sm:pb-5'>
+          <SheetContent className='overflow-y-scroll min-h-[calc(100svh-2rem)]'>
             <SheetHeader>
               <SheetTitle className='text-center'>Book Tracker</SheetTitle>
               <SheetDescription className='text-center'>

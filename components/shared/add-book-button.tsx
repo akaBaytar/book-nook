@@ -34,10 +34,10 @@ const AddBookButton = ({ onBookAdded }: { onBookAdded: () => void }) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button size='sm'>
-          <PlusIcon /> Add New Book
+          <PlusIcon /> Add Book
         </Button>
       </DialogTrigger>
-      <DialogContent className='h-full md:h-[calc(100%-2.5rem)] overflow-y-scroll'>
+      <DialogContent className='max-h-[calc(100%-2.5rem)] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle>Add New Book</DialogTitle>
         </DialogHeader>

@@ -32,7 +32,7 @@ const ListsSkeleton = () => {
       <div className='flex flex-col justify-between gap-5'>
         <div className='flex items-center justify-between gap-5'>
           <Skeleton className='h-9 w-40' />
-          <Skeleton className='h-9 w-32' />
+          <Skeleton className='h-9 w-24' />
         </div>
         <div className='flex items-center justify-between gap-5 sm:gap-10'>
           <Skeleton className='h-9 w-full' />

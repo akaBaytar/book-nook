@@ -104,8 +104,8 @@ const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
           />
         </PopoverTrigger>
         <PopoverContent
-          side='right'
-          className='p-0 max-w-fit border-pink-100 hover:bg-pink-50'>
+          side='bottom'
+          className='p-0 border-pink-100 hover:bg-pink-50'>
           <button
             onClick={onDelete}
             disabled={isUpdating}
@@ -159,12 +159,12 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
                 <EllipsisIcon className='size-4 text-gray-500' />
               </PopoverTrigger>
               <PopoverContent
-                side='right'
-                className='p-1 max-w-fit border-pink-100 flex flex-col items-center gap-1'>
+                side='bottom'
+                className='flex flex-col items-center gap-1.5'>
                 <Button
                   size='sm'
                   variant='ghost'
-                  className='h-6 w-full border border-pink-100 justify-between'
+                  className='h-6 w-full shadow justify-between rounded-sm'
                   onClick={() => setIsAddingNew(true)}>
                   <PlusIcon className='!size-3' />
                   <span>Add Item</span>
@@ -203,7 +203,9 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
             </Button>
           </div>
         ) : (
-          <p className='text-sm'>{checkList.items?.length === 0 ? 'There are no items. ' : ''}</p>
+          <p className='text-sm'>
+            {checkList.items?.length === 0 ? 'There are no items. ' : ''}
+          </p>
         )}
       </CardContent>
     </Card>

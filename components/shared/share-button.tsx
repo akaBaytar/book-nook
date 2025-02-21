@@ -3,7 +3,6 @@
 import { Share2Icon } from 'lucide-react';
 
 import {
-  EmailShareButton,
   RedditShareButton,
   BlueskyShareButton,
   TwitterShareButton,
@@ -12,7 +11,6 @@ import {
 } from 'react-share';
 
 import {
-  RiMailLine,
   RiRedditLine,
   RiBlueskyLine,
   RiWhatsappLine,
@@ -56,10 +54,6 @@ const ShareButton = ({ content, type }: PropTypes) => {
   const title = getShareTitle();
 
   const shareButtons = [
-    {
-      component: EmailShareButton,
-      icon: RiMailLine,
-    },
     {
       component: WhatsappShareButton,
       icon: RiWhatsappLine,

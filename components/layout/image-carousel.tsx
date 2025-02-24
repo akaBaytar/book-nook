@@ -36,6 +36,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
                   src={image}
                   width={400}
                   height={400}
+                  priority
                   alt='placeholder image'
                   className='rounded-md size-full object-cover'
                 />

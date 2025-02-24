@@ -13,6 +13,7 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardTitle, CardDescription } from '@/components/ui/card';
 
 import type { List } from '@/types';
@@ -28,9 +29,10 @@ type Book = {
 type PropType = {
   list: List;
   books?: Book[];
+  isLoading: boolean;
 };
 
-const ListCard = ({ list, books = [] }: PropType) => {
+const ListCard = ({ list, books = [], isLoading }: PropType) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onClick = (e: React.MouseEvent) => {
@@ -73,13 +75,17 @@ const ListCard = ({ list, books = [] }: PropType) => {
                   <div
                     key={book.id}
                     className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border border-pink-100'>
-                    <Image
-                      src={book.image}
-                      alt={book.name}
-                      width={27}
-                      height={48}
-                      className='rounded-sm object-contain'
-                    />
+                    {isLoading ? (
+                      <Skeleton className='w-[27px] h-[48px]' />
+                    ) : (
+                      <Image
+                        src={book.image}
+                        alt={book.name}
+                        width={27}
+                        height={48}
+                        className='rounded-sm object-contain'
+                      />
+                    )}
                     <div className='w-full flex flex-col justify-between gap-1 sm:flex-row lg:flex-col xl:flex-row'>
                       <div className='flex-1 min-w-0'>
                         <h4 className='text-sm font-medium truncate'>

@@ -201,7 +201,7 @@ const ListsPage = () => {
           </Alert>
         ) : (
           filteredLists.map((list) => (
-            <ListCard key={list.id} list={list} books={booksData[list.id]} />
+            <ListCard key={list.id} list={list} books={booksData[list.id]} isLoading={loading}/>
           ))
         )}
       </div>

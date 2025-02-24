@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -25,6 +27,8 @@ import {
   SidebarMenuButton,
   SidebarGroupContent,
 } from '@/components/ui/sidebar';
+
+import { Skeleton } from '../ui/skeleton';
 
 import ImageCarousel from './image-carousel';
 
@@ -55,6 +59,12 @@ const AppSidebar = () => {
   const { user } = useUser();
 
   const { setOpenMobile } = useSidebar();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <Sidebar side='left' variant='floating'>
@@ -99,25 +109,29 @@ const AppSidebar = () => {
       </SidebarContent>
       <SidebarSeparator className='hidden md:block' />
       <SidebarFooter>
-        <div className='hidden md:flex items-center gap-2'>
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: 'size-10 rounded-md',
-                userButtonPopoverCard: 'w-[15rem]',
-                userButtonTrigger: 'rounded-md',
-              },
-            }}
-          />
-          <div className='flex flex-col'>
-            <p className='text-sm font-medium'>
-              {user?.firstName} {user?.lastName}
-            </p>
-            <p className='text-xs text-gray-500'>
-              {user?.emailAddresses[0].emailAddress}
-            </p>
+        {loading ? (
+          <Skeleton className='h-10 w-[241px]'/>
+        ) : (
+          <div className='hidden md:flex items-center gap-2'>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: 'size-10 rounded-md',
+                  userButtonPopoverCard: 'w-[15rem]',
+                  userButtonTrigger: 'rounded-md',
+                },
+              }}
+            />
+            <div className='flex flex-col'>
+              <p className='text-sm font-medium'>
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className='text-xs text-gray-500'>
+                {user?.emailAddresses[0].emailAddress}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

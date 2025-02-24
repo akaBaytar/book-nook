@@ -16,7 +16,10 @@ export const getAllList = async () => {
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
-    const lists = await prisma.list.findMany({ where: { userId } });
+    const lists = await prisma.list.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
 
     return {
       success: true,

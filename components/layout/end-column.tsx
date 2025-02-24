@@ -4,13 +4,11 @@ import { Card, CardContent } from '@/components/ui/card';
 
 import {
   Sheet,
-  SheetClose,
+  SheetTitle,
+  SheetHeader,
+  SheetTrigger,
   SheetContent,
   SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
 } from '@/components/ui/sheet';
 
 import ImageCarousel from './image-carousel';
@@ -32,7 +30,7 @@ const EndColumn = async () => {
           <SheetTrigger asChild>
             <Button className='shadow-md'>Open Tracker</Button>
           </SheetTrigger>
-          <SheetContent className='overflow-y-scroll pb-20 sm:pb-5'>
+          <SheetContent className='overflow-y-scroll'>
             <SheetHeader>
               <SheetTitle className='text-center'>Book Tracker</SheetTitle>
               <SheetDescription className='text-center'>
@@ -40,13 +38,6 @@ const EndColumn = async () => {
               </SheetDescription>
             </SheetHeader>
             <BookTracker />
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button type='submit' className='w-full'>
-                  Save Changes
-                </Button>
-              </SheetClose>
-            </SheetFooter>
           </SheetContent>
         </Sheet>
       </Card>

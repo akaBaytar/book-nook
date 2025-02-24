@@ -3,6 +3,7 @@ import { z } from 'zod';
 import {
   ListSchema,
   BookSchema,
+  BookEntrySchema,
   CheckListSchema,
   CheckListItemSchema,
 } from '@/schemas';
@@ -62,6 +63,8 @@ export type GetAllBooks = {
 };
 
 export type BookData = z.infer<typeof BookSchema>;
+
+export type BookEntryData = z.infer<typeof BookEntrySchema>;
 
 export type Filter = 'all' | 'completed' | 'unread';
 

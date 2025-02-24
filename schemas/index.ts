@@ -57,3 +57,9 @@ export const ListSchema = z.object({
   books: z.array(z.string()).optional(),
   private: z.boolean(),
 });
+
+export const BookEntrySchema = z.object({
+  day: z.number().int(),
+  month: z.number().int(),
+  pagesRead: z.number().int(),
+});

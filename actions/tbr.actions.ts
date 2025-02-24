@@ -39,7 +39,10 @@ export const getAllTBR = async () => {
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
-    const TBRs = await prisma.tbr.findMany({ where: { userId } });
+    const TBRs = await prisma.tbr.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
 
     return {
       success: true,

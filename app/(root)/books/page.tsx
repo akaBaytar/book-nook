@@ -8,7 +8,6 @@ import { SearchIcon, ChevronDown, LibraryBigIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import {
   Select,
@@ -38,34 +37,6 @@ import {
 } from '@/actions/book.actions';
 
 import type { Book, Filter, Sort } from '@/types';
-
-const PageSkeleton = () => {
-  return (
-    <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
-      <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-2'>
-          <Skeleton className='h-8 w-44' />
-        </div>
-        <Skeleton className='h-8 w-24' />
-      </div>
-      <div className='flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between'>
-        <div className='flex flex-col xl:flex-row w-full items-center gap-5'>
-          <Skeleton className='h-8 w-full xl:w-1/2' />
-          <Skeleton className='h-8 w-full xl:w-1/2' />
-          <Skeleton className='h-8 w-full xl:w-1/2' />
-        </div>
-        <div className='flex gap-2.5 w-full sm:w-1/2 xl:w-2/3'>
-          <Skeleton className='h-8 w-1/3' />
-          <Skeleton className='h-8 w-1/3' />
-          <Skeleton className='h-8 w-1/3' />
-        </div>
-      </div>
-      <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-        <BookSkeleton />
-      </div>
-    </section>
-  );
-};
 
 const AllBooksPage = () => {
   const router = useRouter();
@@ -191,17 +162,13 @@ const AllBooksPage = () => {
     fetchBooks(true);
   }, [router, fetchBooks]);
 
-  if (isLoading) {
-    return <PageSkeleton />;
-  }
-
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
         <header className='flex items-center justify-between'>
           <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
             <LibraryBigIcon className='size-5' />
-            My Books ({count})
+            My Books
           </h1>
           <AddBookButton onBookAdded={handleBookAdded} />
         </header>
@@ -281,7 +248,9 @@ const AllBooksPage = () => {
         </div>
       </div>
       <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-        {books.length === 0 ? (
+        {isLoading ? (
+          <BookSkeleton />
+        ) : books.length === 0 ? (
           <div className='col-span-full text-center py-10'>
             <p className='text-muted-foreground'>No books found.</p>
           </div>

@@ -26,29 +26,44 @@ type Book = {
   genre: string[];
 };
 
-const ListsSkeleton = () => {
+const CardSkeleton = () => {
   return (
-    <>
-      <div className='flex flex-col justify-between gap-5'>
-        <div className='flex items-center justify-between gap-5'>
-          <Skeleton className='h-9 w-40' />
-          <Skeleton className='h-9 w-24' />
+    <div className='p-4 rounded-md border w-full min-h-[235px]'>
+      <div className='space-y-2.5'>
+        <div className='flex items-start justify-between'>
+          <div className='space-y-2.5 w-full'>
+            <div className='flex items-center justify-between gap-2.5'>
+              <Skeleton className='w-1/2 lg:w-1/3 h-6 rounded-md' />
+              <Skeleton className='size-6 rounded-md' />
+            </div>
+            <Skeleton className='w-3/4 h-6 rounded-md' />
+          </div>
         </div>
-        <div className='flex items-center justify-between gap-5 sm:gap-10'>
-          <Skeleton className='h-9 w-full' />
-          <div className='flex gap-1 sm:gap-2.5'>
-            <Skeleton className='h-9 w-9' />
-            <Skeleton className='h-9 w-16' />
-            <Skeleton className='h-9 w-16' />
+        <div className='flex items-center gap-1 text-muted-foreground'>
+          <Skeleton className='size-5 rounded-md' />
+          <Skeleton className='w-20 h-5 rounded-md' />
+        </div>
+        <div className='space-y-2.5'>
+          <div className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border  min-h-[61px]'>
+            <Skeleton className='w-[27px] h-[43px] rounded-sm' />
+            <div className='w-full flex flex-col justify-between gap-1 sm:flex-row lg:flex-col xl:flex-row'>
+              <div className='flex flex-col gap-1 flex-1 min-w-0'>
+                <Skeleton className='w-3/4 h-4 rounded-md' />
+                <Skeleton className='w-1/2 h-4 rounded-md' />
+              </div>
+              <div className='flex items-center gap-1'>
+                {[...Array(3)].map((_, index) => (
+                  <Skeleton key={index} className='w-12 h-5 rounded-md' />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className='flex justify-center'>
+            <Skeleton className='w-48 h-5 rounded-md mt-2.5' />
           </div>
         </div>
       </div>
-      <div className='grid gap-5'>
-        {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Skeleton key={i} className='h-[233px] w-full rounded-md' />
-        ))}
-      </div>
-    </>
+    </div>
   );
 };
 
@@ -135,64 +150,61 @@ const ListsPage = () => {
 
   return (
     <div className='space-y-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
-      {loading ? (
-        <ListsSkeleton />
-      ) : (
-        <>
-          <div className='flex flex-col gap-5'>
-            <div className='flex items-center justify-between gap-5'>
-              <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
-                <ListTreeIcon className='size-5 mt-0.5' />
-                My Lists ({filteredLists.length})
-              </h1>
-              <AddListButton onAdd={fetchLists} />
-            </div>
-            <div className='flex items-center justify-between gap-5 sm:gap-10'>
-              <div className='relative w-full'>
-                <SearchIcon className='absolute left-2 top-2.5 size-4 text-muted-foreground' />
-                <Input
-                  placeholder='Search...'
-                  className='ps-7'
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <div className='flex gap-1 sm:gap-2.5'>
-                <Button
-                  variant={privacyFilter === 'all' ? 'default' : 'outline'}
-                  size='sm'
-                  onClick={() => setPrivacyFilter('all')}>
-                  All
-                </Button>
-                <Button
-                  variant={privacyFilter === 'public' ? 'default' : 'outline'}
-                  size='sm'
-                  onClick={() => setPrivacyFilter('public')}>
-                  Public
-                </Button>
-                <Button
-                  variant={privacyFilter === 'private' ? 'default' : 'outline'}
-                  size='sm'
-                  onClick={() => setPrivacyFilter('private')}>
-                  Private
-                </Button>
-              </div>
-            </div>
+      <div className='flex flex-col gap-5'>
+        <div className='flex items-center justify-between gap-5'>
+          <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
+            <ListTreeIcon className='size-5 mt-0.5' />
+            My Lists
+          </h1>
+          <AddListButton onAdd={fetchLists} />
+        </div>
+        <div className='flex items-center justify-between gap-5 sm:gap-10'>
+          <div className='relative w-full'>
+            <SearchIcon className='absolute left-2 top-2.5 size-4 text-muted-foreground' />
+            <Input
+              placeholder='Search...'
+              className='ps-7'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-          {filteredLists.length === 0 && (
-            <Alert>
-              <AlertDescription>
-                No lists found. Try removing filters or add a new list.
-              </AlertDescription>
-            </Alert>
-          )}
-          <div className='grid gap-5'>
-            {filteredLists.map((list) => (
-              <ListCard key={list.id} list={list} books={booksData[list.id]} />
-            ))}
+          <div className='flex gap-1 sm:gap-2.5'>
+            <Button
+              variant={privacyFilter === 'all' ? 'default' : 'outline'}
+              size='sm'
+              onClick={() => setPrivacyFilter('all')}>
+              All
+            </Button>
+            <Button
+              variant={privacyFilter === 'public' ? 'default' : 'outline'}
+              size='sm'
+              onClick={() => setPrivacyFilter('public')}>
+              Public
+            </Button>
+            <Button
+              variant={privacyFilter === 'private' ? 'default' : 'outline'}
+              size='sm'
+              onClick={() => setPrivacyFilter('private')}>
+              Private
+            </Button>
           </div>
-        </>
-      )}
+        </div>
+      </div>
+      <div className='grid gap-5'>
+        {loading ? (
+         [...Array(2)].map((_, index) => <CardSkeleton key={index} />)
+        ) : filteredLists.length === 0 ? (
+          <Alert>
+            <AlertDescription>
+              No lists found. Try removing filters or add a new list.
+            </AlertDescription>
+          </Alert>
+        ) : (
+          filteredLists.map((list) => (
+            <ListCard key={list.id} list={list} books={booksData[list.id]} />
+          ))
+        )}
+      </div>
     </div>
   );
 };

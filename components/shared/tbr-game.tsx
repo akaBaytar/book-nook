@@ -217,7 +217,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
   const favoritesCount = books.filter((book) => book.favorite).length;
 
   return (
-    <div className='flex flex-col gap-5 mt-5 md:mt-0 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
+    <div className='flex flex-col gap-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex gap-5 items-center justify-between'>
         <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
           <SparklesIcon className='size-5 mt-0.5' />

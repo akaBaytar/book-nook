@@ -1,11 +1,11 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { UserButton } from '@clerk/nextjs';
-import { currentUser } from '@clerk/nextjs/server';
+import { UserButton, useUser } from '@clerk/nextjs';
 
 import {
-  SearchIcon,
   ListTreeIcon,
   SparklesIcon,
   LibraryBigIcon,
@@ -44,19 +44,14 @@ const items = [
     icon: ListTreeIcon,
   },
   {
-    title: 'Search',
-    url: '/search',
-    icon: SearchIcon,
-  },
-  {
     title: 'To Be Read',
     url: '/tbr-game',
     icon: SparklesIcon,
   },
 ];
 
-const AppSidebar = async () => {
-  const user = await currentUser();
+const AppSidebar = () => {
+  const { user } = useUser();
 
   return (
     <Sidebar side='left' variant='floating'>
@@ -81,17 +76,10 @@ const AppSidebar = async () => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    {item.title === 'Search' ? (
-                      <button>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </button>
-                    ) : (
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    )}
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

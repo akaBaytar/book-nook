@@ -2,12 +2,12 @@ import { Progress } from '@/components/ui/progress';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 import {
-  BookXIcon,
+  BookIcon,
   TargetIcon,
   RainbowIcon,
   CalendarIcon,
   BookCheckIcon,
-  BookHeartIcon,
+  ChartSplineIcon,
   TrendingUpIcon,
   BookMarkedIcon,
 } from 'lucide-react';
@@ -71,7 +71,7 @@ const DashboardGrid = () => {
         <StatCard
           title='Books Remaining'
           value={booksNotReadYet}
-          icon={BookXIcon}
+          icon={BookIcon}
           color='text-orange-600'
         />
       </div>
@@ -143,7 +143,7 @@ const DashboardGrid = () => {
           title='Daily Average'
           value='52 pages'
           subtitle='This week'
-          icon={BookHeartIcon}
+          icon={ChartSplineIcon}
           color='text-amber-600'
         />
       </div>

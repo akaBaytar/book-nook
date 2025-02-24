@@ -14,6 +14,7 @@ import {
 
 import {
   Sidebar,
+  useSidebar,
   SidebarMenu,
   SidebarGroup,
   SidebarFooter,
@@ -53,6 +54,8 @@ const items = [
 const AppSidebar = () => {
   const { user } = useUser();
 
+  const { setOpenMobile } = useSidebar();
+
   return (
     <Sidebar side='left' variant='floating'>
       <SidebarHeader>
@@ -74,7 +77,9 @@ const AppSidebar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  onClick={() => setOpenMobile(false)}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
                       <item.icon />

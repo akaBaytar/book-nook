@@ -114,7 +114,6 @@ const BookTracker = () => {
           pagesForColors[selectedColor as keyof typeof pagesForColors];
       }
 
-      // const { success, message } = await upsertBookEntry({
       const { success } = await upsertBookEntry({
         day,
         month,
@@ -123,8 +122,6 @@ const BookTracker = () => {
 
       if (success) {
         await loadEntries();
-
-        // toast({ description: message });
       }
     } catch {
       toast({ title: 'Error', description: 'An error occurred.' });
@@ -132,7 +129,7 @@ const BookTracker = () => {
   };
 
   return (
-    <div className='w-full py-2.5'>
+    <div className='w-full py-5'>
       <div className='flex flex-col justify-center items-center'>
         <div className='text-[11px] flex items-center gap-4 mb-0.5'>
           {ranges.map((range, index) => (

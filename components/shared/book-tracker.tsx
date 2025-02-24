@@ -105,31 +105,41 @@ const BookTracker = () => {
     const day = row + 1;
     const month = col + 1;
 
+    const previousColors = [...boxColors];
+    
+    const currentColor = boxColors[row][col];
+    let pagesRead = 0;
+
+    let newColor = null;
+
+    if (currentColor !== selectedColor) {
+      pagesRead = pagesForColors[selectedColor as keyof typeof pagesForColors];
+
+      newColor = selectedColor;
+    }
+
+    setBoxColors((prev) => {
+      const updatedColors = prev.map((rowArr) => [...rowArr]);
+
+      updatedColors[row][col] = newColor;
+
+      return updatedColors;
+    });
+
     try {
-      const currentColor = boxColors[row][col];
-      let pagesRead = 0;
+      const { success } = await upsertBookEntry({ day, month, pagesRead });
 
-      if (currentColor !== selectedColor) {
-        pagesRead =
-          pagesForColors[selectedColor as keyof typeof pagesForColors];
-      }
-
-      const { success } = await upsertBookEntry({
-        day,
-        month,
-        pagesRead,
-      });
-
-      if (success) {
-        await loadEntries();
+      if (!success) {
+        throw new Error('Failed to update entry');
       }
     } catch {
+      setBoxColors(previousColors);
       toast({ title: 'Error', description: 'An error occurred.' });
     }
   };
 
   return (
-    <div className='w-full py-5'>
+    <div className='w-full py-2.5'>
       <div className='flex flex-col justify-center items-center'>
         <div className='text-[11px] flex items-center gap-4 mb-0.5'>
           {ranges.map((range, index) => (

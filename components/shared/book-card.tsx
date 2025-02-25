@@ -28,15 +28,15 @@ const BookCard = ({ book }: { book: Book }) => {
             <CardTitle
               title={book.name}
               className='line-clamp-1 font-normal tracking-[0.015em]'>
-              {book.name}
+              {book.name.charAt(0).toUpperCase() + book.name.slice(1)}
             </CardTitle>
             <CardDescription title={book.author} className='line-clamp-1'>
-              {book.author}
+              {book.author.charAt(0).toUpperCase() + book.author.slice(1)}
             </CardDescription>
             <CardDescription
               title={book.publisher}
               className='text-xs font-light line-clamp-1'>
-              {book.publisher}
+              {book.publisher.charAt(0).toUpperCase() + book.publisher.slice(1)}
             </CardDescription>
             <div className='flex gap-2 mt-1'>
               {book.genre.slice(0, 2).map((genre) => (

@@ -89,10 +89,12 @@ const ListCard = ({ list, books = [], isLoading }: PropType) => {
                     <div className='w-full flex flex-col justify-between gap-1 sm:flex-row lg:flex-col xl:flex-row'>
                       <div className='flex-1 min-w-0'>
                         <h4 className='text-sm font-medium truncate'>
-                          {book.name}
+                          {book.name.charAt(0).toUpperCase() +
+                            book.name.slice(1)}
                         </h4>
                         <p className='text-xs text-muted-foreground truncate'>
-                          {book.author}
+                          {book.author.charAt(0).toUpperCase() +
+                            book.author.slice(1)}
                         </p>
                       </div>
                       <div className='flex items-center gap-1'>
@@ -127,10 +129,12 @@ const ListCard = ({ list, books = [], isLoading }: PropType) => {
                           <div className='w-full flex flex-col justify-between gap-1 sm:flex-row lg:flex-col xl:flex-row'>
                             <div className='flex-1 min-w-0'>
                               <h4 className='text-sm font-medium truncate'>
-                                {book.name}
+                                {book.name.charAt(0).toUpperCase() +
+                                  book.name.slice(1)}
                               </h4>
                               <p className='text-xs text-muted-foreground truncate'>
-                                {book.author}
+                                {book.author.charAt(0).toUpperCase() +
+                                  book.author.slice(1)}
                               </p>
                             </div>
                             <div className='flex items-center gap-1'>

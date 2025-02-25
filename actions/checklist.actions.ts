@@ -46,7 +46,7 @@ export const getCheckList = async () => {
   try {
     const checkList = await prisma.checkList.findUnique({
       where: { userId },
-      select: { id: true, items: true, name: true, userId: true },
+      include: { items: { orderBy: { createdAt: 'desc' } } },
     });
 
     return {

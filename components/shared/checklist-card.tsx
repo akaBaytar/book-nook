@@ -33,10 +33,15 @@ import {
 
 import type { CheckList } from '@/types';
 
-type CheckListItemProps = {
+type Item = {
   id: string;
   name: string;
   completed: boolean;
+  checkListId: string;
+};
+
+type CheckListItemProps = {
+  item: Item;
 };
 
 type CheckListCardProps = {
@@ -44,17 +49,17 @@ type CheckListCardProps = {
   id: string;
 };
 
-const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
+const CheckListItem = ({ item }: CheckListItemProps) => {
   const { toast } = useToast();
 
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(completed);
+  const [isCompleted, setIsCompleted] = useState(item.completed);
 
   const onClick = async () => {
     try {
       setIsUpdating(true);
 
-      await toggleCheckListItem(id);
+      await toggleCheckListItem(item.id);
 
       setIsCompleted(!isCompleted);
     } catch {
@@ -68,7 +73,7 @@ const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
     try {
       setIsUpdating(true);
 
-      await removeCheckListItem(id);
+      await removeCheckListItem(item.id);
     } catch {
       toast({ description: 'Failed to update.' });
     } finally {
@@ -92,7 +97,7 @@ const CheckListItem = ({ id, name, completed }: CheckListItemProps) => {
           className={
             isCompleted ? 'line-through text-gray-300 truncate' : 'truncate'
           }>
-          {name}
+          {item.name}
         </button>
       </div>
       <Popover>
@@ -123,6 +128,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
   const { toast } = useToast();
 
   const [newItem, setNewItem] = useState('');
+  const [open, setOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [isAddingNew, setIsAddingNew] = useState(false);
 
@@ -154,7 +160,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
         <CardTitle className='text-lg font-normal tracking-wide flex items-center justify-between gap-1'>
           <p className='truncate'>{checkList.name}</p>
           <div className='flex items-center gap-2'>
-            <Popover>
+            <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger>
                 <EllipsisIcon className='size-4 text-gray-500' />
               </PopoverTrigger>
@@ -165,7 +171,10 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
                   size='sm'
                   variant='ghost'
                   className='h-6 w-full shadow justify-between rounded-sm'
-                  onClick={() => setIsAddingNew(true)}>
+                  onClick={() => {
+                    setIsAddingNew(true);
+                    setOpen(false);
+                  }}>
                   <PlusIcon className='!size-3' />
                   <span>Add Item</span>
                 </Button>
@@ -177,28 +186,19 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {checkList.items && (
-          <div className='space-y-2'>
-            {checkList.items.map((item) => (
-              <CheckListItem
-                key={item.id}
-                id={item.id as string}
-                name={item.name}
-                completed={item.completed}
-              />
-            ))}
-          </div>
-        )}
         {isAddingNew ? (
-          <div className='flex gap-2'>
+          <div className='flex gap-2.5 items-center'>
             <Input
               value={newItem}
               onChange={(e) => setNewItem(e.target.value)}
               placeholder='Enter item'
               onKeyDown={(e) => e.key === 'Enter' && onClick()}
-              className='h-6 text-sm'
+              className='h-6 text-sm mb-2.5'
             />
-            <Button onClick={onClick} disabled={isAdding} className='h-6'>
+            <Button
+              onClick={onClick}
+              disabled={isAdding}
+              className='h-6 mb-2.5'>
               Add
             </Button>
           </div>
@@ -206,6 +206,13 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
           <p className='text-sm'>
             {checkList.items?.length === 0 ? 'There are no items. ' : ''}
           </p>
+        )}
+        {checkList.items && (
+          <div className='space-y-2'>
+            {checkList.items.map((item) => (
+              <CheckListItem key={item.id} item={item as Item} />
+            ))}
+          </div>
         )}
       </CardContent>
     </Card>

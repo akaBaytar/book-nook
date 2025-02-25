@@ -102,7 +102,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
           <div>
             {name && (
               <CardTitle className='text-2xl font-medium tracking-[0.015em] flex flex-col sm:flex-row mb-2.5 sm:mb-0 items-center gap-2.5 truncate'>
-                {name.charAt(0).toUpperCase() + name.slice(1)}
+                {name}
                 {completed && (
                   <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
                     Completed

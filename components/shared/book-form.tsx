@@ -636,7 +636,7 @@ const BookForm = ({
                     <Calendar
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={field.onChange}
+                      onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
                     />
                   </PopoverContent>
@@ -673,7 +673,7 @@ const BookForm = ({
                     <Calendar
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={field.onChange}
+                      onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
                     />
                   </PopoverContent>
@@ -710,7 +710,7 @@ const BookForm = ({
                     <Calendar
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={field.onChange}
+                      onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
                     />
                   </PopoverContent>
@@ -747,7 +747,7 @@ const BookForm = ({
                     <Calendar
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={field.onChange}
+                      onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
                     />
                   </PopoverContent>

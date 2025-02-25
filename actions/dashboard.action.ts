@@ -4,6 +4,7 @@ import prisma from '@/database';
 
 import { handleError } from '@/utils';
 import { getCurrentUser } from '@/actions/user.actions';
+import { revalidatePath } from 'next/cache';
 
 const calculateReadingStreak = async () => {
   const userId = await getCurrentUser();
@@ -108,10 +109,17 @@ export const getBookStats = async () => {
 
     const booksRemaining = totalBooks - booksRead;
 
-    const readingGoal = 9999;
+    const user = (await prisma.user.findUnique({
+      where: { id: userId },
+      select: { readingGoal: true },
+    })) || {
+      readingGoal: 0,
+    };
 
     const goalProgress =
-      readingGoal > 0 ? Math.round((booksRead / readingGoal) * 100) : 0;
+      user.readingGoal > 0
+        ? Math.round((booksRead / user.readingGoal) * 100)
+        : 0;
 
     const currentlyReadingBook = books.find((book) => book.readingNow);
 
@@ -136,24 +144,18 @@ export const getBookStats = async () => {
         book.endDate <= now
     ).length;
 
-    const monthlyEntries = await prisma.bookEntry.findMany({
-      where: {
-        userId,
-        year: now.getFullYear(),
-        month: now.getMonth() + 1,
-      },
-    });
-
     const monthlyBooksCompleted = books.filter(
       (book) =>
         book.completed &&
         book.endDate &&
         book.endDate >= startOfMonth &&
         book.endDate <= now
-    ).length;
+    );
 
-    const monthlyPagesRead = monthlyEntries.reduce(
-      (sum, entry) => sum + entry.pagesRead,
+    const monthlyTotalBooks = monthlyBooksCompleted.length;
+
+    const monthlyPagesRead = monthlyBooksCompleted.reduce(
+      (sum, entry) => sum + entry.pageCount,
       0
     );
 
@@ -200,7 +202,7 @@ export const getBookStats = async () => {
       success: true,
       totalBooks,
       booksRead,
-      readingGoal,
+      readingGoal: user.readingGoal,
       goalProgress,
       booksRemaining,
       booksReadThisYear,
@@ -210,13 +212,13 @@ export const getBookStats = async () => {
           ? {
               id: currentlyReadingBook.id,
               name: currentlyReadingBook.name,
-              currentChapter: 9999,
-              percentCompleted: 9999,
+              author: currentlyReadingBook.author,
+              publisher: currentlyReadingBook.publisher,
             }
           : null,
       },
       monthlyProgress: {
-        count: monthlyBooksCompleted,
+        count: monthlyTotalBooks,
         pagesRead: monthlyPagesRead,
       },
       yearlyProgress: {
@@ -231,6 +233,30 @@ export const getBookStats = async () => {
         pages: dailyAveragePages,
         period: totalPagesThisWeek,
       },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const updateReadingGoal = async (readingGoal: number) => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  if (readingGoal < 0) return;
+
+  try {
+    await prisma.user.update({ where: { id: userId }, data: { readingGoal } });
+
+    revalidatePath('/dashboard');
+
+    return {
+      success: true,
+      message: 'Your reading goal updated successfully.',
     };
   } catch (error) {
     return {

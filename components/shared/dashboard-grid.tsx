@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Progress } from '@/components/ui/progress';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
@@ -11,6 +13,8 @@ import {
   TrendingUpIcon,
   BookMarkedIcon,
 } from 'lucide-react';
+
+import UpdateGoal from './update-goal';
 
 import type { ElementType } from 'react';
 
@@ -35,10 +39,10 @@ type PropTypes = {
   currentlyReading:
     | {
         book: {
-          id: string;
+          id:string;
           name: string;
-          currentChapter: number;
-          percentCompleted: number;
+          author: string;
+          publisher: string;
         } | null;
       }
     | undefined;
@@ -72,13 +76,15 @@ const DashboardGrid = ({
   }: CardPropType) => (
     <Card className='rounded-md'>
       <CardHeader className='flex flex-row items-center justify-between pb-1'>
-        <h3 className='text-xl text-gray-500'>{title}</h3>
+        <h3 className='text-xl text-muted-foreground'>{title}</h3>
         <Icon className={`size-5 ${color}`} />
       </CardHeader>
       <CardContent>
         <div className='mt-1'>
           <p className='text-2xl'>{value}</p>
-          {subtitle && <p className='text-sm text-gray-500 mt-1'>{subtitle}</p>}
+          {subtitle && (
+            <p className='text-sm text-muted-foreground mt-1'>{subtitle}</p>
+          )}
         </div>
       </CardContent>
     </Card>
@@ -118,14 +124,17 @@ const DashboardGrid = ({
             <div className='mt-1'>
               <div className='flex justify-between items-center mb-2'>
                 <span className='text-2xl'>{booksRead}</span>
-                <span className='text-gray-500'>of {readingGoal}</span>
+                <span className='text-muted-foreground text-sm'>
+                  of
+                  <UpdateGoal readingGoal={readingGoal} />
+                </span>
               </div>
               <Progress
                 value={goalProgress}
                 max={100}
                 className='h-2 bg-violet-100'
               />
-              <p className='text-sm text-gray-500 mt-2'>
+              <p className='text-sm text-muted-foreground mt-2'>
                 {Math.round(goalProgress)}% of yearly goal completed
               </p>
             </div>
@@ -140,27 +149,17 @@ const DashboardGrid = ({
           </CardHeader>
           {currentlyReading && currentlyReading.book ? (
             <CardContent>
-              <div className='mt-1'>
-                <p className='text-2xl tracking-[0.015em]'>
-                  {currentlyReading.book.name}
-                </p>
-                <div className='mt-4 flex items-center'>
-                  <div className='w-2 h-2 bg-green-500 rounded-full' />
-                  <span className='text-sm text-gray-500 ml-2'>
-                    Currently on Chapter {currentlyReading.book.currentChapter}
-                  </span>
-                </div>
-                <div className='mt-2'>
-                  <Progress
-                    value={currentlyReading.book.percentCompleted}
-                    max={100}
-                    className='h-2 bg-indigo-100'
-                  />
-                  <p className='text-sm text-gray-500 mt-1'>
-                    {currentlyReading.book.percentCompleted}% completed
+              <Link href={`/books/${currentlyReading.book.id}`}>
+                <div className='mt-1 space-y-1'>
+                  <p className='text-xl tracking-[0.015em]'>
+                    {currentlyReading.book.name}
+                  </p>
+                  <p className='text-sm'>{currentlyReading.book.author}</p>
+                  <p className='text-xs text-muted-foreground'>
+                    {currentlyReading.book.publisher}
                   </p>
                 </div>
-              </div>
+              </Link>
             </CardContent>
           ) : (
             <CardContent>
@@ -169,10 +168,6 @@ const DashboardGrid = ({
                   You can mark the book you are currently reading from the ones
                   you have added.
                 </p>
-                <div className='mt-5'>
-                  <Progress value={0} max={100} className='h-2 bg-indigo-100' />
-                  <p className='text-sm text-gray-500 mt-1'>0% completed</p>
-                </div>
               </div>
             </CardContent>
           )}

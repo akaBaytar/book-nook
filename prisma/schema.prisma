@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid())
-  clerkId   String     @unique
-  email     String?    @unique
-  firstName String?
-  lastName  String?
-  tbr       Tbr[]
-  books     Book[]
-  lists     List[]
-  checkList CheckList?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String     @id @default(uuid())
+  clerkId     String     @unique
+  email       String?    @unique
+  firstName   String?
+  lastName    String?
+  tbr         Tbr[]
+  books       Book[]
+  lists       List[]
+  readingGoal Int        @default(0)
+  checkList   CheckList?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@index([clerkId])
 }

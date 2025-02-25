@@ -683,7 +683,7 @@ const BookForm = ({
                   </PopoverTrigger>
                   <PopoverContent
                     className='w-auto p-0'
-                    align='start'
+                    align='end'
                     sideOffset={5}
                     avoidCollisions={true}>
                     <Calendar
@@ -777,7 +777,7 @@ const BookForm = ({
                   </PopoverTrigger>
                   <PopoverContent
                     className='w-auto p-0'
-                    align='start'
+                    align='end'
                     sideOffset={5}
                     avoidCollisions={true}>
                     <Calendar

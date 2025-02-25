@@ -632,7 +632,12 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    side='bottom'
+                    avoidCollisions={false}>
                     <Calendar
                       mode='single'
                       captionLayout='dropdown'
@@ -673,7 +678,12 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    side='bottom'
+                    avoidCollisions={false}>
                     <Calendar
                       mode='single'
                       captionLayout='dropdown'
@@ -714,7 +724,12 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    side='bottom'
+                    avoidCollisions={false}>
                     <Calendar
                       mode='single'
                       captionLayout='dropdown'
@@ -755,7 +770,12 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    side='bottom'
+                    avoidCollisions={false}>
                     <Calendar
                       mode='single'
                       captionLayout='dropdown'

@@ -54,6 +54,7 @@ const EndColumn = async () => {
           <CardContent className='p-4'>
             <Calendar
               mode='single'
+              showCaption
               selected={new Date()}
               className='w-full grid place-content-center'
             />

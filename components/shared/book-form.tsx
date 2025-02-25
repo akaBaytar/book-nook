@@ -614,9 +614,11 @@ const BookForm = ({
             render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel>Publication Date</FormLabel>
-                <Popover>
+                <Popover modal>
                   <PopoverTrigger asChild>
-                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                    <FormControl
+                      onClick={(e) => e.stopPropagation()}
+                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
                       <Button
                         variant={'outline'}
                         className={cn(
@@ -632,8 +634,16 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    avoidCollisions={true}>
                     <Calendar
+                      captionLayout='dropdown'
+                      fromYear={1940}
+                      toYear={new Date().getFullYear()}
+                      ISOWeek
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
@@ -651,9 +661,11 @@ const BookForm = ({
             render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel>Date Acquired</FormLabel>
-                <Popover>
+                <Popover modal>
                   <PopoverTrigger asChild>
-                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                    <FormControl
+                      onClick={(e) => e.stopPropagation()}
+                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
                       <Button
                         variant={'outline'}
                         className={cn(
@@ -669,8 +681,16 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    avoidCollisions={true}>
                     <Calendar
+                      captionLayout='dropdown'
+                      fromYear={1940}
+                      toYear={new Date().getFullYear()}
+                      ISOWeek
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
@@ -688,9 +708,11 @@ const BookForm = ({
             render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel>Start Date</FormLabel>
-                <Popover>
+                <Popover modal>
                   <PopoverTrigger asChild>
-                    <FormControl className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                    <FormControl
+                      onClick={(e) => e.stopPropagation()}
+                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
                       <Button
                         variant={'outline'}
                         className={cn(
@@ -706,8 +728,16 @@ const BookForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
+                  <PopoverContent
+                    className='w-auto p-0'
+                    align='start'
+                    sideOffset={5}
+                    avoidCollisions={true}>
                     <Calendar
+                      captionLayout='dropdown'
+                      fromYear={1940}
+                      toYear={new Date().getFullYear()}
+                      ISOWeek
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
@@ -749,9 +779,12 @@ const BookForm = ({
                     className='w-auto p-0'
                     align='start'
                     sideOffset={5}
-                    side='bottom'
-                    avoidCollisions={false}>
+                    avoidCollisions={true}>
                     <Calendar
+                      captionLayout='dropdown'
+                      fromYear={1940}
+                      toYear={new Date().getFullYear()}
+                      ISOWeek
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}

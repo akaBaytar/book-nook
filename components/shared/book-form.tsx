@@ -607,7 +607,7 @@ const BookForm = ({
             )}
           />
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+        <div className='grid grid-cols-2 gap-5'>
           <FormField
             control={form.control}
             name='publicationDate'
@@ -626,7 +626,7 @@ const BookForm = ({
                           !field.value && 'text-muted-foreground'
                         )}>
                         {field.value ? (
-                          format(new Date(field.value), 'PPP')
+                          format(new Date(field.value), 'PP')
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -635,7 +635,7 @@ const BookForm = ({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent
-                    className='w-auto p-0'
+                    className='w-full p-0'
                     align='start'
                     sideOffset={5}
                     avoidCollisions={true}>
@@ -673,7 +673,7 @@ const BookForm = ({
                           !field.value && 'text-muted-foreground'
                         )}>
                         {field.value ? (
-                          format(new Date(field.value), 'PPP')
+                          format(new Date(field.value), 'PP')
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -720,7 +720,7 @@ const BookForm = ({
                           !field.value && 'text-muted-foreground'
                         )}>
                         {field.value ? (
-                          format(new Date(field.value), 'PPP')
+                          format(new Date(field.value), 'PP')
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -767,7 +767,7 @@ const BookForm = ({
                           !field.value && 'text-muted-foreground'
                         )}>
                         {field.value ? (
-                          format(new Date(field.value), 'PPP')
+                          format(new Date(field.value), 'PP')
                         ) : (
                           <span>Pick a date</span>
                         )}

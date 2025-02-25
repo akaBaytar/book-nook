@@ -5,7 +5,11 @@ import prisma from '@/database';
 import { handleError } from '@/utils';
 import { getCurrentUser } from '@/actions/user.actions';
 
-const calculateReadingStreak = async (userId: string) => {
+const calculateReadingStreak = async () => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
   const today = new Date();
 
   const entries = await prisma.bookEntry.findMany({
@@ -104,7 +108,7 @@ export const getBookStats = async () => {
 
     const booksRemaining = totalBooks - booksRead;
 
-    const readingGoal = 999;
+    const readingGoal = 9999;
 
     const goalProgress =
       readingGoal > 0 ? Math.round((booksRead / readingGoal) * 100) : 0;
@@ -113,7 +117,24 @@ export const getBookStats = async () => {
 
     const now = new Date();
 
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const booksReadThisYear = books.filter(
+      (book) =>
+        book.completed &&
+        book.endDate &&
+        book.endDate >= startOfYear &&
+        book.endDate <= now
+    ).length;
+
+    const booksReadThisMonth = books.filter(
+      (book) =>
+        book.completed &&
+        book.endDate &&
+        book.endDate >= startOfMonth &&
+        book.endDate <= now
+    ).length;
 
     const monthlyEntries = await prisma.bookEntry.findMany({
       where: {
@@ -136,11 +157,23 @@ export const getBookStats = async () => {
       0
     );
 
-    const streak = await calculateReadingStreak(userId);
+    const yearlyEntries = await prisma.bookEntry.findMany({
+      where: {
+        userId,
+        year: now.getFullYear(),
+      },
+    });
+
+    const yearlyPagesRead = yearlyEntries.reduce(
+      (sum, entry) => sum + entry.pagesRead,
+      0
+    );
+
+    const streak = await calculateReadingStreak();
 
     const startOfWeek = new Date();
 
-    startOfWeek.setDate(now.getDate() - now.getDay());
+    startOfWeek.setDate(now.getDate() - now.getDay() + 1);
 
     const weeklyEntries = await prisma.bookEntry.findMany({
       where: {
@@ -165,18 +198,20 @@ export const getBookStats = async () => {
 
     return {
       success: true,
-      data: totalBooks,
+      totalBooks,
       booksRead,
-      booksRemaining,
       readingGoal,
       goalProgress,
+      booksRemaining,
+      booksReadThisYear,
+      booksReadThisMonth,
       currentlyReading: {
         book: currentlyReadingBook
           ? {
               id: currentlyReadingBook.id,
               name: currentlyReadingBook.name,
-              currentChapter: 99,
-              percentCompleted: 99,
+              currentChapter: 9999,
+              percentCompleted: 9999,
             }
           : null,
       },
@@ -184,13 +219,17 @@ export const getBookStats = async () => {
         count: monthlyBooksCompleted,
         pagesRead: monthlyPagesRead,
       },
+      yearlyProgress: {
+        count: booksReadThisYear,
+        pagesRead: yearlyPagesRead,
+      },
       readingStreak: {
         currentStreak: streak.currentStreak,
         personalBest: streak.personalBest,
       },
       dailyAverage: {
         pages: dailyAveragePages,
-        period: 'This week',
+        period: totalPagesThisWeek,
       },
     };
   } catch (error) {

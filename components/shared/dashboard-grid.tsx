@@ -14,16 +14,47 @@ import {
 
 import type { ElementType } from 'react';
 
-const DashboardGrid = () => {
-  const booksRead = 60;
-  const totalBooks = 100;
-  const readingGoal = 120;
-  const booksThisMonth = 10;
-  const totalPagesThisMonth = 150;
-  const booksNotReadYet = totalBooks - booksRead;
-  const currentlyReading = 'Küllerimle Dans Ettim';
-  const readingProgress = (booksRead / readingGoal) * 100;
+type PropTypes = {
+  booksRead: number;
+  totalBooks: number;
+  readingGoal: number;
+  goalProgress: number;
+  booksRemaining: number;
+  dailyAverage: {
+    pages: number;
+    period: number;
+  };
+  readingStreak: {
+    currentStreak: number;
+    personalBest: number;
+  };
+  monthlyProgress: {
+    count: number;
+    pagesRead: number;
+  };
+  currentlyReading:
+    | {
+        book: {
+          id: string;
+          name: string;
+          currentChapter: number;
+          percentCompleted: number;
+        } | null;
+      }
+    | undefined;
+};
 
+const DashboardGrid = ({
+  booksRead,
+  booksRemaining,
+  currentlyReading,
+  dailyAverage,
+  goalProgress,
+  monthlyProgress,
+  readingGoal,
+  readingStreak,
+  totalBooks,
+}: PropTypes) => {
   type CardPropType = {
     title: string;
     color?: string;
@@ -70,7 +101,7 @@ const DashboardGrid = () => {
         />
         <StatCard
           title='Books Remaining'
-          value={booksNotReadYet}
+          value={booksRemaining}
           icon={BookIcon}
           color='text-orange-600'
         />
@@ -87,15 +118,15 @@ const DashboardGrid = () => {
             <div className='mt-1'>
               <div className='flex justify-between items-center mb-2'>
                 <span className='text-2xl'>{booksRead}</span>
-                <span className='text-gray-500'>of {readingGoal} books</span>
+                <span className='text-gray-500'>of {readingGoal}</span>
               </div>
               <Progress
-                value={readingProgress}
+                value={goalProgress}
                 max={100}
-                className='h-3 bg-violet-100'
+                className='h-2 bg-violet-100'
               />
               <p className='text-sm text-gray-500 mt-2'>
-                {Math.round(readingProgress)}% of yearly goal completed
+                {Math.round(goalProgress)}% of yearly goal completed
               </p>
             </div>
           </CardContent>
@@ -107,42 +138,77 @@ const DashboardGrid = () => {
             </h3>
             <BookMarkedIcon className='h-5 w-5 text-blue-500' />
           </CardHeader>
-          <CardContent>
-            <div className='mt-1'>
-              <p className='text-2xl tracking-[0.015em]'>{currentlyReading}</p>
-              <div className='mt-4 flex items-center'>
-                <div className='w-2 h-2 bg-green-500 rounded-full' />
-                <span className='text-sm text-gray-500 ml-2'>
-                  Currently on Chapter 5
-                </span>
+          {currentlyReading && currentlyReading.book ? (
+            <CardContent>
+              <div className='mt-1'>
+                <p className='text-2xl tracking-[0.015em]'>
+                  {currentlyReading.book.name}
+                </p>
+                <div className='mt-4 flex items-center'>
+                  <div className='w-2 h-2 bg-green-500 rounded-full' />
+                  <span className='text-sm text-gray-500 ml-2'>
+                    Currently on Chapter {currentlyReading.book.currentChapter}
+                  </span>
+                </div>
+                <div className='mt-2'>
+                  <Progress
+                    value={currentlyReading.book.percentCompleted}
+                    max={100}
+                    className='h-2 bg-indigo-100'
+                  />
+                  <p className='text-sm text-gray-500 mt-1'>
+                    {currentlyReading.book.percentCompleted}% completed
+                  </p>
+                </div>
               </div>
-              <div className='mt-2'>
-                <Progress value={45} max={100} className='h-2 bg-indigo-100' />
-                <p className='text-sm text-gray-500 mt-1'>45% completed</p>
+            </CardContent>
+          ) : (
+            <CardContent>
+              <div className='mt-1'>
+                <p className='text-sm text-pretty text-muted-foreground tracking-[0.015em]'>
+                  You can mark the book you are currently reading from the ones
+                  you have added.
+                </p>
+                <div className='mt-5'>
+                  <Progress value={0} max={100} className='h-2 bg-indigo-100' />
+                  <p className='text-sm text-gray-500 mt-1'>0% completed</p>
+                </div>
               </div>
-            </div>
-          </CardContent>
+            </CardContent>
+          )}
         </Card>
       </div>
       <div className='mt-5 grid grid-cols-1 xl:grid-cols-3 gap-5'>
         <StatCard
           title='Monthly Progress'
-          value={booksThisMonth}
-          subtitle={`${totalPagesThisMonth} pages read`}
+          value={`${monthlyProgress.count} ${
+            monthlyProgress.count < 2 ? 'book' : 'books'
+          }`}
+          subtitle={`${monthlyProgress.pagesRead} ${
+            monthlyProgress.pagesRead < 2 ? 'page' : 'pages'
+          } read`}
           icon={CalendarIcon}
           color='text-rose-800'
         />
         <StatCard
           title='Reading Streak'
-          value='15 days'
-          subtitle='Personal best: 30 days'
+          value={`${readingStreak.currentStreak} ${
+            readingStreak.currentStreak < 2 ? 'day' : 'days'
+          }`}
+          subtitle={`Personal best: ${readingStreak.personalBest} ${
+            readingStreak.personalBest < 2 ? 'day' : 'days'
+          }`}
           icon={TrendingUpIcon}
           color='text-emerald-600'
         />
         <StatCard
           title='Daily Average'
-          value='52 pages'
-          subtitle='This week'
+          value={`${dailyAverage.pages} ${
+            dailyAverage.pages < 2 ? 'page' : 'pages'
+          }`}
+          subtitle={`Total this week: ${dailyAverage.period} ${
+            dailyAverage.period < 2 ? 'page' : 'pages'
+          }`}
           icon={ChartSplineIcon}
           color='text-amber-600'
         />

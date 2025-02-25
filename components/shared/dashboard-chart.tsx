@@ -17,45 +17,63 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-const chartData = [
-  {
-    data: 'Books Reads This Month',
-    Book: 13,
-    fill: 'var(--color-booksReadsThisMonth)',
-  },
-  {
-    data: 'Books Reads This Year',
-    Book: 96,
-    fill: 'var(--color-booksReadsThisYear)',
-  },
-  { data: 'Total Books Read', Book: 245, fill: 'var(--color-totalBooksRead)' },
-  { data: 'Total Books', Book: 273, fill: 'var(--color-totalBooks)' },
-];
+type PropTypes = {
+  totalBooks: number;
+  booksRead: number;
+  booksReadThisYear: number;
+  booksReadThisMonth: number;
+};
 
-const chartConfig = {
-  booksReadsThisYear: {
-    label: 'Books Reads This Year',
-    color: '#8ebaa3',
-  },
-  booksReadsThisMonth: {
-    label: 'Books Reads This Month',
-    color: '#709dad',
-  },
-  totalBooksRead: {
-    label: 'Total Books Read',
-    color: '#a3aed3',
-  },
-  totalBooks: {
-    label: 'Total Books',
-    color: '#d7b6',
-  },
-} satisfies ChartConfig;
+const DashboardChart = ({
+  totalBooks,
+  booksRead,
+  booksReadThisYear,
+  booksReadThisMonth,
+}: PropTypes) => {
+  const chartData = [
+    {
+      data: 'Read This Month',
+      Book: booksReadThisMonth,
+      fill: 'var(--color-booksReadsThisMonth)',
+    },
+    {
+      data: 'Read This Year',
+      Book: booksReadThisYear,
+      fill: 'var(--color-booksReadsThisYear)',
+    },
+    {
+      data: 'Total Read',
+      Book: booksRead,
+      fill: 'var(--color-totalBooksRead)',
+    },
+    { data: 'Total Books', Book: totalBooks, fill: 'var(--color-totalBooks)' },
+  ];
 
-const DashboardChart = () => {
+  const chartConfig = {
+    booksReadsThisYear: {
+      label: 'Read This Year',
+      color: '#8ebaa3',
+    },
+    booksReadsThisMonth: {
+      label: 'Read This Month',
+      color: '#709dad',
+    },
+    totalBooksRead: {
+      label: 'Total Read',
+      color: '#a3aed3',
+    },
+    totalBooks: {
+      label: 'Total Books',
+      color: '#d7b6',
+    },
+  } satisfies ChartConfig;
+
   return (
     <Card className='flex flex-col rounded-md'>
       <CardHeader className='items-center pb-0'>
-        <CardTitle className='text-2xl font-normal tracking-[0.015em]'>My Book Chart</CardTitle>
+        <CardTitle className='text-2xl font-normal tracking-[0.015em]'>
+          My Book Chart
+        </CardTitle>
         <CardDescription>Monthly and yearly book data</CardDescription>
       </CardHeader>
       <CardContent className='flex-1 mt-5'>

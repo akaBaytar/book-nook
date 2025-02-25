@@ -20,6 +20,7 @@ import type { ElementType } from 'react';
 
 type PropTypes = {
   booksRead: number;
+  booksReadThisYear: number;
   totalBooks: number;
   readingGoal: number;
   goalProgress: number;
@@ -58,6 +59,7 @@ const DashboardGrid = ({
   readingGoal,
   readingStreak,
   totalBooks,
+  booksReadThisYear
 }: PropTypes) => {
   type CardPropType = {
     title: string;
@@ -123,7 +125,7 @@ const DashboardGrid = ({
           <CardContent>
             <div className='mt-1'>
               <div className='flex justify-between items-center mb-2'>
-                <span className='text-2xl'>{booksRead}</span>
+                <span className='text-2xl'>{booksReadThisYear}</span>
                 <span className='text-muted-foreground text-sm'>
                   of
                   <UpdateGoal readingGoal={readingGoal} />

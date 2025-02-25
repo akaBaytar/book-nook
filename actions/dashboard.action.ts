@@ -116,11 +116,6 @@ export const getBookStats = async () => {
       readingGoal: 0,
     };
 
-    const goalProgress =
-      user.readingGoal > 0
-        ? Math.round((booksRead / user.readingGoal) * 100)
-        : 0;
-
     const currentlyReadingBook = books.find((book) => book.readingNow);
 
     const now = new Date();
@@ -151,6 +146,11 @@ export const getBookStats = async () => {
         book.endDate >= startOfMonth &&
         book.endDate <= now
     );
+
+    const goalProgress =
+      user.readingGoal > 0
+        ? Math.round((booksReadThisYear / user.readingGoal) * 100)
+        : 0;
 
     const monthlyTotalBooks = monthlyBooksCompleted.length;
 

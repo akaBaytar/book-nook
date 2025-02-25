@@ -28,6 +28,7 @@ const DashboardPage = async () => {
       />
       <DashboardGrid
         booksRead={booksRead || 0}
+        booksReadThisYear={booksReadThisYear || 0}
         totalBooks={totalBooks || 0}
         readingGoal={readingGoal || 0}
         goalProgress={goalProgress || 0}

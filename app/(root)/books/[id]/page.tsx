@@ -116,7 +116,9 @@ const BookDetailsPage = async ({ params }: PropType) => {
               </CardTitle>
             )}
             {author && (
-              <p className='text-lg text-muted-foreground'>by {author}</p>
+              <p className='text-lg text-muted-foreground'>
+                by {author.charAt(0).toUpperCase() + author.slice(1)}
+              </p>
             )}
           </div>
           {genre && genre.length > 0 && (
@@ -160,13 +162,15 @@ const BookDetailsPage = async ({ params }: PropType) => {
           {summary && (
             <div className='space-y-2.5 text-center xl:text-start'>
               <h3 className='text-lg'>Summary</h3>
-              <p className='text-muted-foreground leading-relaxed'>{summary}</p>
+              <p className='text-muted-foreground leading-relaxed'>
+                {summary.charAt(0).toUpperCase() + summary.slice(1)}
+              </p>
             </div>
           )}
           {quote && (
             <blockquote className='flex gap-1 items-center border-s-4 border border-pink-100 p-2.5 rounded-md italic text-muted-foreground'>
               <QuoteIcon className='size-4 rotate-180  fill-pink-100 text-pink-300' />
-              {quote}
+              {quote.charAt(0).toUpperCase() + quote.slice(1)}
               <QuoteIcon className='size-4 fill-pink-100 text-pink-300' />
             </blockquote>
           )}
@@ -192,7 +196,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
             {category && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Category</p>
-                <p>{category}</p>
+                <p>{category.charAt(0).toUpperCase() + category.slice(1)}</p>
               </div>
             )}
             {isbn && (
@@ -204,7 +208,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
             {language && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Language</p>
-                <p>{language}</p>
+                <p>{language.charAt(0).toUpperCase() + language.slice(1)}</p>
               </div>
             )}
             {printing && (
@@ -216,7 +220,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
             {publisher && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Publisher</p>
-                <p>{publisher}</p>
+                <p>{publisher.charAt(0).toUpperCase() + publisher.slice(1)}</p>
               </div>
             )}
             {publicationDate && (
@@ -240,13 +244,17 @@ const BookDetailsPage = async ({ params }: PropType) => {
             {translator && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Translator</p>
-                <p>{translator}</p>
+                <p>
+                  {translator.charAt(0).toUpperCase() + translator.slice(1)}
+                </p>
               </div>
             )}
             {illustrator && (
               <div className='space-y-1'>
                 <p className='text-muted-foreground'>Illustrator</p>
-                <p>{illustrator}</p>
+                <p>
+                  {illustrator.charAt(0).toUpperCase() + illustrator.slice(1)}
+                </p>
               </div>
             )}
           </div>

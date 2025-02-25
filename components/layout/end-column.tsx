@@ -33,8 +33,9 @@ const EndColumn = async () => {
           <SheetContent className='overflow-y-scroll py-10'>
             <SheetHeader>
               <SheetTitle className='text-center'>Book Tracker</SheetTitle>
-              <SheetDescription className='text-center'>
-                You can track your books and update your tracker.
+              <SheetDescription className='text-center text-pretty'>
+                Mark your pages, track weekly averages and
+                monitor your reading streak.
               </SheetDescription>
             </SheetHeader>
             <BookTracker />

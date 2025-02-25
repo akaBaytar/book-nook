@@ -203,7 +203,7 @@ const DashboardGrid = ({
           value={`${dailyAverage.pages} ${
             dailyAverage.pages < 2 ? 'page' : 'pages'
           }`}
-          subtitle={`Total this week: ${dailyAverage.period} ${
+          subtitle={`Average this week: ${dailyAverage.period} ${
             dailyAverage.period < 2 ? 'page' : 'pages'
           }`}
           icon={ChartSplineIcon}

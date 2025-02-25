@@ -90,11 +90,11 @@ function Calendar({
               onValueChange={(value) => {
                 handleChange(value);
               }}>
-              <SelectTrigger className='pr-1.5 focus:ring-0 bg-transparent'>
+              <SelectTrigger className='pe-1.5 focus:ring-0 bg-transparent'>
                 <SelectValue>{selected?.props?.children}</SelectValue>
               </SelectTrigger>
-              <SelectContent position='popper'>
-                <ScrollArea className='h-80'>
+              <SelectContent>
+                <ScrollArea className='h-52'>
                   {options.map((option, id: number) => (
                     <SelectItem
                       key={`${option.props.value}-${id}`}

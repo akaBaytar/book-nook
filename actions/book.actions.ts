@@ -282,7 +282,7 @@ export const removeBook = async (id: string) => {
 
     await prisma.book.delete({ where: { id: book.id } });
 
-    redirect('/all-books');
+    redirect('/books');
   } catch (error) {
     return {
       success: false,

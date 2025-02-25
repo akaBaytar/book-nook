@@ -47,7 +47,7 @@ model Book {
   summary         String?   @db.Text
   category        String
   volume          Int?
-  isbn            String?   @unique
+  isbn            String?
   printing        Int?
   publicationDate DateTime?
   acquiredDate    DateTime?

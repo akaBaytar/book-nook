@@ -55,7 +55,6 @@ const EndColumn = async () => {
             <Calendar
               mode='single'
               selected={new Date()}
-              showCaption
               className='w-full grid place-content-center'
             />
           </CardContent>

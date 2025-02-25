@@ -1,32 +1,20 @@
-'use client';
+"use client"
 
-import * as React from 'react';
+import * as React from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { DayPicker } from "react-day-picker"
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { DayPicker, DropdownProps } from 'react-day-picker';
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 
-import { ScrollArea } from '@/components/ui/scroll-area';
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
-import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  showCaption = false,
   ...props
-}: CalendarProps & { showCaption?: boolean }) {
+}: CalendarProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -35,8 +23,7 @@ function Calendar({
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
         month: 'space-y-4',
         caption: 'flex justify-center pt-1 relative items-center',
-        caption_label: `${showCaption ? '' : 'hidden'}`,
-        caption_dropdowns: 'flex flex-col gap-2.5 w-full',
+        caption_label: 'text-sm font-medium',
         nav: 'space-x-1 flex items-center',
         nav_button: cn(
           buttonVariants({ variant: 'outline' }),
@@ -91,11 +78,11 @@ function Calendar({
               onValueChange={(value) => {
                 handleChange(value);
               }}>
-              <SelectTrigger className='pe-1.5 focus:ring-0 bg-transparent'>
+              <SelectTrigger className='pr-1.5 focus:ring-0 bg-transparent'>
                 <SelectValue>{selected?.props?.children}</SelectValue>
               </SelectTrigger>
-              <SelectContent>
-                <ScrollArea className='h-52'>
+              <SelectContent position='popper'>
+                <ScrollArea className='h-80'>
                   {options.map((option, id: number) => (
                     <SelectItem
                       key={`${option.props.value}-${id}`}
@@ -115,6 +102,6 @@ function Calendar({
     />
   );
 }
-Calendar.displayName = 'Calendar';
+Calendar.displayName = "Calendar"
 
-export { Calendar };
+export { Calendar }

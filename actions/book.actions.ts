@@ -146,12 +146,6 @@ export const getAllBooks = async ({
               mode: 'insensitive' as Prisma.QueryMode,
             },
           },
-          {
-            publisher: {
-              contains: search,
-              mode: 'insensitive' as Prisma.QueryMode,
-            },
-          },
         ],
       }),
       ...(filter === 'completed' && { completed: true }),

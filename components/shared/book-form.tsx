@@ -640,10 +640,6 @@ const BookForm = ({
                     avoidCollisions={false}>
                     <Calendar
                       mode='single'
-                      captionLayout='dropdown'
-                      fromYear={1940}
-                      toYear={new Date().getFullYear()}
-                      ISOWeek
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
@@ -686,10 +682,6 @@ const BookForm = ({
                     avoidCollisions={false}>
                     <Calendar
                       mode='single'
-                      captionLayout='dropdown'
-                      fromYear={1940}
-                      toYear={new Date().getFullYear()}
-                      ISOWeek
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
@@ -732,10 +724,6 @@ const BookForm = ({
                     avoidCollisions={false}>
                     <Calendar
                       mode='single'
-                      captionLayout='dropdown'
-                      fromYear={1940}
-                      toYear={new Date().getFullYear()}
-                      ISOWeek
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus
@@ -778,10 +766,6 @@ const BookForm = ({
                     avoidCollisions={false}>
                     <Calendar
                       mode='single'
-                      captionLayout='dropdown'
-                      fromYear={1940}
-                      toYear={new Date().getFullYear()}
-                      ISOWeek
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => field.onChange(date?.toISOString())}
                       initialFocus

@@ -749,7 +749,8 @@ const BookForm = ({
                     className='w-auto p-0'
                     align='start'
                     sideOffset={5}
-                    avoidCollisions={true}>
+                    side='bottom'
+                    avoidCollisions={false}>
                     <Calendar
                       mode='single'
                       selected={field.value ? new Date(field.value) : undefined}

@@ -24,7 +24,7 @@ import { removeBook } from '@/actions/book.actions';
 
 const RemoveBook = ({ id }: { id: string }) => {
   const router = useRouter();
-  
+
   const { toast } = useToast();
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,14 +32,14 @@ const RemoveBook = ({ id }: { id: string }) => {
   const onRemove = async () => {
     try {
       setIsDeleting(true);
-      
+
       await removeBook(id);
 
       toast({
         description: 'Book removed successfully.',
       });
 
-      router.push('/all-books');
+      router.push('/books');
     } catch {
       toast({
         title: 'Error',

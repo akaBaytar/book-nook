@@ -27,10 +27,7 @@ export const BookSchema = z
     publicationDate: z.string().datetime().optional(),
     endDate: z.string().datetime().optional(),
     startDate: z.string().datetime().optional(),
-    isbn: z
-      .string()
-      .regex(/^(?:\d{10}|\d{13})$/, { message: 'Invalid ISBN format' })
-      .optional(),
+    isbn: z.string().optional(),
     type: z.nativeEnum(BookType, {
       required_error: 'Please select a book type',
     }),

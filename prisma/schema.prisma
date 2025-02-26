@@ -31,7 +31,7 @@ model Book {
   name            String
   author          String
   publisher       String
-  rating          Decimal   @default(5) @db.Decimal(3, 1)
+  rating          Decimal   @default(0) @db.Decimal(3, 1)
   type            BookType  @default(BOOK)
   pageCount       Int
   private         Boolean   @default(false)

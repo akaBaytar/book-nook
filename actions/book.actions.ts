@@ -79,6 +79,7 @@ export const getBooks = async (ids: string[]) => {
         author: true,
         publisher: true,
       },
+      orderBy: { updatedAt: 'desc' },
     });
 
     if (!books) throw new Error('Books not found.');
@@ -323,7 +324,7 @@ export const getAllBooksForTBR = async () => {
   try {
     const books = await prisma.book.findMany({
       where: { userId },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { updatedAt: 'desc' },
       select: { id: true, name: true, favorite: true, completed: true },
     });
     return {
@@ -475,6 +476,43 @@ export const getBookEntries = async () => {
     return {
       success: true,
       entries: JSON.parse(JSON.stringify(entries)),
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: handleError(error),
+    };
+  }
+};
+
+export const getBookReadThisYear = async () => {
+  const userId = await getCurrentUser();
+
+  if (!userId) throw new Error('User is not authenticated.');
+
+  const now = new Date();
+
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+
+  try {
+    const books = await prisma.book.findMany({
+      where: {
+        userId,
+      },
+      orderBy: { endDate: 'desc' },
+    });
+
+    const booksReadThisYear = books.filter(
+      (book) =>
+        book.completed &&
+        book.endDate &&
+        book.endDate >= startOfYear &&
+        book.endDate <= now
+    );
+
+    return {
+      success: true,
+      books: JSON.parse(JSON.stringify(booksReadThisYear)),
     };
   } catch (error) {
     return {

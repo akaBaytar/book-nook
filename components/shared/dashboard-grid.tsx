@@ -40,7 +40,7 @@ type PropTypes = {
   currentlyReading:
     | {
         book: {
-          id:string;
+          id: string;
           name: string;
           author: string;
           publisher: string;
@@ -59,7 +59,7 @@ const DashboardGrid = ({
   readingGoal,
   readingStreak,
   totalBooks,
-  booksReadThisYear
+  booksReadThisYear,
 }: PropTypes) => {
   type CardPropType = {
     title: string;
@@ -123,23 +123,25 @@ const DashboardGrid = ({
             <TargetIcon className='h-5 w-5 text-violet-600' />
           </CardHeader>
           <CardContent>
-            <div className='mt-1'>
-              <div className='flex justify-between items-center mb-2'>
-                <span className='text-2xl'>{booksReadThisYear}</span>
-                <span className='text-muted-foreground text-sm'>
-                  of
-                  <UpdateGoal readingGoal={readingGoal} />
-                </span>
+            <Link href='/goal-progress'>
+              <div className='mt-1'>
+                <div className='flex justify-between items-center mb-2'>
+                  <span className='text-2xl'>{booksReadThisYear}</span>
+                  <span className='text-muted-foreground text-sm'>
+                    of
+                    <UpdateGoal readingGoal={readingGoal} />
+                  </span>
+                </div>
+                <Progress
+                  value={goalProgress}
+                  max={100}
+                  className='h-2 bg-violet-100'
+                />
+                <p className='text-sm text-muted-foreground mt-2'>
+                  {Math.round(goalProgress)}% of yearly goal completed
+                </p>
               </div>
-              <Progress
-                value={goalProgress}
-                max={100}
-                className='h-2 bg-violet-100'
-              />
-              <p className='text-sm text-muted-foreground mt-2'>
-                {Math.round(goalProgress)}% of yearly goal completed
-              </p>
-            </div>
+            </Link>
           </CardContent>
         </Card>
         <Card className='rounded-md'>

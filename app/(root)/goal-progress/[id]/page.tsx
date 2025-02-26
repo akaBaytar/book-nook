@@ -61,7 +61,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
     return (
       <div className='flex flex-col items-center justify-center h-[calc(100vh-2rem)] gap-5'>
         <p className='text-xl text-muted-foreground'>Book not found.</p>
-        <Link href='/books'>
+        <Link href='/goal-progress'>
           <Button variant='outline'>
             <ArrowLeftIcon className='mr-2 size-4' />
             Back to Books
@@ -75,7 +75,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
     <Card className='relative rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
       <div className='flex items-center justify-between gap-2.5 mt-4 mx-4'>
         <Button asChild>
-          <Link href='/books'>
+          <Link href='/goal-progress'>
             <ArrowLeftIcon className='size-4' />
             <span>My Books</span>
           </Link>

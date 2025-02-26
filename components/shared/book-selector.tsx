@@ -51,6 +51,11 @@ const BookSelector = ({ selectedBooks = [], onSelect }: PropTypes) => {
     }
   };
 
+  const selectedBooksList = filteredBooks.filter((book) => isSelected(book.id));
+  const unselectedBooksList = filteredBooks.filter(
+    (book) => !isSelected(book.id)
+  );
+
   return (
     <div className='space-y-2.5'>
       <div className='relative'>
@@ -73,7 +78,18 @@ const BookSelector = ({ selectedBooks = [], onSelect }: PropTypes) => {
           </div>
         ) : (
           <div className='p-4 space-y-2'>
-            {filteredBooks.map((book) => (
+            {selectedBooksList.map((book) => (
+              <div
+                key={book.id}
+                className='flex items-center justify-between p-2 rounded-lg bg-muted'
+                onClick={() => toggleBookSelection(book.id)}>
+                <div className='flex items-center space-x-2'>
+                  <div className='flex-1'>{book.name}</div>
+                </div>
+                <CheckIcon className='h-4 w-4 text-primary' />
+              </div>
+            ))}
+            {unselectedBooksList.map((book) => (
               <div
                 key={book.id}
                 className='flex items-center justify-between p-2 rounded-lg hover:bg-accent cursor-pointer'

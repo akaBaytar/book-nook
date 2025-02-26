@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   SearchIcon,
   TargetIcon,
+  PickaxeIcon,
   ListTreeIcon,
   SparklesIcon,
   LibraryBigIcon,
@@ -181,6 +182,14 @@ const AppSidebar = () => {
                   <SidebarMenuButton onClick={openGoalDialog}>
                     <TargetIcon />
                     Reading Goal
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem onClick={() => setOpenMobile(false)}>
+                  <SidebarMenuButton asChild>
+                    <Link href='/goal-progress'>
+                      <PickaxeIcon />
+                      Goal Progress
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>

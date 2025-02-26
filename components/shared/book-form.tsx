@@ -280,7 +280,7 @@ const BookForm = ({
                     type='number'
                     min='1'
                     placeholder='Enter page count'
-                    value={field.value ?? 1}
+                    value={field.value === 0 ? '' : field.value}
                     onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
@@ -300,7 +300,7 @@ const BookForm = ({
                     type='number'
                     min='0'
                     placeholder='Enter volume number'
-                    value={field.value ?? 0}
+                    value={field.value === 0 ? '' : field.value}
                     onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
@@ -320,7 +320,7 @@ const BookForm = ({
                     type='number'
                     min='1'
                     placeholder='Enter printing number'
-                    value={field.value ?? 1}
+                    value={field.value === 0 ? '' : field.value}
                     onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
@@ -338,10 +338,11 @@ const BookForm = ({
                 <FormControl>
                   <Input
                     type='number'
-                    min={1}
+                    min={0}
                     max={5}
                     step={0.1}
-                    value={Number(field.value) ?? 5}
+                    placeholder='Enter rating (max 5)'
+                    value={Number(field.value) === 0 ? '' : Number(field.value)}
                     onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />

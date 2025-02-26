@@ -247,8 +247,6 @@ export const updateReadingGoal = async (readingGoal: number) => {
 
   if (!userId) throw new Error('User is not authenticated.');
 
-  if (readingGoal < 0) return;
-
   try {
     await prisma.user.update({ where: { id: userId }, data: { readingGoal } });
 

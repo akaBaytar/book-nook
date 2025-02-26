@@ -281,6 +281,7 @@ const BookForm = ({
                     min='1'
                     placeholder='Enter page count'
                     value={field.value ?? 1}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -300,6 +301,7 @@ const BookForm = ({
                     min='0'
                     placeholder='Enter volume number'
                     value={field.value ?? 0}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -319,6 +321,7 @@ const BookForm = ({
                     min='1'
                     placeholder='Enter printing number'
                     value={field.value ?? 1}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -339,6 +342,7 @@ const BookForm = ({
                     max={5}
                     step={0.1}
                     value={Number(field.value) ?? 5}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
@@ -383,7 +387,6 @@ const BookForm = ({
             )}
           />
         </div>
-
         <FormField
           control={form.control}
           name='genre'

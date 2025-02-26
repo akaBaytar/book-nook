@@ -15,7 +15,7 @@ export const BookSchema = z
     rating: z.number().min(1).max(5).default(5),
     publisher: z.string().min(1, 'Publisher is required'),
     category: z.string().min(1, 'Category is required'),
-    genre: z.array(z.string()).min(1, 'At least one genre is required'),
+    genre: z.array(z.string()),
     image: z.string().optional(),
     completed: z.boolean().default(false),
     private: z.boolean().default(false),

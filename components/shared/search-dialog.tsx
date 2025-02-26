@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog';
 
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 import { getAllBooks } from '@/actions/book.actions';
@@ -105,34 +106,36 @@ export default function SearchDialog({ searchOpen, setSearchOpen }: PropTypes) {
           ) : (
             <TabsContent value={searchType}>
               {results.length > 0 && (
-                <ul className='space-y-2'>
-                  {results.map((item) => (
-                    <li key={item.id} className='p-2 border rounded-md'>
-                      {searchType === 'books' ? (
-                        <Link
-                          href={`/books/${item.id}`}
-                          onClick={() => setSearchOpen(false)}
-                          className='flex items-center gap-2.5'>
-                          <Image
-                            src={(item as Book).image || '/placeholder.jpg'}
-                            alt={item.name}
-                            width={27}
-                            height={48}
-                            className='rounded-sm object-contain'
-                          />
-                          {item.name} by {(item as Book).author}
-                        </Link>
-                      ) : (
-                        <Link
-                          href={`/my-lists/${item.id}`}
-                          onClick={() => setSearchOpen(false)}
-                          className='flex'>
-                          {item.name}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                <ScrollArea className='max-h-64 overflow-y-auto'>
+                  <ul className='space-y-2'>
+                    {results.map((item) => (
+                      <li key={item.id} className='p-2 border rounded-md'>
+                        {searchType === 'books' ? (
+                          <Link
+                            href={`/books/${item.id}`}
+                            onClick={() => setSearchOpen(false)}
+                            className='flex items-center gap-2.5'>
+                            <Image
+                              src={(item as Book).image || '/placeholder.jpg'}
+                              alt={item.name}
+                              width={27}
+                              height={48}
+                              className='rounded-sm object-contain'
+                            />
+                            {item.name} by {(item as Book).author}
+                          </Link>
+                        ) : (
+                          <Link
+                            href={`/my-lists/${item.id}`}
+                            onClick={() => setSearchOpen(false)}
+                            className='flex'>
+                            {item.name}
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </ScrollArea>
               )}
             </TabsContent>
           )}

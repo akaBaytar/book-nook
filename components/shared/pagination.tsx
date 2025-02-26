@@ -74,7 +74,7 @@ const Pagination = ({
         <Button
           size='sm'
           variant='outline'
-          className='size-9'
+          className='size-6 sm:size-9'
           disabled
           aria-hidden='true'>
           <MoreHorizontal />
@@ -86,7 +86,7 @@ const Pagination = ({
       <Button
         variant={isCurrentPage ? 'default' : 'outline'}
         size='icon'
-        className='size-9'
+        className='size-6 sm:size-9'
         onClick={() => onPageChange(page)}
         aria-label={`Go to page ${page}`}
         aria-current={isCurrentPage ? 'page' : undefined}>
@@ -97,13 +97,13 @@ const Pagination = ({
 
   const NavigationButton = ({ direction, onClick, disabled }: ButtonProps) => (
     <Button
+    size='icon'
       variant='outline'
       onClick={onClick}
+      className='size-6 sm:size-9'
       disabled={disabled}
-      className='gap-2.5'
       aria-label={`Go to ${direction} page`}>
       {direction === 'previous' && <ArrowLeftIcon />}
-      {direction === 'previous' ? 'Previous' : 'Next'}
       {direction === 'next' && <ArrowRightIcon />}
     </Button>
   );
@@ -114,7 +114,7 @@ const Pagination = ({
     <nav
       role='navigation'
       aria-label='Pagination'
-      className='flex justify-center items-center gap-2.5 2xl:justify-end'>
+      className='flex justify-center items-center gap-1.5 sm:gap-2.5 2xl:justify-end'>
       <NavigationButton
         direction='previous'
         onClick={() => onPageChange(currentPage - 1)}
@@ -122,7 +122,7 @@ const Pagination = ({
       />
       {showPages && (
         <div
-          className='flex items-center gap-2.5'
+          className='flex items-center gap-1.5 sm:gap-2.5'
           role='group'
           aria-label='Pagination pages'>
           {paginationRange.map((pageNumber, index) => (

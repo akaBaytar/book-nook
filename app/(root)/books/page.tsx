@@ -4,10 +4,9 @@ import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useDebounce } from 'use-debounce';
-import { SearchIcon, ChevronDown, LibraryBigIcon } from 'lucide-react';
+import { SearchIcon, LibraryBigIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 
 import {
   Select,
@@ -15,13 +14,6 @@ import {
   SelectTrigger,
   SelectContent,
 } from '@/components/ui/select';
-
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from '@/components/ui/dropdown-menu';
 
 import Pagination from '@/components/shared/pagination';
 import AddBookButton from '@/components/shared/add-book-button';
@@ -162,6 +154,12 @@ const AllBooksPage = () => {
     fetchBooks(true);
   }, [router, fetchBooks]);
 
+  const filterOptions = [
+    { value: 'all', label: 'All' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'unread', label: 'Unread' },
+  ];
+
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
@@ -172,21 +170,21 @@ const AllBooksPage = () => {
           </h1>
           <AddBookButton onBookAdded={handleBookAdded} />
         </header>
-        <div className='flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between'>
-          <div className='flex flex-col xl:flex-row w-full items-center gap-5'>
-            <div className='relative w-full xl:w-1/2'>
-              <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
-              <Input
-                type='search'
-                placeholder='Search books...'
-                className='ps-7'
-                value={searchQuery}
-                onChange={handleSearch}
-              />
-            </div>
+        <div className='flex flex-col gap-5'>
+          <div className='relative w-full'>
+            <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
+            <Input
+              type='search'
+              placeholder='Search books...'
+              className='ps-7'
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+          </div>
+          <div className='grid gap-5 sm:grid-cols-2 2xl:grid-cols-4'>
             <Select value={genre} onValueChange={handleGenreChange}>
-              <SelectTrigger className='w-full xl:w-1/2 text-muted-foreground'>
-                {genre === 'all' ? 'Filter by Genres' : genre}
+              <SelectTrigger className='w-full'>
+                {genre === 'all' ? 'Genres' : genre}
               </SelectTrigger>
               <SelectContent>
                 {genres.map((g) => (
@@ -197,8 +195,8 @@ const AllBooksPage = () => {
               </SelectContent>
             </Select>
             <Select value={category} onValueChange={handleCategoryChange}>
-              <SelectTrigger className='w-full xl:w-1/2 text-muted-foreground'>
-                {category === 'all' ? 'Filter by Categories' : category}
+              <SelectTrigger className='w-full'>
+                {category === 'all' ? 'Categories' : category}
               </SelectTrigger>
               <SelectContent>
                 {categories.map((c) => (
@@ -208,42 +206,44 @@ const AllBooksPage = () => {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-          <div className='flex flex-col sm:flex-row gap-5 items-center'>
-            <div className='flex gap-2.5 w-full sm:w-1/2 xl:w-2/3'>
-              {(['all', 'completed', 'unread'] as const).map((filterOption) => (
-                <Button
-                  key={filterOption}
-                  variant={filter === filterOption ? 'default' : 'outline'}
-                  onClick={() => handleFilter(filterOption)}
-                  className='w-1/3 text-xs capitalize'>
-                  {filterOption}
-                </Button>
-              ))}
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                asChild
-                className='w-full sm:w-1/2 xl:w-1/3 h-9 mt-2.5 sm:mt-0'>
-                <Button variant='outline' size='sm'>
-                  Sort By <ChevronDown className='ms-auto' />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='end'>
-                {SORT_OPTIONS.map((option) => (
-                  <DropdownMenuItem
+            <Select value={filter} onValueChange={handleFilter}>
+              <SelectTrigger className='w-full'>
+                {filter === 'all'
+                  ? 'Reading Status'
+                  : filter.charAt(0).toUpperCase() + filter.slice(1)}
+              </SelectTrigger>
+              <SelectContent>
+                {filterOptions.map((option) => (
+                  <SelectItem
                     key={option.value}
-                    onClick={() => handleSort(option.value as Sort)}
-                    className={
-                      sortBy === option.value
-                        ? 'bg-accent cursor-pointer'
-                        : 'cursor-pointer'
-                    }>
+                    value={option.value}
+                    className='cursor-pointer'>
                     {option.label}
-                  </DropdownMenuItem>
+                  </SelectItem>
                 ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </SelectContent>
+            </Select>
+            <Select value={sortBy} onValueChange={handleSort}>
+              <SelectTrigger className='w-full'>
+                {sortBy === 'recent'
+                  ? 'Most Recent'
+                  : sortBy === 'author'
+                  ? 'Author A-Z'
+                  : sortBy === 'name'
+                  ? 'Title A-Z'
+                  : 'Oldest First'}
+              </SelectTrigger>
+              <SelectContent>
+                {SORT_OPTIONS.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className='cursor-pointer'>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>

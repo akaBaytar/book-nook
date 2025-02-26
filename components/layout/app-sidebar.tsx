@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { UserButton, useUser } from '@clerk/nextjs';
 
 import {
+  SearchIcon,
+  TargetIcon,
   ListTreeIcon,
   SparklesIcon,
   LibraryBigIcon,
@@ -31,29 +33,6 @@ import {
 import { Skeleton } from '../ui/skeleton';
 
 import ImageCarousel from './image-carousel';
-
-const items = [
-  {
-    title: 'Dashboard',
-    url: '/dashboard',
-    icon: LayoutDashboardIcon,
-  },
-  {
-    title: 'My Books',
-    url: '/books',
-    icon: LibraryBigIcon,
-  },
-  {
-    title: 'My Lists',
-    url: '/my-lists',
-    icon: ListTreeIcon,
-  },
-  {
-    title: 'To Be Read',
-    url: '/tbr-game',
-    icon: SparklesIcon,
-  },
-];
 
 const AppSidebar = () => {
   const { user } = useUser();
@@ -86,18 +65,52 @@ const AppSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem
-                  key={item.title}
-                  onClick={() => setOpenMobile(false)}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem onClick={() => setOpenMobile(false)}>
+                <SidebarMenuButton asChild>
+                  <Link href='/dashboard'>
+                    <LayoutDashboardIcon />
+                    Dashboard
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem onClick={() => setOpenMobile(false)}>
+                <SidebarMenuButton asChild>
+                  <Link href='/tbr-game'>
+                    <SparklesIcon />
+                    To Be Read
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarSeparator />
+              <SidebarMenuItem onClick={() => setOpenMobile(false)}>
+                <SidebarMenuButton asChild>
+                  <Link href='/books'>
+                    <LibraryBigIcon />
+                    My Books
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem onClick={() => setOpenMobile(false)}>
+                <SidebarMenuButton asChild>
+                  <Link href='/my-lists'>
+                    <ListTreeIcon />
+                    My Lists
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarSeparator />
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => setOpenMobile(false)}>
+                  <SearchIcon />
+                  Search
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => setOpenMobile(false)}>
+                  <TargetIcon />
+                  Reading Goal
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -110,7 +123,7 @@ const AppSidebar = () => {
       <SidebarSeparator className='hidden md:block' />
       <SidebarFooter>
         {loading ? (
-          <Skeleton className='h-10 w-[241px]'/>
+          <Skeleton className='h-10 w-[241px]' />
         ) : (
           <div className='hidden md:flex items-center gap-2'>
             <UserButton

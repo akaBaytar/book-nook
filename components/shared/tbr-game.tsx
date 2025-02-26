@@ -340,8 +340,9 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
       {availableForSelection.length === 0 && !isSelectMode && (
         <Alert>
           <AlertDescription>
-            No unread books available with current filters. Try different
-            filters or mark some books as not completed.
+            {mode === 'library'
+              ? 'No unread books available with current filters. Try different filters or mark some books as not completed.'
+              : 'No TBR available with current filters. Try different filters or add some TBR.'}
           </AlertDescription>
         </Alert>
       )}

@@ -24,14 +24,15 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import Selection from './selection';
 import AddTBRButton from './add-tbr-button';
 
 import { toggleFavorite, toggleCompleted } from '@/actions/book.actions';
 
 import {
   removeTBRs,
-  toggleTBRCompleted,
   toggleTBRFavorite,
+  toggleTBRCompleted,
 } from '@/actions/tbr.actions';
 
 type TBR = { id: string; name: string; favorite: boolean; completed: boolean };
@@ -82,8 +83,8 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
     setSelectedIndex(null);
     setBlinkingIndex(null);
 
-    const blinkInterval = 150;
-    const blinkDuration = 5000;
+    const blinkInterval = 8000;
+    const blinkDuration = 8000;
 
     const startTime = Date.now();
 
@@ -132,6 +133,8 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
 
   const handleToggleFavorite = (id: string) => {
     if (isSelectMode) return;
+
+    setSelectedIndex(null);
 
     setBooks((prev) =>
       prev.map((book) =>
@@ -346,20 +349,13 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
           </AlertDescription>
         </Alert>
       )}
-      {selectedIndex !== null &&
-        filteredBooks[selectedIndex] &&
-        !isSelectMode && (
-          <Alert>
-            <SparklesIcon className='size-4 !text-white' />
-            <AlertDescription className='mt-1'>
-              Your next book to read is{' '}
-              <span className='font-bold'>
-                {filteredBooks[selectedIndex].name}
-              </span>
-              .
-            </AlertDescription>
-          </Alert>
-        )}
+      <Selection
+        isSelecting={isSelecting}
+        selectedBook={
+          selectedIndex !== null ? filteredBooks[selectedIndex] : null
+        }
+        availableBooks={filteredBooks}
+      />
       <div className='grid sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-5'>
         {filteredBooks.map((book, index) => (
           <motion.div
@@ -378,7 +374,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                 book.completed ? 'opacity-40' : ''
               } ${
                 selectedIndex === index
-                  ? 'border border-pink-300 bg-pink-50 transform'
+                  ? 'border border-pink-200 text-white bg-gradient-to-r from-pink-200 to-violet-200 transform'
                   : blinkingIndex === index
                   ? 'bg-pink-100 text-black'
                   : book.favorite && !book.completed
@@ -400,10 +396,16 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                           handleToggleFavorite(book.id);
                         }}
                         disabled={isPending}
-                        className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
+                        className={`rounded-full bg-pink-50 p-1 transition-colors ${
+                          selectedIndex === index && 'bg-violet-300'
+                        }`}>
                         <HeartIcon
                           className={`size-3 text-pink-500 ${
-                            book.favorite ? 'fill-pink-500' : ''
+                            selectedIndex === index && 'text-white'
+                          } ${book.favorite ? 'fill-pink-500' : ''} ${
+                            selectedIndex === index &&
+                            book.favorite &&
+                            'fill-violet-50'
                           }`}
                         />
                       </button>
@@ -413,8 +415,14 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                           handleToggleCompleted(book.id);
                         }}
                         disabled={isPending}
-                        className='rounded-full bg-pink-50 p-1 hover:bg-pink-100 transition-colors'>
-                        <CheckCircleIcon className='size-3 text-pink-500' />
+                        className={`rounded-full bg-pink-50 p-1 transition-colors ${
+                          selectedIndex === index && 'bg-violet-300'
+                        }`}>
+                        <CheckCircleIcon
+                          className={`size-3 text-pink-500 ${
+                            selectedIndex === index && 'text-white'
+                          }`}
+                        />
                       </button>
                     </div>
                   )}

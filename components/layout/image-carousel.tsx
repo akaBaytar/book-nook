@@ -21,7 +21,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
 
   if (isBoxed) {
     return (
-      <Card className='flex items-center justify-center p-8 rounded-md'>
+      <Card className='p-8 rounded-md'>
         <Carousel
           opts={{ loop: true }}
           plugins={[
@@ -37,7 +37,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
                   width={400}
                   height={400}
                   priority
-                  alt='placeholder image'
+                  alt='carousel image'
                   className='rounded-md size-full object-cover'
                 />
               </CarouselItem>
@@ -56,14 +56,15 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           delay: 120000,
         }),
       ]}>
-      <CarouselContent>
+      <CarouselContent className='h-[220px]'>
         {images.map(({ id, image }) => (
           <CarouselItem key={id}>
             <Image
               src={image}
               width={400}
               height={400}
-              alt='placeholder image'
+              priority
+              alt='carousel image'
               className='rounded-md size-full object-cover'
             />
           </CarouselItem>

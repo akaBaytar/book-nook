@@ -12,7 +12,7 @@ import { BOOKS_PER_PAGE } from '@/constants';
 
 import type { Book } from '@/types';
 
-const BookCard = ({ book, progress }: { book: Book; progress: boolean }) => {
+const BookCard = ({ book, progress }: { book: Book; progress?: boolean }) => {
   return (
     <Link href={progress ? `/goal-progress/${book.id}` : `/books/${book.id}`}>
       <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>

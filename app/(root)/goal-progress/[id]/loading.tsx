@@ -12,11 +12,11 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 const BookDetailsLoadingPage = () => {
 return (
   <Card className='relative rounded-md bg-sidebar min-h-[calc(100vh-2rem)]'>
-    <div className='flex items-center justify-between gap-2.5 mt-4 mx-4'>
+    <div className='flex items-center justify-between gap-2.5 mt-2.5 mx-4'>
       <Button asChild>
-        <Link href='/books'>
+        <Link href='/goal-progress'>
           <ArrowLeftIcon className='size-4' />
-          <span>My Books</span>
+          <span>Goal Progress</span>
         </Link>
       </Button>
       <div className='space-x-2.5'>

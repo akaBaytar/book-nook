@@ -64,7 +64,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
         <Link href='/goal-progress'>
           <Button variant='outline'>
             <ArrowLeftIcon className='mr-2 size-4' />
-            Back to Books
+            Back to Goal Progress
           </Button>
         </Link>
       </div>
@@ -77,7 +77,7 @@ const BookDetailsPage = async ({ params }: PropType) => {
         <Button asChild>
           <Link href='/goal-progress'>
             <ArrowLeftIcon className='size-4' />
-            <span>My Books</span>
+            <span>Goal Progress</span>
           </Link>
         </Button>
         <div className='space-x-2.5'>

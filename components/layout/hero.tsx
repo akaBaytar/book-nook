@@ -7,6 +7,7 @@ import { auth } from '@clerk/nextjs/server';
 import { SignInButton } from '@clerk/nextjs';
 
 import { Button } from '../ui/button';
+import TextGeneration from '../shared/text-generation';
 
 const Hero = async () => {
   const { userId } = await auth();
@@ -17,12 +18,10 @@ const Hero = async () => {
         <div className='flex flex-col lg:flex-row items-center gap-12 lg:gap-20'>
           <div className='flex-1 space-y-8 text-center lg:text-left'>
             <div className='space-y-6 max-w-2xl mx-4 lg:mx-0'>
-              <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-pretty'>
-                Your Personal Library,{' '}
-                <span className='bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-pink-500'>
-                  Anytime, Anywhere
-                </span>
-              </h1>
+              <TextGeneration
+                words='Your Personal Library, Anytime, Anywhere'
+                className='text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-pretty'
+              />
               <p className='text-xl text-slate-600 leading-relaxed text-pretty xl:max-w-lg'>
                 Track your progress, set reading goals and build your dream
                 library with the #1 book tracking app.
@@ -37,9 +36,7 @@ const Hero = async () => {
                   </Button>
                 ) : (
                   <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
-                    <Button
-                      size='lg'
-                      className='shadow-md shadow-violet-100'>
+                    <Button size='lg' className='shadow-md shadow-violet-100'>
                       Get Started
                       <ArrowRightIcon className='size-4' />
                     </Button>

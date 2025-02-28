@@ -34,21 +34,14 @@ const EndColumn = async () => {
             <SheetHeader>
               <SheetTitle className='text-center'>Book Tracker</SheetTitle>
               <SheetDescription className='text-center text-pretty'>
-                Mark your pages, track weekly averages and
-                monitor your reading streak.
+                Mark your pages, track weekly averages and monitor your reading
+                streak.
               </SheetDescription>
             </SheetHeader>
             <BookTracker />
           </SheetContent>
         </Sheet>
       </Card>
-      {checkList ? (
-        <CheckListCard checkList={checkList as CheckList} id={checkList.id} />
-      ) : (
-        <Card className='grid p-4 min-h-[76px] items-center rounded-md'>
-          <AddCheckListButton />
-        </Card>
-      )}
       <div className='flex flex-col items-center justify-between gap-5'>
         <Card className='rounded-md w-full'>
           <CardContent className='p-4'>
@@ -62,6 +55,13 @@ const EndColumn = async () => {
         </Card>
       </div>
       <ImageCarousel orientation='end' />
+      {checkList ? (
+        <CheckListCard checkList={checkList as CheckList} id={checkList.id} />
+      ) : (
+        <Card className='grid p-4 min-h-[76px] items-center rounded-md'>
+          <AddCheckListButton />
+        </Card>
+      )}
     </div>
   );
 };

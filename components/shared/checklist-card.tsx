@@ -86,16 +86,16 @@ const CheckListItem = ({ item }: CheckListItemProps) => {
       <div className='flex items-center gap-1'>
         <button onClick={onClick} disabled={isUpdating}>
           {isCompleted ? (
-            <CircleCheckBigIcon className='size-3 text-pink-500' />
+            <CircleCheckBigIcon className='size-3' />
           ) : (
-            <CircleIcon className='size-3 text-gray-500' />
+            <CircleIcon className='size-3' />
           )}
         </button>
         <button
           onClick={onClick}
           disabled={isUpdating}
           className={
-            isCompleted ? 'line-through text-gray-300 truncate' : 'truncate'
+            isCompleted ? 'line-through truncate' : 'truncate'
           }>
           {item.name}
         </button>
@@ -104,18 +104,18 @@ const CheckListItem = ({ item }: CheckListItemProps) => {
         <PopoverTrigger>
           <EllipsisIcon
             className={`size-4 ${
-              isCompleted ? 'text-gray-300' : 'text-gray-500'
+              isCompleted ? '' : ''
             }`}
           />
         </PopoverTrigger>
         <PopoverContent
           side='bottom'
-          className='p-0 border-pink-100 hover:bg-pink-50'>
+          className='p-0'>
           <button
             onClick={onDelete}
             disabled={isUpdating}
             className='flex items-center justify-center gap-0.5 p-2'>
-            <TrashIcon className='size-4 text-gray-500' />
+            <TrashIcon className='size-4' />
             <span className='text-xs'>Remove</span>
           </button>
         </PopoverContent>
@@ -162,7 +162,7 @@ const CheckListCard = ({ checkList, id }: CheckListCardProps) => {
           <div className='flex items-center gap-2'>
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger>
-                <EllipsisIcon className='size-4 text-gray-500' />
+                <EllipsisIcon className='size-4' />
               </PopoverTrigger>
               <PopoverContent
                 side='bottom'

@@ -7,6 +7,7 @@ const isPublicRoute = createRouteMatcher([
   '/lists(.*)',
   '/all-books(.*)',
   '/api/webhooks(.*)',
+  '/manifest.json'
 ]);
 
 export default clerkMiddleware(async (auth, request) => {

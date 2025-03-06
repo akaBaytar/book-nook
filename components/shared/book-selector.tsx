@@ -67,7 +67,7 @@ const BookSelector = ({ selectedBooks = [], onSelect }: PropTypes) => {
           className='pl-8'
         />
       </div>
-      <ScrollArea className='h-52 rounded-md border border-pink-100 shadow-sm'>
+      <ScrollArea className='h-52 rounded-md border shadow-sm'>
         {loading ? (
           <div className='p-4 grid place-content-center h-52'>
             <Loader2Icon className='size-6 animate-spin' />

@@ -126,15 +126,15 @@ const Selection = ({
                   repeat: Infinity,
                   ease: 'linear',
                 }}
-                className='rounded-full bg-white bg-opacity-10 p-2'>
-                <Loader2Icon className='size-5 text-white' />
+                className='rounded-full p-2'>
+                <Loader2Icon className='size-5' />
               </motion.div>
               <div>
-                <AlertDescription className='text-white font-medium'>
+                <AlertDescription className='font-medium'>
                   {selectionText}
                 </AlertDescription>
                 {blinkingBook && (
-                  <div className='text-white text-sm mt-1 italic'>
+                  <div className='text-sm mt-1 italic'>
                     {blinkingBook.name}
                   </div>
                 )}
@@ -148,8 +148,7 @@ const Selection = ({
                 duration: 1.5,
                 repeat: Infinity,
                 repeatType: 'reverse',
-              }}
-              className='text-white'>
+              }}>
               <SparklesIcon className='size-5' />
             </motion.div>
           </div>
@@ -168,7 +167,7 @@ const Selection = ({
                 damping: 15,
               },
             }}
-            className='rounded-lg bg-gradient-to-r from-pink-200 to-violet-200 p-0.5 shadow-lg tbr-bg'>
+            className='rounded-lg p-0.5 shadow-lg tbr-bg'>
             <div className='rounded-md p-4'>
               <div className='flex justify-between items-center'>
                 <div className='flex items-center gap-3'>
@@ -184,18 +183,18 @@ const Selection = ({
                       repeatType: 'reverse',
                     }}
                     className='rounded-full bg-violet-500 bg-opacity-30 p-2'>
-                    <CircleCheckBigIcon className='size-5 text-white' />
+                    <CircleCheckBigIcon className='size-5' />
                   </motion.div>
                   <div>
-                    <AlertDescription className='text-white flex flex-col'>
-                      <span className='text-sm text-white'>
+                    <AlertDescription className='flex flex-col'>
+                      <span className='text-sm'>
                         Your next book to read is
                       </span>
                       <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.5 }}
-                        className='font-bold text-2xl text-white'>
+                        className='font-bold text-2xl'>
                         {selectedBook.name}
                       </motion.span>
                     </AlertDescription>
@@ -211,7 +210,7 @@ const Selection = ({
                     repeat: Infinity,
                     repeatType: 'loop',
                   }}>
-                  <SparklesIcon className='size-8 text-white' />
+                  <SparklesIcon className='size-8' />
                 </motion.div>
               </div>
             </div>

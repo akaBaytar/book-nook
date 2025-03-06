@@ -63,14 +63,12 @@ const DashboardGrid = ({
 }: PropTypes) => {
   type CardPropType = {
     title: string;
-    color?: string;
     subtitle?: string;
     icon: ElementType;
     value: number | string;
   };
 
   const StatCard = ({
-    color,
     title,
     value,
     subtitle,
@@ -79,7 +77,7 @@ const DashboardGrid = ({
     <Card className='rounded-md'>
       <CardHeader className='flex flex-row items-center justify-between pb-1'>
         <h3 className='text-xl text-muted-foreground'>{title}</h3>
-        <Icon className={`size-5 ${color}`} />
+        <Icon className='size-5' />
       </CardHeader>
       <CardContent>
         <div className='mt-1'>
@@ -99,28 +97,25 @@ const DashboardGrid = ({
           title='Total Books'
           value={totalBooks}
           icon={RainbowIcon}
-          color='text-pink-600'
         />
         <StatCard
           title='Books Read'
           value={booksRead}
           icon={BookCheckIcon}
-          color='text-green-600'
         />
         <StatCard
           title='Books Remaining'
           value={booksRemaining}
           icon={BookIcon}
-          color='text-orange-600'
         />
       </div>
       <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5'>
         <Card className='rounded-md'>
           <CardHeader className='flex flex-row items-center justify-between pb-2'>
-            <h3 className='text-lg tracking-[0.015em] text-gray-700'>
+            <h3 className='text-lg tracking-[0.015em]'>
               Reading Goal Progress
             </h3>
-            <TargetIcon className='h-5 w-5 text-violet-600' />
+            <TargetIcon className='size-5' />
           </CardHeader>
           <CardContent>
             <Link href='/goal-progress'>
@@ -146,10 +141,10 @@ const DashboardGrid = ({
         </Card>
         <Card className='rounded-md'>
           <CardHeader className='flex flex-row items-center justify-between pb-2'>
-            <h3 className='text-lg tracking-[0.015em] text-gray-700'>
+            <h3 className='text-lg tracking-[0.015em]'>
               Currently Reading
             </h3>
-            <BookMarkedIcon className='h-5 w-5 text-blue-500' />
+            <BookMarkedIcon className='size-5' />
           </CardHeader>
           {currentlyReading && currentlyReading.book ? (
             <CardContent>
@@ -187,7 +182,6 @@ const DashboardGrid = ({
             monthlyProgress.pagesRead < 2 ? 'page' : 'pages'
           } read`}
           icon={CalendarIcon}
-          color='text-rose-800'
         />
         <StatCard
           title='Reading Streak'
@@ -198,7 +192,6 @@ const DashboardGrid = ({
             readingStreak.personalBest < 2 ? 'day' : 'days'
           }`}
           icon={TrendingUpIcon}
-          color='text-emerald-600'
         />
         <StatCard
           title='Daily Average'
@@ -209,7 +202,6 @@ const DashboardGrid = ({
             dailyAverage.period < 2 ? 'page' : 'pages'
           }`}
           icon={ChartSplineIcon}
-          color='text-amber-600'
         />
       </div>
     </div>

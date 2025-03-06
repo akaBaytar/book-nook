@@ -69,9 +69,9 @@ const ListDetailsPage = async ({ params }: PropType) => {
               {list.name}
             </h1>
             {list.private ? (
-              <LockIcon className='!size-4 mt-0.5 ms-2.5 me-5 text-pink-300' />
+              <LockIcon className='!size-4 mt-0.5 ms-2.5 me-5' />
             ) : (
-              <UnlockIcon className='!size-4 mt-0.5 ms-2.5 me-5 text-pink-400' />
+              <UnlockIcon className='!size-4 mt-0.5 ms-2.5 me-5' />
             )}
           </div>
         </div>
@@ -84,16 +84,16 @@ const ListDetailsPage = async ({ params }: PropType) => {
       <div className='sm:hidden flex items-center gap-2.5 justify-between md:flex xl:hidden'>
         <h1 className='text-xl tracking-[0.015em] line-clamp-1'>{list.name}</h1>
         {list.private ? (
-          <LockIcon className='size-4 mt-0.5 text-pink-300' />
+          <LockIcon className='size-4 mt-0.5' />
         ) : (
-          <UnlockIcon className='size-4 mt-0.5 text-pink-400' />
+          <UnlockIcon className='size-4 mt-0.5' />
         )}
       </div>
       <Card className='rounded-md p-4'>
         <CardContent className='p-0'>
           <p className='text-muted-foreground'>{list.description}</p>
           <div className='mt-2.5 flex items-center gap-0.5 text-sm text-muted-foreground'>
-            <LibraryBigIcon className='size-4 text-pink-300' />
+            <LibraryBigIcon className='size-4' />
             <span>
               {books.length} {list.books.length < 2 ? 'book' : 'books'}
             </span>
@@ -103,7 +103,7 @@ const ListDetailsPage = async ({ params }: PropType) => {
       <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3'>
         {books.map((book: Book) => (
           <Link key={book.id} href={`/books/${book.id}`}>
-            <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>
+            <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow'>
               <div className='flex items-center gap-2.5'>
                 <Image
                   src={book.image || '/placeholder.jpg'}

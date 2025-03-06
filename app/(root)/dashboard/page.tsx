@@ -19,7 +19,7 @@ const DashboardPage = async () => {
   } = await getBookStats();
 
   return (
-    <div className='bg-sidebar rounded-md border border-pink-100 p-4 min-h-[calc(100vh-2rem)]'>
+    <div className='bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <DashboardChart
         booksRead={booksRead || 0}
         totalBooks={totalBooks || 0}

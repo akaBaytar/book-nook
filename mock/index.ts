@@ -274,19 +274,6 @@ export const BOOKS = [
   },
 ];
 
-export const CAROUSEL = [
-  { id: 0, image: '/mock/c0.jpg' },
-  { id: 1, image: '/mock/c1.jpg' },
-  { id: 2, image: '/mock/c2.jpg' },
-  { id: 3, image: '/mock/c3.jpg' },
-  { id: 4, image: '/mock/c4.jpg' },
-  { id: 5, image: '/mock/c5.jpg' },
-  { id: 6, image: '/mock/c6.jpg' },
-  { id: 7, image: '/mock/c7.jpg' },
-  { id: 8, image: '/mock/c8.jpg' },
-  { id: 9, image: '/mock/c9.jpg' },
-];
-
 export const LISTS = [
   {
     id: '1',

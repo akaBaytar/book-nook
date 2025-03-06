@@ -42,7 +42,7 @@ const ListDetailsLoadingPage = () => {
         {Array.from({ length: 4 }).map((_, index) => (
           <Card
             key={index}
-            className='relative flex items-center justify-between gap-5 p-2.5 rounded-md border-pink-100'>
+            className='relative flex items-center justify-between gap-5 p-2.5 rounded-md'>
             <div className='flex items-center gap-2.5'>
               <Skeleton className='w-[60px] h-[90px] rounded-md' />
               <div className='flex flex-col'>

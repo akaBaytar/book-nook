@@ -153,7 +153,7 @@ const BookTracker = () => {
               key={index}
               className={`size-4 rounded-sm ${
                 selectedColor === color &&
-                'scale-110 outline outline-1 outline-offset-1 outline-gray-500'
+                'scale-110 outline outline-1 outline-offset-1'
               }`}
               style={{ backgroundColor: color }}
               onClick={() => setSelectedColor(color)}
@@ -174,11 +174,11 @@ const BookTracker = () => {
             return (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`size-4 rounded-sm border border-gray-300 
+                className={`size-4 rounded-sm border 
                   ${
                     isValid
                       ? 'cursor-pointer hover:opacity-75'
-                      : 'cursor-not-allowed bg-gray-100'
+                      : 'cursor-not-allowed'
                   }`}
                 style={{
                   backgroundColor: isValid

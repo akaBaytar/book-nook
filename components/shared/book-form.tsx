@@ -484,7 +484,7 @@ const BookForm = ({
                     onUploadError={(err: Error) => {
                       toast({ description: err.message });
                     }}
-                    className='ut-button:border ut-button:border-input ut-button:bg-gradient-to-r from-violet-200 to-pink-200 ut-button:text-sm ut-button:font-medium ut-button:h-9 ut-button:ut-uploading:bg-secondary ut-button:w-full'
+                    className='ut-button:border ut-button:border-input ut-button:bg-primary ut-button:text-sm ut-button:font-medium ut-button:h-9 ut-button:ut-uploading:bg-secondary ut-button:w-full'
                   />
                 </div>
               </FormControl>
@@ -497,7 +497,7 @@ const BookForm = ({
             control={form.control}
             name='completed'
             render={({ field }) => (
-              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
+              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border p-2.5'>
                 <div className='space-y-0.5'>
                   <FormLabel>Completed</FormLabel>
                   <FormDescription className='text-xs'>
@@ -517,7 +517,7 @@ const BookForm = ({
             control={form.control}
             name='readingNow'
             render={({ field }) => (
-              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
+              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border p-2.5'>
                 <div className='space-y-0.5'>
                   <FormLabel>Reading Now</FormLabel>
                   <FormDescription className='text-xs'>
@@ -539,7 +539,7 @@ const BookForm = ({
             control={form.control}
             name='private'
             render={({ field }) => (
-              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
+              <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border p-2.5'>
                 <div className='space-y-0.5'>
                   <FormLabel>Private</FormLabel>
                   <FormDescription className='text-xs'>
@@ -622,7 +622,7 @@ const BookForm = ({
                   <PopoverTrigger asChild>
                     <FormControl
                       onClick={(e) => e.stopPropagation()}
-                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      className='bg-transparent'>
                       <Button
                         variant={'outline'}
                         className={cn(
@@ -669,7 +669,7 @@ const BookForm = ({
                   <PopoverTrigger asChild>
                     <FormControl
                       onClick={(e) => e.stopPropagation()}
-                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      className='bg-transparent'>
                       <Button
                         variant={'outline'}
                         className={cn(
@@ -716,7 +716,7 @@ const BookForm = ({
                   <PopoverTrigger asChild>
                     <FormControl
                       onClick={(e) => e.stopPropagation()}
-                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      className='bg-transparent'>
                       <Button
                         variant={'outline'}
                         className={cn(
@@ -763,7 +763,7 @@ const BookForm = ({
                   <PopoverTrigger asChild>
                     <FormControl
                       onClick={(e) => e.stopPropagation()}
-                      className='bg-transparent hover:bg-pink-50 hover:border-pink-300'>
+                      className='bg-transparent'>
                       <Button
                         variant={'outline'}
                         className={cn(

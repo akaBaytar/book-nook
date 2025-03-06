@@ -30,6 +30,7 @@ import {
   SidebarHeader,
   SidebarContent,
   SidebarMenuItem,
+  SidebarSeparator,
   SidebarMenuButton,
   SidebarGroupContent,
 } from '@/components/ui/sidebar';
@@ -59,6 +60,7 @@ import { updateReadingGoal } from '@/actions/dashboard.action';
 
 import ImageCarousel from './image-carousel';
 import SearchDialog from '../shared/search-dialog';
+import ThemeSwitcher from './theme-switcher';
 
 const formSchema = z.object({
   goal: z
@@ -131,7 +133,7 @@ const AppSidebar = () => {
               width={70}
               priority
             />
-            <p className='min-w-[76px] text-center tracking-wide text-2xl mt-3 px-2 rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
+            <p className='min-w-[76px] text-center tracking-wide text-2xl mt-3 px-2 rounded-md'>
               Book Nook
             </p>
           </Link>
@@ -156,6 +158,7 @@ const AppSidebar = () => {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+                <SidebarSeparator className='my-1.5' />
                 <SidebarMenuItem onClick={() => setOpenMobile(false)}>
                   <SidebarMenuButton asChild>
                     <Link href='/books'>
@@ -172,6 +175,22 @@ const AppSidebar = () => {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+                <SidebarSeparator className='my-1.5' />
+                <SidebarMenuItem onClick={() => setOpenMobile(false)}>
+                  <SidebarMenuButton asChild>
+                    <Link href='/goal-progress'>
+                      <TargetIcon />
+                      Reading Goal Progress
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton onClick={openGoalDialog}>
+                    <PickaxeIcon />
+                    Set Reading Goal
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarSeparator className='my-1.5' />
                 <SidebarMenuItem>
                   <SidebarMenuButton onClick={openSearchDialog}>
                     <SearchIcon />
@@ -179,18 +198,7 @@ const AppSidebar = () => {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton onClick={openGoalDialog}>
-                    <TargetIcon />
-                    Reading Goal
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem onClick={() => setOpenMobile(false)}>
-                  <SidebarMenuButton asChild>
-                    <Link href='/goal-progress'>
-                      <PickaxeIcon />
-                      Goal Progress
-                    </Link>
-                  </SidebarMenuButton>
+                  <ThemeSwitcher />
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
@@ -219,7 +227,7 @@ const AppSidebar = () => {
                 <p className='text-sm font-medium'>
                   {user?.firstName} {user?.lastName}
                 </p>
-                <p className='text-xs text-gray-500'>
+                <p className='text-xs'>
                   {user?.emailAddresses[0].emailAddress}
                 </p>
               </div>
@@ -227,6 +235,7 @@ const AppSidebar = () => {
           )}
         </SidebarFooter>
       </Sidebar>
+
       <SearchDialog searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
       <Dialog open={goalDialogOpen} onOpenChange={setGoalDialogOpen}>
         <DialogContent style={{ zIndex: 9999 }}>

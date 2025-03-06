@@ -76,12 +76,23 @@ export type CheckListItem = z.infer<typeof CheckListItemSchema>;
 
 export type List = z.infer<typeof ListSchema> & { id: string };
 
-
 export type ShareContent = {
   id: string;
   name: string;
   author?: string;
   description?: string;
+};
+
+export type Theme =
+  | 'theme-soft-pastel'
+  | 'theme-ocean-breeze'
+  | 'theme-lavender-fields'
+  | 'theme-mint-fresh'
+  | 'theme-sunset-glow'
+
+export type ThemeContext = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
 };
 
 export enum BookType {

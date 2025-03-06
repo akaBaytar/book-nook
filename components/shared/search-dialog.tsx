@@ -82,13 +82,13 @@ export default function SearchDialog({ searchOpen, setSearchOpen }: PropTypes) {
             <TabsTrigger
               value='books'
               onClick={() => setSearchQuery('')}
-              className='flex-1 hover:bg-gray-100'>
+              className='flex-1'>
               Books
             </TabsTrigger>
             <TabsTrigger
               value='lists'
               onClick={() => setSearchQuery('')}
-              className='flex-1 hover:bg-gray-100'>
+              className='flex-1'>
               Lists
             </TabsTrigger>
           </TabsList>
@@ -100,7 +100,7 @@ export default function SearchDialog({ searchOpen, setSearchOpen }: PropTypes) {
             className='w-full mb-4'
           />
           {isLoading ? (
-            <div className='grid place-content-center bg-gray-100 p-2.5 rounded-md'>
+            <div className='grid place-content-center p-2.5 rounded-md'>
               <Loader2Icon className='animate-spin size-4' />
             </div>
           ) : (

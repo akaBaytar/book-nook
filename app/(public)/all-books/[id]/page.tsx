@@ -77,12 +77,12 @@ const PublicBookDetailPage = async ({ params }: PropType) => {
               <CardTitle className='text-2xl font-medium tracking-[0.015em] flex flex-col sm:flex-row mb-2.5 items-center gap-2.5 truncate'>
                 {name}
                 {completed && (
-                  <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
+                  <Badge className='cursor-default mt-0.5'>
                     Completed
                   </Badge>
                 )}
                 {readingNow && !completed && (
-                  <Badge className='bg-gradient-to-r from-violet-200 to-pink-200 cursor-default mt-0.5'>
+                  <Badge className='cursor-default mt-0.5'>
                     Currently Reading
                   </Badge>
                 )}
@@ -106,7 +106,7 @@ const PublicBookDetailPage = async ({ params }: PropType) => {
           )}
           {rating && (
             <div className='flex items-center gap-1'>
-              <StarIcon className='fill-pink-100 text-pink-400 size-5' />
+              <StarIcon className='size-5' />
               <span className='text-lg'>{rating}/5</span>
             </div>
           )}
@@ -114,13 +114,13 @@ const PublicBookDetailPage = async ({ params }: PropType) => {
             <div className='flex flex-wrap gap-5'>
               {pageCount && (
                 <div className='flex items-center justify-center w-full gap-1'>
-                  <SwatchBookIcon className='fill-pink-100 text-pink-400 size-5' />
+                  <SwatchBookIcon className='size-5' />
                   <span>{pageCount} pages</span>
                 </div>
               )}
               {startDate && (
                 <div className='flex items-center justify-center w-full gap-1'>
-                  <CalendarIcon className='fill-pink-100 text-pink-400 size-5' />
+                  <CalendarIcon className='size-5' />
                   <span>Started {formatDate(startDate)}</span>
                 </div>
               )}
@@ -137,10 +137,10 @@ const PublicBookDetailPage = async ({ params }: PropType) => {
             </div>
           )}
           {quote && (
-            <blockquote className='flex gap-1 items-center justify-center border-s-4 border border-pink-100 p-2.5 rounded-md italic text-muted-foreground'>
-              <QuoteIcon className='size-4 rotate-180  fill-pink-100 text-pink-300' />
+            <blockquote className='flex gap-1 items-center justify-center border-s-4 border p-2.5 rounded-md italic text-muted-foreground'>
+              <QuoteIcon className='size-4 rotate-180' />
               {quote}
-              <QuoteIcon className='size-4 fill-pink-100 text-pink-300' />
+              <QuoteIcon className='size-4' />
             </blockquote>
           )}
         </div>

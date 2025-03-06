@@ -287,7 +287,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
           )}
         </div>
       </div>
-      <div className='bg-white p-3 rounded-md border flex justify-between items-center'>
+      <div className='p-3 rounded-md border flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
           <div className='flex items-center gap-1'>
             <span className='text-sm'>
@@ -298,11 +298,11 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
         </div>
         <div className='flex gap-1'>
           <Badge variant='secondary' className='flex items-center gap-1'>
-            <HeartIcon className='size-3 fill-pink-500 text-pink-500' />
+            <HeartIcon className='size-3' />
             {favoritesCount}
           </Badge>
           <Badge variant='secondary' className='flex items-center gap-1'>
-            <CheckCircleIcon className='size-3 text-pink-500' />
+            <CheckCircleIcon className='size-3' />
             {completedCount}
           </Badge>
         </div>
@@ -330,12 +330,12 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
         </Tabs>
         <div className='flex flex-col gap-5 xl:flex-row xl:items-center w-full'>
           <div className='relative flex-1 min-w-48'>
-            <SearchIcon className='absolute start-2.5 top-3 size-4 text-slate-500' />
+            <SearchIcon className='absolute start-2.5 top-3 size-4' />
             <Input
               placeholder='Search...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='ps-8 bg-white h-10'
+              className='ps-8 h-10'
             />
           </div>
         </div>
@@ -374,15 +374,13 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                 book.completed ? 'opacity-40' : ''
               } ${
                 selectedIndex === index
-                  ? 'border border-pink-200 text-white bg-gradient-to-r from-pink-200 to-violet-200 transform'
+                  ? 'border transform'
                   : blinkingIndex === index
-                  ? 'bg-pink-100 text-black'
+                  ? 'text-black'
                   : book.favorite && !book.completed
-                  ? 'border-pink-200'
+                  ? ''
                   : ''
-              } ${
-                selectedBooks.has(book.id) ? 'border-pink-300 bg-pink-50' : ''
-              }`}
+              } ${selectedBooks.has(book.id) ? '' : ''}`}
               onClick={() => handleToggleSelect(book.id)}
               style={{ cursor: isSelectMode ? 'pointer' : 'default' }}>
               <div className='flex flex-col gap-2.5 w-full'>
@@ -396,16 +394,14 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                           handleToggleFavorite(book.id);
                         }}
                         disabled={isPending}
-                        className={`rounded-full bg-pink-50 p-1 transition-colors ${
-                          selectedIndex === index && 'bg-violet-300'
+                        className={`rounded-full p-1 transition-colors ${
+                          selectedIndex === index && ''
                         }`}>
                         <HeartIcon
-                          className={`size-3 text-pink-500 ${
-                            selectedIndex === index && 'text-white'
-                          } ${book.favorite ? 'fill-pink-500' : ''} ${
-                            selectedIndex === index &&
-                            book.favorite &&
-                            'fill-violet-50'
+                          className={`size-3 ${
+                            selectedIndex === index && ''
+                          } ${book.favorite ? '' : ''} ${
+                            selectedIndex === index && book.favorite && ''
                           }`}
                         />
                       </button>
@@ -415,12 +411,12 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                           handleToggleCompleted(book.id);
                         }}
                         disabled={isPending}
-                        className={`rounded-full bg-pink-50 p-1 transition-colors ${
-                          selectedIndex === index && 'bg-violet-300'
+                        className={`rounded-full p-1 transition-colors ${
+                          selectedIndex === index && ''
                         }`}>
                         <CheckCircleIcon
-                          className={`size-3 text-pink-500 ${
-                            selectedIndex === index && 'text-white'
+                          className={`size-3 ${
+                            selectedIndex === index && ''
                           }`}
                         />
                       </button>

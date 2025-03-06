@@ -46,10 +46,10 @@ const TextGeneration = ({
               key={word + idx}
               className={`opacity-0 ${
                 idx === 3 &&
-                'bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-pink-500'
+                'bg-clip-text text-transparent'
               } ${
                 idx === 4 &&
-                'bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-pink-500'
+                'bg-clip-text text-transparent'
               }`}
               style={{
                 filter: filter ? 'blur(10px)' : 'none',

@@ -48,9 +48,9 @@ const PublicListDetailsPage = async ({ params }: PropType) => {
       <div className='flex items-center gap-2.5 justify-center'>
         <h1 className='text-xl tracking-[0.015em] line-clamp-1'>{list.name}</h1>
         {list.private ? (
-          <LockIcon className='size-4 mt-0.5 text-pink-300' />
+          <LockIcon className='size-4 mt-0.5' />
         ) : (
-          <UnlockIcon className='size-4 mt-0.5 text-pink-400' />
+          <UnlockIcon className='size-4 mt-0.5' />
         )}
       </div>
       <Card className='rounded-md p-4'>
@@ -59,7 +59,7 @@ const PublicListDetailsPage = async ({ params }: PropType) => {
             {list.description}
           </p>
           <div className='mt-2.5 flex items-center justify-center gap-0.5 text-sm text-muted-foreground'>
-            <LibraryBigIcon className='size-4 text-pink-300' />
+            <LibraryBigIcon className='size-4' />
             <span>
               {books.length} {list.books.length < 2 ? 'book' : 'books'}
             </span>
@@ -69,7 +69,7 @@ const PublicListDetailsPage = async ({ params }: PropType) => {
       <div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
         {books.map((book: Book) => (
           <Link key={book.id} href={`/all-books/${book.id}`}>
-            <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>
+            <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow'>
               <div className='flex items-center gap-2.5'>
                 <Image
                   src={book.image || '/placeholder.jpg'}

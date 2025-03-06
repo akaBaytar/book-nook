@@ -52,19 +52,19 @@ const DashboardChart = ({
   const chartConfig = {
     booksReadsThisYear: {
       label: 'Read This Year',
-      color: '#8ebaa3',
+      color: 'hsl(var(--chart-1))',
     },
     booksReadsThisMonth: {
       label: 'Read This Month',
-      color: '#709dad',
+      color: 'hsl(var(--chart-2))',
     },
     totalBooksRead: {
       label: 'Total Read',
-      color: '#a3aed3',
+      color: 'hsl(var(--chart-3))',
     },
     totalBooks: {
       label: 'Total Books',
-      color: '#d7b6',
+      color: 'hsl(var(--chart-4))',
     },
   } satisfies ChartConfig;
 

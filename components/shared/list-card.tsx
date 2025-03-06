@@ -52,9 +52,9 @@ const ListCard = ({ list, books = [], isLoading }: PropType) => {
                   {list.name}
                 </CardTitle>
                 {list.private ? (
-                  <LockIcon className='size-4 text-pink-400' />
+                  <LockIcon className='size-4' />
                 ) : (
-                  <UnlockIcon className='size-4 text-pink-300' />
+                  <UnlockIcon className='size-4' />
                 )}
               </div>
               <CardDescription className='line-clamp-1 text-sm'>
@@ -74,7 +74,7 @@ const ListCard = ({ list, books = [], isLoading }: PropType) => {
                 {books.slice(0, 1).map((book: Book) => (
                   <div
                     key={book.id}
-                    className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border border-pink-100'>
+                    className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border'>
                     {isLoading ? (
                       <Skeleton className='w-[27px] h-[48px]' />
                     ) : (
@@ -118,7 +118,7 @@ const ListCard = ({ list, books = [], isLoading }: PropType) => {
                       {books.slice(1).map((book: Book) => (
                         <div
                           key={book.id}
-                          className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border border-pink-100'>
+                          className='flex items-center gap-2.5 p-2 rounded-md shadow-sm border'>
                           <Image
                             src={book.image}
                             alt={book.name}

@@ -15,7 +15,7 @@ import type { Book } from '@/types';
 const BookCard = ({ book, progress }: { book: Book; progress?: boolean }) => {
   return (
     <Link href={progress ? `/goal-progress/${book.id}` : `/books/${book.id}`}>
-      <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow border-pink-100'>
+      <Card className='relative flex items-center justify-between gap-5 p-2.5 rounded-md hover:shadow-md transition-shadow'>
         <div className='flex items-center gap-2.5'>
           <Image
             src={book.image || '/placeholder.jpg'}
@@ -52,11 +52,7 @@ const BookCard = ({ book, progress }: { book: Book; progress?: boolean }) => {
             book.completed ? formatDate(book.endDate as Date) : 'Not completed'
           }
           className='absolute end-2.5 top-2.5'>
-          {book.completed ? (
-            <BookCheckIcon className='fill-pink-100 text-pink-500' />
-          ) : (
-            <BookIcon className='fill-pink-100 text-pink-300' />
-          )}
+          {book.completed ? <BookCheckIcon /> : <BookIcon />}
         </div>
       </Card>
     </Link>

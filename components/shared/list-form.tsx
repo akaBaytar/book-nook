@@ -133,7 +133,7 @@ const ListForm = ({ isEdit, setIsOpen, onSuccess, list }: PropTypes) => {
           control={form.control}
           name='private'
           render={({ field }) => (
-            <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border border-pink-100 p-2.5'>
+            <FormItem className='flex flex-row items-center justify-between rounded-md shadow-sm border p-2.5'>
               <div className='space-y-0.5'>
                 <FormLabel>Private</FormLabel>
                 <FormDescription className='text-xs text-pretty'>

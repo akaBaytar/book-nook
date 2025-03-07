@@ -135,14 +135,14 @@ const AppSidebar = () => {
             <Image
               src={isDark ? '/logo-dark.png' : '/logo.png'}
               alt='book nook app logo'
-              height={70}
-              width={70}
+              height={50}
+              width={50}
               priority
             />
             <p
               className={`${
                 isDark ? 'text-[#d5d7dd]' : 'text-[#1E201E]'
-              } min-w-[76px] text-center tracking-wide font-light text-2xl px-2 rounded-md`}>
+              } min-w-[76px] text-center tracking-wide font-light text-xl px-1 rounded-md`}>
               Book Nook
             </p>
           </Link>
@@ -167,7 +167,7 @@ const AppSidebar = () => {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarSeparator className='my-1.5' />
+                <SidebarSeparator className='my-0.5' />
                 <SidebarMenuItem onClick={() => setOpenMobile(false)}>
                   <SidebarMenuButton asChild>
                     <Link href='/books'>
@@ -184,7 +184,7 @@ const AppSidebar = () => {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarSeparator className='my-1.5' />
+                <SidebarSeparator className='my-0.5' />
                 <SidebarMenuItem onClick={() => setOpenMobile(false)}>
                   <SidebarMenuButton asChild>
                     <Link href='/goal-progress'>
@@ -199,7 +199,7 @@ const AppSidebar = () => {
                     Set Reading Goal
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarSeparator className='my-1.5' />
+                <SidebarSeparator className='my-0.5' />
                 <SidebarMenuItem>
                   <SidebarMenuButton onClick={openSearchDialog}>
                     <SearchIcon />

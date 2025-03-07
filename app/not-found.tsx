@@ -51,11 +51,7 @@ const NotFound = () => {
         </div>
         <h1 className='text-9xl font-bold text-primary mb-4'>404</h1>
         <div className='text-2xl font-semibold mb-8'>
-          <span className='text-muted-foreground'>Oops! Page </span>
-          <span className='bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-pink-400'>
-            not
-          </span>
-          <span className='text-muted-foreground'> found</span>
+          <span className='text-muted-foreground'>Oops! Page not found</span>
         </div>
         <p className='text-lg text-muted-foreground mb-8 max-w-md text-pretty'>
           The page you&apos;re looking for has drifted off into the digital

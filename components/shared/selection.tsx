@@ -12,8 +12,6 @@ type Book = {
   completed: boolean;
 };
 
-type AnimationPhase = 'initial' | 'selecting' | 'finalizing' | 'complete';
-
 type PropTypes = {
   isSelecting: boolean;
   selectedBook: Book | null;
@@ -27,8 +25,6 @@ const Selection = ({
 }: PropTypes) => {
   const [blinkingBook, setBlinkingBook] = useState<Book | null>(null);
   const [animationSpeed, setAnimationSpeed] = useState(1);
-  const [animationPhase, setAnimationPhase] =
-    useState<AnimationPhase>('initial');
 
   const [selectionText, setSelectionText] = useState(
     'Choosing your next adventure...'
@@ -47,11 +43,9 @@ const Selection = ({
 
   useEffect(() => {
     if (!isSelecting) {
-      setAnimationPhase('complete');
       return;
     }
 
-    setAnimationPhase('selecting');
     let blinkCounter = 0;
     let textCounter = 0;
 
@@ -81,11 +75,6 @@ const Selection = ({
       if (blinkCounter >= 35) {
         clearInterval(blinkInterval);
         clearInterval(textInterval);
-        setAnimationPhase('finalizing');
-
-        setTimeout(() => {
-          setAnimationPhase('complete');
-        }, 800);
       }
     }, 300 / animationSpeed);
 
@@ -97,13 +86,6 @@ const Selection = ({
 
   if (!isSelecting && !selectedBook) return null;
 
-  const gradientColors = {
-    initial: 'from-violet-300 to-pink-400',
-    selecting: 'from-pink-200 to-violet-200',
-    finalizing: 'from-yellow-400 to-pink-400',
-    complete: 'from-violet-400 to-pink-300',
-  };
-
   return (
     <AnimatePresence mode='wait'>
       {isSelecting ? (
@@ -113,7 +95,7 @@ const Selection = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.3 }}
-          className={`rounded-lg bg-gradient-to-r ${gradientColors[animationPhase]} p-0.5 shadow-lg`}>
+          className='rounded-lg bg-muted p-0.5 shadow-lg'>
           <div className='rounded-md p-4 flex items-center justify-between'>
             <div className='flex items-center gap-3'>
               <motion.div
@@ -134,9 +116,7 @@ const Selection = ({
                   {selectionText}
                 </AlertDescription>
                 {blinkingBook && (
-                  <div className='text-sm mt-1 italic'>
-                    {blinkingBook.name}
-                  </div>
+                  <div className='text-sm mt-1 italic'>{blinkingBook.name}</div>
                 )}
               </div>
             </div>
@@ -167,7 +147,7 @@ const Selection = ({
                 damping: 15,
               },
             }}
-            className='rounded-lg p-0.5 shadow-lg tbr-bg'>
+            className='rounded-lg p-0.5 shadow-lg bg-gradient-to-r from-muted to-secondary'>
             <div className='rounded-md p-4'>
               <div className='flex justify-between items-center'>
                 <div className='flex items-center gap-3'>
@@ -182,14 +162,12 @@ const Selection = ({
                       repeat: 2,
                       repeatType: 'reverse',
                     }}
-                    className='rounded-full bg-violet-500 bg-opacity-30 p-2'>
+                    className='rounded-full bg-opacity-30 p-2'>
                     <CircleCheckBigIcon className='size-5' />
                   </motion.div>
                   <div>
                     <AlertDescription className='flex flex-col'>
-                      <span className='text-sm'>
-                        Your next book to read is
-                      </span>
+                      <span className='text-sm'>Your next book to read is</span>
                       <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}

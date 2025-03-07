@@ -59,9 +59,8 @@ export default function Error({
         </div>
         <h1 className='text-9xl font-bold text-primary mb-4'>500</h1>
         <div className='text-2xl font-semibold mb-8'>
-          <span className='text-muted-foreground'>Oops! Something </span>
-          <span className='bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-pink-400'>
-            went wrong
+          <span className='text-muted-foreground'>
+            Oops! Something went wrong
           </span>
         </div>
         <p className='text-lg text-muted-foreground mb-8 max-w-md text-pretty'>

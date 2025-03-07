@@ -86,7 +86,7 @@ const CheckListItem = ({ item }: CheckListItemProps) => {
       <div className='flex items-center gap-1'>
         <button onClick={onClick} disabled={isUpdating}>
           {isCompleted ? (
-            <CircleCheckBigIcon className='size-3' />
+            <CircleCheckBigIcon className='size-3 opacity-60' />
           ) : (
             <CircleIcon className='size-3' />
           )}
@@ -95,7 +95,7 @@ const CheckListItem = ({ item }: CheckListItemProps) => {
           onClick={onClick}
           disabled={isUpdating}
           className={
-            isCompleted ? 'line-through truncate' : 'truncate'
+            isCompleted ? 'line-through truncate opacity-60' : 'truncate'
           }>
           {item.name}
         </button>

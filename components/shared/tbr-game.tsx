@@ -267,7 +267,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
               disabled={
                 isPending || isSelecting || availableForSelection.length === 0
               }
-              className='sm:w-[170px] lg:w-auto xl:w-[170px] disabled:bg-black/90'>
+              className='sm:w-[170px] lg:w-auto xl:w-[170px]'>
               {isSelecting ? (
                 <>
                   <Loader2Icon className='size-4 animate-spin' />
@@ -298,7 +298,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
         </div>
         <div className='flex gap-1'>
           <Badge variant='secondary' className='flex items-center gap-1'>
-            <HeartIcon className='size-3' />
+            <HeartIcon className='size-3 fill-primary text-primary' />
             {favoritesCount}
           </Badge>
           <Badge variant='secondary' className='flex items-center gap-1'>
@@ -317,7 +317,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
             setIsSelectMode(false);
             setSelectedBooks(new Set());
           }}>
-          <TabsList className='grid w-full grid-cols-2'>
+          <TabsList className='grid w-full grid-cols-2 gap-2'>
             <TabsTrigger value='library' className='flex gap-2'>
               <OrigamiIcon className='size-4' />
               Library
@@ -374,13 +374,11 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                 book.completed ? 'opacity-40' : ''
               } ${
                 selectedIndex === index
-                  ? 'border transform'
+                  ? 'transform bg-gradient-to-r from-muted to-secondary'
                   : blinkingIndex === index
                   ? 'text-black'
-                  : book.favorite && !book.completed
-                  ? ''
                   : ''
-              } ${selectedBooks.has(book.id) ? '' : ''}`}
+              } ${selectedBooks.has(book.id) ? 'bg-secondary' : ''}`}
               onClick={() => handleToggleSelect(book.id)}
               style={{ cursor: isSelectMode ? 'pointer' : 'default' }}>
               <div className='flex flex-col gap-2.5 w-full'>
@@ -399,9 +397,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                         }`}>
                         <HeartIcon
                           className={`size-3 ${
-                            selectedIndex === index && ''
-                          } ${book.favorite ? '' : ''} ${
-                            selectedIndex === index && book.favorite && ''
+                            book.favorite ? 'text-primary fill-primary' : ''
                           }`}
                         />
                       </button>
@@ -415,9 +411,7 @@ const TBRGame = ({ initialBooks, initialTBRs }: PropTypes) => {
                           selectedIndex === index && ''
                         }`}>
                         <CheckCircleIcon
-                          className={`size-3 ${
-                            selectedIndex === index && ''
-                          }`}
+                          className={`size-3 ${selectedIndex === index && ''}`}
                         />
                       </button>
                     </div>

@@ -20,9 +20,9 @@ const Hero = async () => {
             <div className='space-y-6 max-w-2xl mx-4 lg:mx-0'>
               <TextGeneration
                 words='Your Personal Library, Anytime, Anywhere'
-                className='text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-pretty'
+                className='text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-pretty text-primary'
               />
-              <p className='text-xl text-slate-600 leading-relaxed text-pretty xl:max-w-lg'>
+              <p className='text-xl leading-relaxed text-pretty xl:max-w-lg'>
                 Track your progress, set reading goals and build your dream
                 library with the #1 book tracking app.
               </p>

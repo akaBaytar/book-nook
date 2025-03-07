@@ -23,7 +23,7 @@ const Header = async () => {
             priority
             className='h-9 w-9'
           />
-          <span className='text-xl tracking-wide'>Book Nook</span>
+          <span className='text-xl tracking-wide text-primary'>Book Nook</span>
         </div>
         <div className='flex items-center gap-4'>
           {userId ? (

@@ -20,7 +20,7 @@ const Footer = () => {
               width={36}
               priority
             />
-            <span className='text-xl tracking-wide'>Book Nook</span>
+            <span className='text-xl tracking-wide text-primary'>Book Nook</span>
           </div>
           <div className='flex gap-4'>
             <Button variant='ghost' size='icon' aria-label='Instagram'>

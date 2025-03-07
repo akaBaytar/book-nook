@@ -64,6 +64,7 @@ const DashboardGrid = ({
   type CardPropType = {
     title: string;
     subtitle?: string;
+    color?: string;
     icon: ElementType;
     value: number | string;
   };
@@ -72,12 +73,13 @@ const DashboardGrid = ({
     title,
     value,
     subtitle,
+    color,
     icon: Icon,
   }: CardPropType) => (
     <Card className='rounded-md'>
       <CardHeader className='flex flex-row items-center justify-between pb-1'>
         <h3 className='text-xl text-muted-foreground'>{title}</h3>
-        <Icon className='size-5' />
+        <Icon className='size-6' style={{ color }} />
       </CardHeader>
       <CardContent>
         <div className='mt-1'>
@@ -97,16 +99,19 @@ const DashboardGrid = ({
           title='Total Books'
           value={totalBooks}
           icon={RainbowIcon}
+          color='#d2665a'
         />
         <StatCard
           title='Books Read'
           value={booksRead}
           icon={BookCheckIcon}
+          color='#709dad'
         />
         <StatCard
           title='Books Remaining'
           value={booksRemaining}
           icon={BookIcon}
+          color='#d7b'
         />
       </div>
       <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5'>
@@ -115,7 +120,7 @@ const DashboardGrid = ({
             <h3 className='text-lg tracking-[0.015em]'>
               Reading Goal Progress
             </h3>
-            <TargetIcon className='size-5' />
+            <TargetIcon className='size-6 text-[#d7b]' />
           </CardHeader>
           <CardContent>
             <Link href='/goal-progress'>
@@ -127,11 +132,7 @@ const DashboardGrid = ({
                     <UpdateGoal readingGoal={readingGoal} />
                   </span>
                 </div>
-                <Progress
-                  value={goalProgress}
-                  max={100}
-                  className='h-2 bg-violet-100'
-                />
+                <Progress value={goalProgress} max={100} className='h-2' />
                 <p className='text-sm text-muted-foreground mt-2'>
                   {Math.round(goalProgress)}% of yearly goal completed
                 </p>
@@ -141,10 +142,8 @@ const DashboardGrid = ({
         </Card>
         <Card className='rounded-md'>
           <CardHeader className='flex flex-row items-center justify-between pb-2'>
-            <h3 className='text-lg tracking-[0.015em]'>
-              Currently Reading
-            </h3>
-            <BookMarkedIcon className='size-5' />
+            <h3 className='text-lg tracking-[0.015em]'>Currently Reading</h3>
+            <BookMarkedIcon className='size-6 text-[#709dad]' />
           </CardHeader>
           {currentlyReading && currentlyReading.book ? (
             <CardContent>
@@ -182,6 +181,7 @@ const DashboardGrid = ({
             monthlyProgress.pagesRead < 2 ? 'page' : 'pages'
           } read`}
           icon={CalendarIcon}
+          color='#d2665a'
         />
         <StatCard
           title='Reading Streak'
@@ -192,6 +192,7 @@ const DashboardGrid = ({
             readingStreak.personalBest < 2 ? 'day' : 'days'
           }`}
           icon={TrendingUpIcon}
+          color='#8ebaa3'
         />
         <StatCard
           title='Daily Average'
@@ -202,6 +203,7 @@ const DashboardGrid = ({
             dailyAverage.period < 2 ? 'page' : 'pages'
           }`}
           icon={ChartSplineIcon}
+          color='#8193cf'
         />
       </div>
     </div>

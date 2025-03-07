@@ -44,13 +44,7 @@ const TextGeneration = ({
           return (
             <motion.span
               key={word + idx}
-              className={`opacity-0 ${
-                idx === 3 &&
-                'bg-clip-text text-transparent'
-              } ${
-                idx === 4 &&
-                'bg-clip-text text-transparent'
-              }`}
+              className='opacity-0'
               style={{
                 filter: filter ? 'blur(10px)' : 'none',
               }}>

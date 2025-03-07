@@ -50,21 +50,21 @@ const DashboardChart = ({
   ];
 
   const chartConfig = {
-    booksReadsThisYear: {
-      label: 'Read This Year',
-      color: 'hsl(var(--chart-1))',
-    },
     booksReadsThisMonth: {
       label: 'Read This Month',
-      color: 'hsl(var(--chart-2))',
+      color: 'hsl(var(--chart-3))',
+    },
+    booksReadsThisYear: {
+      label: 'Read This Year',
+      color: 'hsl(var(--chart-5))',
     },
     totalBooksRead: {
       label: 'Total Read',
-      color: 'hsl(var(--chart-3))',
+      color: 'hsl(var(--chart-4))',
     },
     totalBooks: {
       label: 'Total Books',
-      color: 'hsl(var(--chart-4))',
+      color: 'hsl(var(--chart-2))',
     },
   } satisfies ChartConfig;
 

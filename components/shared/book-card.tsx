@@ -52,7 +52,7 @@ const BookCard = ({ book, progress }: { book: Book; progress?: boolean }) => {
             book.completed ? formatDate(book.endDate as Date) : 'Not completed'
           }
           className='absolute end-2.5 top-2.5'>
-          {book.completed ? <BookCheckIcon /> : <BookIcon />}
+          {book.completed ? <BookCheckIcon className='opacity-70'/> : <BookIcon className='opacity-30'/>}
         </div>
       </Card>
     </Link>

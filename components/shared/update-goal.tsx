@@ -17,8 +17,11 @@ const UpdateGoal = ({ readingGoal }: { readingGoal: number }) => {
     setGoal(readingGoal || 0);
   }, [readingGoal]);
 
-  const enable = () => {
+  const enable = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     setIsEditing(true);
+
     setTimeout(() => input.current?.focus(), 0);
   };
 
@@ -30,7 +33,7 @@ const UpdateGoal = ({ readingGoal }: { readingGoal: number }) => {
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-   if(+e.target.value >= 0)  setGoal(+e.target.value);
+    if (+e.target.value >= 0) setGoal(+e.target.value);
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -53,7 +56,7 @@ const UpdateGoal = ({ readingGoal }: { readingGoal: number }) => {
         <Button
           variant='ghost'
           size='sm'
-          onClick={enable}
+          onClick={(e) => enable(e)}
           className='h-8 text-sm p-1 hover:bg-inherit opacity-100 '>
           <span className='truncate'>{goal}</span>
         </Button>

@@ -133,7 +133,7 @@ const AppSidebar = () => {
               width={70}
               priority
             />
-            <p className='min-w-[76px] text-center tracking-wide text-2xl mt-3 px-2 rounded-md'>
+            <p className='min-w-[76px] text-center text-primary tracking-wide text-2xl mt-3 px-2 rounded-md'>
               Book Nook
             </p>
           </Link>

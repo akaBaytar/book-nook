@@ -11,10 +11,10 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const Navbar = () => {
   return (
-    <nav className='rounded-md fixed top-4 h-20 start-4 end-4 md:hidden px-4 flex justify-between items-center border z-10 shadow-md border-pink-100 bg-sidebar/50 backdrop-blur-sm'>
+    <nav className='rounded-md fixed top-4 h-20 start-4 end-4 md:hidden px-4 flex justify-between items-center border z-10 shadow-md border-muted bg-sidebar/50 backdrop-blur-sm'>
       <SidebarTrigger />
       <Link href='/dashboard' className='flex items-center'>
-        <p className='text-2xl text-center tracking-wide px-2 h-8 border shadow-sm grid place-content-center rounded-md text-white bg-gradient-to-r from-violet-200 to-pink-200'>
+        <p className='text-2xl text-center tracking-wide px-2 h-8 border border-muted shadow-sm grid place-content-center rounded-md bg-gradient-to-r from-muted to-secondary'>
           Book Nook
         </p>
       </Link>

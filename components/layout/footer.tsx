@@ -23,23 +23,23 @@ const Footer = () => {
             <span className='text-xl tracking-wide'>Book Nook</span>
           </div>
           <div className='flex gap-4'>
-            <Button variant='ghost' size='icon' aria-label='Instagram'>
+            <Button variant='ghost' size='icon' aria-label='Instagram' asChild>
               <Link
                 href='https://www.instagram.com/obscuramanuscripts/'
                 target='_blank'>
-                <Instagram className='size-5' />
+                <Instagram className='!size-6' />
               </Link>
             </Button>
-            <Button variant='ghost' size='icon' aria-label='Instagram'>
+            <Button variant='ghost' size='icon' aria-label='Linkedin' asChild>
               <Link
                 href='https://www.linkedin.com/in/akabaytar/'
                 target='_blank'>
-                <Linkedin className='size-5' />
+                <Linkedin className='!size-6' />
               </Link>
             </Button>
-            <Button variant='ghost' size='icon' aria-label='Instagram'>
+            <Button variant='ghost' size='icon' aria-label='Github' asChild>
               <Link href='https://github.com/akaBaytar' target='_blank'>
-                <Github className='size-5' />
+                <Github className='!size-6' />
               </Link>
             </Button>
           </div>

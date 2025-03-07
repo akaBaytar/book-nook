@@ -4,8 +4,6 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 import { Toaster } from '@/components/ui/toaster';
 
-import { ThemeProvider } from '@/context/theme';
-
 import type { Metadata } from 'next';
 
 import '@/styles/globals.css';
@@ -67,10 +65,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       signUpForceRedirectUrl={'/dashboard'}>
       <html lang='en' className={sourGummy.className}>
         <body>
-          <ThemeProvider>
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

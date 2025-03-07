@@ -9,7 +9,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-slate-50 border-t border-slate-200'>
+    <footer className='bg-slate-50 border-t border-slate-200 !text-black'>
       <div className='container mx-auto px-4 py-8 md:px-10'>
         <div className='flex flex-col sm:flex-row justify-between items-center gap-4'>
           <div className='flex items-center'>
@@ -20,7 +20,7 @@ const Footer = () => {
               width={36}
               priority
             />
-            <span className='text-xl tracking-wide text-primary'>Book Nook</span>
+            <span className='text-xl tracking-wide'>Book Nook</span>
           </div>
           <div className='flex gap-4'>
             <Button variant='ghost' size='icon' aria-label='Instagram'>

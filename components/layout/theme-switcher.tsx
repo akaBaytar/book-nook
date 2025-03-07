@@ -31,6 +31,11 @@ const ThemeSwitcher = () => {
       },
       { value: 'theme-mint-fresh', label: 'Mint Fresh', color: '#d7eede' },
       { value: 'theme-sunset-glow', label: 'Sunset Glow', color: '#f5e0c9' },
+      {
+        value: 'theme-midnight-nebula',
+        label: 'Midnight Nebula',
+        color: '#181d31',
+      },
     ],
     []
   );

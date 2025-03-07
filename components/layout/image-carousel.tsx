@@ -69,6 +69,17 @@ import sg_c7 from '@/images/sunset-glow/c7.jpg';
 import sg_c8 from '@/images/sunset-glow/c8.jpg';
 import sg_c9 from '@/images/sunset-glow/c9.jpg';
 
+import mn_c0 from '@/images/midnight-nebula/c0.jpg';
+import mn_c1 from '@/images/midnight-nebula/c1.jpg';
+import mn_c2 from '@/images/midnight-nebula/c2.jpg';
+import mn_c3 from '@/images/midnight-nebula/c3.jpg';
+import mn_c4 from '@/images/midnight-nebula/c4.jpg';
+import mn_c5 from '@/images/midnight-nebula/c5.jpg';
+import mn_c6 from '@/images/midnight-nebula/c6.jpg';
+import mn_c7 from '@/images/midnight-nebula/c7.jpg';
+import mn_c8 from '@/images/midnight-nebula/c8.jpg';
+import mn_c9 from '@/images/midnight-nebula/c9.jpg';
+
 type PropTypes = { orientation: 'start' | 'end'; isBoxed?: boolean };
 
 const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
@@ -88,7 +99,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c0
           : theme === 'theme-sunset-glow'
           ? sg_c0
-          : '/placeholder.jpg',
+          : mn_c0,
     },
     {
       id: 1,
@@ -103,7 +114,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c1
           : theme === 'theme-sunset-glow'
           ? sg_c1
-          : '/placeholder.jpg',
+          : mn_c1,
     },
     {
       id: 2,
@@ -118,7 +129,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c2
           : theme === 'theme-sunset-glow'
           ? sg_c2
-          : '/placeholder.jpg',
+          : mn_c2,
     },
     {
       id: 3,
@@ -133,7 +144,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c3
           : theme === 'theme-sunset-glow'
           ? sg_c3
-          : '/placeholder.jpg',
+          : mn_c3,
     },
     {
       id: 4,
@@ -148,7 +159,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c4
           : theme === 'theme-sunset-glow'
           ? sg_c4
-          : '/placeholder.jpg',
+          : mn_c4,
     },
     {
       id: 5,
@@ -163,7 +174,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c5
           : theme === 'theme-sunset-glow'
           ? sg_c5
-          : '/placeholder.jpg',
+          : mn_c5,
     },
     {
       id: 6,
@@ -178,7 +189,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c6
           : theme === 'theme-sunset-glow'
           ? sg_c6
-          : '/placeholder.jpg',
+          : mn_c6,
     },
     {
       id: 7,
@@ -193,7 +204,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c7
           : theme === 'theme-sunset-glow'
           ? sg_c7
-          : '/placeholder.jpg',
+          : mn_c7,
     },
     {
       id: 8,
@@ -208,7 +219,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c8
           : theme === 'theme-sunset-glow'
           ? sg_c8
-          : '/placeholder.jpg',
+          : mn_c8,
     },
     {
       id: 9,
@@ -223,7 +234,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? ob_c9
           : theme === 'theme-sunset-glow'
           ? sg_c9
-          : '/placeholder.jpg',
+          : mn_c9,
     },
   ];
 

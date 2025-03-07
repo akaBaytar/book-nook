@@ -62,6 +62,8 @@ import ImageCarousel from './image-carousel';
 import SearchDialog from '../shared/search-dialog';
 import ThemeSwitcher from './theme-switcher';
 
+import { useTheme } from '@/context/theme';
+
 const formSchema = z.object({
   goal: z
     .number()
@@ -71,6 +73,10 @@ const formSchema = z.object({
 
 const AppSidebar = () => {
   const { user } = useUser();
+
+  const { theme } = useTheme();
+
+  const isDark = theme === 'theme-midnight-nebula';
 
   const { setOpenMobile } = useSidebar();
 
@@ -127,13 +133,16 @@ const AppSidebar = () => {
         <SidebarHeader>
           <Link href='/dashboard' className='flex items-center'>
             <Image
-              src='/logo.png'
+              src={isDark ? '/logo-dark.png' : '/logo.png'}
               alt='book nook app logo'
               height={70}
               width={70}
               priority
             />
-            <p className='min-w-[76px] text-center text-primary tracking-wide text-2xl mt-3 px-2 rounded-md'>
+            <p
+              className={`${
+                isDark ? 'text-[#d5d7dd]' : 'text-[#1E201E]'
+              } min-w-[76px] text-center tracking-wide font-light text-2xl px-2 rounded-md`}>
               Book Nook
             </p>
           </Link>

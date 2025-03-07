@@ -218,6 +218,42 @@
     --sidebar-border: 25 30% 85%;
     --sidebar-ring: 25 40% 75%;
   }
+
+  .theme-midnight-nebula {
+    --background: 220 15% 10%;
+    --foreground: 220 10% 85%;
+    --card: 220 10% 12%;
+    --card-foreground: 220 10% 85%;
+    --popover: 220 10% 12%;
+    --popover-foreground: 220 10% 85%;
+    --primary: 220 20% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 220 10% 85%;
+    --muted: 220 10% 18%;
+    --muted-foreground: 220 10% 65%;
+    --accent: 220 15% 25%;
+    --accent-foreground: 220 10% 85%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 10% 25%;
+    --input: 220 10% 25%;
+    --ring: 220 20% 65%;
+    --chart-1: 220 20% 65%;
+    --chart-2: 220 15% 35%;
+    --chart-3: 220 15% 70%;
+    --chart-4: 220 15% 50%;
+    --chart-5: 220 15% 60%;
+    --radius: 0.5rem;
+    --sidebar-background: 220 15% 14%;
+    --sidebar-foreground: 220 10% 80%;
+    --sidebar-primary: 220 15% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 25%;
+    --sidebar-accent-foreground: 220 10% 85%;
+    --sidebar-border: 220 10% 25%;
+    --sidebar-ring: 220 20% 65%;
+  }
 }
 
 @layer base {

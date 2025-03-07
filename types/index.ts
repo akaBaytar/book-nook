@@ -89,6 +89,7 @@ export type Theme =
   | 'theme-lavender-fields'
   | 'theme-mint-fresh'
   | 'theme-sunset-glow'
+  | 'theme-midnight-nebula';
 
 export type ThemeContext = {
   theme: Theme;

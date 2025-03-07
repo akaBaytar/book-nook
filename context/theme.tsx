@@ -17,6 +17,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       'theme-lavender-fields',
       'theme-mint-fresh',
       'theme-sunset-glow',
+      'theme-midnight-nebula',
     ],
     []
   );

@@ -106,7 +106,7 @@ const BookTracker = () => {
     const month = col + 1;
 
     const previousColors = [...boxColors];
-    
+
     const currentColor = boxColors[row][col];
     let pagesRead = 0;
 
@@ -182,8 +182,8 @@ const BookTracker = () => {
                   }`}
                 style={{
                   backgroundColor: isValid
-                    ? boxColors[rowIndex][colIndex] || '#fff'
-                    : '#f2efe7',
+                    ? boxColors[rowIndex][colIndex] || ''
+                    : 'hsl(var(--accent))',
                 }}
                 onClick={() => isValid && handleBoxClick(rowIndex, colIndex)}
               />

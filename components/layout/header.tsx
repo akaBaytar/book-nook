@@ -12,7 +12,7 @@ const Header = async () => {
   const { userId } = await auth();
 
   return (
-    <header className='w-full border-b border-slate-200 bg-white/50 backdrop-blur-sm fixed top-0 z-50'>
+    <header className='w-full border-b border-slate-200 bg-white/50 backdrop-blur-sm fixed top-0 z-50 !text-black'>
       <div className='container mx-auto flex items-center justify-between p-4 md:px-10'>
         <div className='flex items-center'>
           <Image
@@ -23,11 +23,13 @@ const Header = async () => {
             priority
             className='h-9 w-9'
           />
-          <span className='text-xl tracking-wide text-primary'>Book Nook</span>
+          <span className='text-xl tracking-wide'>Book Nook</span>
         </div>
         <div className='flex items-center gap-4'>
           {userId ? (
-            <Button asChild>
+            <Button
+              asChild
+              className='bg-gradient-to-r from-violet-200 to-pink-200 border-none shadow-violet-100'>
               <Link href='/dashboard'>
                 Go to Dashboard
                 <ArrowRightIcon className='size-4' />
@@ -41,7 +43,7 @@ const Header = async () => {
                 </Button>
               </SignInButton>
               <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
-                <Button>
+                <Button className='bg-gradient-to-r from-violet-200 to-pink-200 border-none shadow-violet-100'>
                   Get Started
                   <ArrowRightIcon className='size-4' />
                 </Button>

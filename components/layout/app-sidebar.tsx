@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import * as z from 'zod';
 import { toast } from 'sonner';
+import { dark } from '@clerk/themes';
 import { useForm } from 'react-hook-form';
 import { UserButton, useUser } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -76,7 +77,8 @@ const AppSidebar = () => {
 
   const { theme } = useTheme();
 
-  const isDark = theme === 'theme-midnight-nebula';
+  const isDark =
+    theme === 'theme-midnight-nebula' || theme === 'theme-deep-ocean';
 
   const { setOpenMobile } = useSidebar();
 
@@ -224,12 +226,16 @@ const AppSidebar = () => {
           ) : (
             <div className='hidden md:flex items-center gap-2'>
               <UserButton
+                userProfileMode='navigation'
+                userProfileUrl='/my-account'
                 appearance={{
+                  baseTheme: isDark ? dark : undefined,
                   elements: {
                     avatarBox: 'size-10 rounded-md',
                     userButtonPopoverCard: 'w-[15rem]',
                     userButtonTrigger: 'rounded-md',
                   },
+                  layout: { unsafe_disableDevelopmentModeWarnings: true },
                 }}
               />
               <div className='flex flex-col'>

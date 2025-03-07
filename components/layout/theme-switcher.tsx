@@ -23,7 +23,6 @@ const ThemeSwitcher = () => {
   const themes = useMemo(
     () => [
       { value: 'theme-soft-pastel', label: 'Soft Pastel', color: '#f8d7e3' },
-      { value: 'theme-ocean-breeze', label: 'Ocean Breeze', color: '#dbe9f5' },
       {
         value: 'theme-lavender-fields',
         label: 'Lavender Fields',
@@ -31,6 +30,7 @@ const ThemeSwitcher = () => {
       },
       { value: 'theme-mint-fresh', label: 'Mint Fresh', color: '#d7eede' },
       { value: 'theme-sunset-glow', label: 'Sunset Glow', color: '#f5e0c9' },
+      { value: 'theme-deep-ocean', label: 'Deep Ocean', color: '#4d80b3' },
       {
         value: 'theme-midnight-nebula',
         label: 'Midnight Nebula',

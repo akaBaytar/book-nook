@@ -1,15 +1,23 @@
+'use client';
+
 import Link from 'next/link';
 
-import { UserButton } from '@clerk/nextjs';
-import { ClerkLoading } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
+import { ClerkLoading, UserButton } from '@clerk/nextjs';
 
 import { UserCogIcon } from 'lucide-react';
 
-import { Button } from '../ui/button';
-
+import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
+import { useTheme } from '@/context/theme';
+
 const Navbar = () => {
+  const { theme } = useTheme();
+
+  const isDark =
+    theme === 'theme-midnight-nebula' || theme === 'theme-deep-ocean';
+
   return (
     <nav className='rounded-md fixed top-4 h-20 start-4 end-4 md:hidden px-4 flex justify-between items-center border z-10 shadow-md border-muted bg-sidebar/50 backdrop-blur-sm'>
       <SidebarTrigger />
@@ -19,12 +27,16 @@ const Navbar = () => {
         </p>
       </Link>
       <UserButton
+        userProfileMode='navigation'
+        userProfileUrl='/my-account'
         appearance={{
+          baseTheme: isDark ? dark : undefined,
           elements: {
             avatarBox: 'size-8 rounded-md',
             userButtonPopoverCard: 'w-[15rem]',
             userButtonTrigger: 'rounded-md',
           },
+          layout: { unsafe_disableDevelopmentModeWarnings: true },
         }}
       />
       <ClerkLoading>

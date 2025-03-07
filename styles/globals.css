@@ -75,42 +75,6 @@
     --sidebar-ring: 340 60% 75%;
   }
 
-  .theme-ocean-breeze {
-    --background: 210 50% 100%;
-    --foreground: 210 25% 35%;
-    --card: 210 40% 99%;
-    --card-foreground: 210 25% 35%;
-    --popover: 210 40% 99%;
-    --popover-foreground: 210 25% 35%;
-    --primary: 210 50% 75%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 200 50% 92%;
-    --secondary-foreground: 210 25% 35%;
-    --muted: 210 40% 95%;
-    --muted-foreground: 210 25% 45%;
-    --accent: 190 50% 88%;
-    --accent-foreground: 210 25% 35%;
-    --destructive: 0 60% 80%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 210 40% 88%;
-    --input: 210 40% 88%;
-    --ring: 210 50% 75%;
-    --chart-1: 210 50% 80%;
-    --chart-2: 225 45% 85%;
-    --chart-3: 225 45% 55%;
-    --chart-4: 225 45% 75%;
-    --chart-5: 225 45% 65%;
-    --radius: 0.5rem;
-    --sidebar-background: 210 45% 98%;
-    --sidebar-foreground: 210 25% 35%;
-    --sidebar-primary: 210 45% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 200 50% 92%;
-    --sidebar-accent-foreground: 210 25% 35%;
-    --sidebar-border: 210 40% 88%;
-    --sidebar-ring: 210 50% 75%;
-  }
-
   .theme-lavender-fields {
     --background: 270 50% 100%;
     --foreground: 270 25% 40%;
@@ -253,6 +217,42 @@
     --sidebar-accent-foreground: 220 10% 85%;
     --sidebar-border: 220 10% 25%;
     --sidebar-ring: 220 20% 65%;
+  }
+
+  .theme-deep-ocean {
+    --background: 215 30% 12%;
+    --foreground: 210 25% 90%;
+    --card: 215 25% 18%;
+    --card-foreground: 210 25% 90%;
+    --popover: 215 25% 18%;
+    --popover-foreground: 210 25% 90%;
+    --primary: 210 40% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 30% 25%;
+    --secondary-foreground: 210 25% 90%;
+    --muted: 215 20% 22%;
+    --muted-foreground: 210 25% 70%;
+    --accent: 190 25% 25%;
+    --accent-foreground: 210 25% 90%;
+    --destructive: 0 60% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 25% 25%;
+    --input: 215 25% 25%;
+    --ring: 210 40% 50%;
+    --chart-1: 210 40% 50%;
+    --chart-2: 225 35% 45%;
+    --chart-3: 225 25% 65%;
+    --chart-4: 225 35% 55%;
+    --chart-5: 225 30% 60%;
+    --radius: 0.5rem;
+    --sidebar-background: 215 30% 16%;
+    --sidebar-foreground: 210 25% 90%;
+    --sidebar-primary: 210 35% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 200 25% 25%;
+    --sidebar-accent-foreground: 210 25% 90%;
+    --sidebar-border: 215 25% 25%;
+    --sidebar-ring: 210 40% 50%;
   }
 }
 

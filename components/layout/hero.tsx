@@ -39,7 +39,7 @@ const Hero = async () => {
                     </Link>
                   </Button>
                 ) : (
-                  <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
+                  <SignInButton mode='redirect' forceRedirectUrl='/dashboard'>
                     <Button
                       size='lg'
                       className='shadow-md border-none shadow-violet-100 bg-gradient-to-r from-violet-200 to-pink-200'>

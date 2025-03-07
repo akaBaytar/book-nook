@@ -47,17 +47,6 @@ import mf_c7 from '@/images/mint-fresh/c7.jpg';
 import mf_c8 from '@/images/mint-fresh/c8.jpg';
 import mf_c9 from '@/images/mint-fresh/c9.jpg';
 
-import ob_c0 from '@/images/ocean-breeze/c0.jpg';
-import ob_c1 from '@/images/ocean-breeze/c1.jpg';
-import ob_c2 from '@/images/ocean-breeze/c2.jpg';
-import ob_c3 from '@/images/ocean-breeze/c3.jpg';
-import ob_c4 from '@/images/ocean-breeze/c4.jpg';
-import ob_c5 from '@/images/ocean-breeze/c5.jpg';
-import ob_c6 from '@/images/ocean-breeze/c6.jpg';
-import ob_c7 from '@/images/ocean-breeze/c7.jpg';
-import ob_c8 from '@/images/ocean-breeze/c8.jpg';
-import ob_c9 from '@/images/ocean-breeze/c9.jpg';
-
 import sg_c0 from '@/images/sunset-glow/c0.jpg';
 import sg_c1 from '@/images/sunset-glow/c1.jpg';
 import sg_c2 from '@/images/sunset-glow/c2.jpg';
@@ -69,16 +58,27 @@ import sg_c7 from '@/images/sunset-glow/c7.jpg';
 import sg_c8 from '@/images/sunset-glow/c8.jpg';
 import sg_c9 from '@/images/sunset-glow/c9.jpg';
 
-import mn_c0 from '@/images/midnight-nebula/c0.jpg';
+import do_c0 from '@/images/ocean-breeze/c0.jpg';
+import do_c1 from '@/images/ocean-breeze/c1.jpg';
+import do_c2 from '@/images/ocean-breeze/c2.jpg';
+import do_c3 from '@/images/ocean-breeze/c3.jpg';
+import do_c4 from '@/images/ocean-breeze/c4.jpg';
+import do_c5 from '@/images/ocean-breeze/c5.jpg';
+import do_c6 from '@/images/ocean-breeze/c6.jpg';
+import do_c7 from '@/images/ocean-breeze/c7.jpg';
+import do_c8 from '@/images/ocean-breeze/c8.jpg';
+import do_c9 from '@/images/ocean-breeze/c9.jpg';
+
+import mn_c0 from '@/images/midnight-nebula/c3.jpg';
 import mn_c1 from '@/images/midnight-nebula/c1.jpg';
-import mn_c2 from '@/images/midnight-nebula/c2.jpg';
-import mn_c3 from '@/images/midnight-nebula/c3.jpg';
+import mn_c2 from '@/images/midnight-nebula/c0.jpg';
+import mn_c3 from '@/images/midnight-nebula/c2.jpg';
 import mn_c4 from '@/images/midnight-nebula/c4.jpg';
 import mn_c5 from '@/images/midnight-nebula/c5.jpg';
 import mn_c6 from '@/images/midnight-nebula/c6.jpg';
 import mn_c7 from '@/images/midnight-nebula/c7.jpg';
-import mn_c8 from '@/images/midnight-nebula/c8.jpg';
-import mn_c9 from '@/images/midnight-nebula/c9.jpg';
+import mn_c8 from '@/images/midnight-nebula/c9.jpg';
+import mn_c9 from '@/images/midnight-nebula/c8.jpg';
 
 type PropTypes = { orientation: 'start' | 'end'; isBoxed?: boolean };
 
@@ -95,8 +95,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c0
           : theme === 'theme-mint-fresh'
           ? mf_c0
-          : theme === 'theme-ocean-breeze'
-          ? ob_c0
+          : theme === 'theme-deep-ocean'
+          ? do_c0
           : theme === 'theme-sunset-glow'
           ? sg_c0
           : mn_c0,
@@ -110,8 +110,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c1
           : theme === 'theme-mint-fresh'
           ? mf_c1
-          : theme === 'theme-ocean-breeze'
-          ? ob_c1
+          : theme === 'theme-deep-ocean'
+          ? do_c1
           : theme === 'theme-sunset-glow'
           ? sg_c1
           : mn_c1,
@@ -125,8 +125,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c2
           : theme === 'theme-mint-fresh'
           ? mf_c2
-          : theme === 'theme-ocean-breeze'
-          ? ob_c2
+          : theme === 'theme-deep-ocean'
+          ? do_c2
           : theme === 'theme-sunset-glow'
           ? sg_c2
           : mn_c2,
@@ -140,8 +140,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c3
           : theme === 'theme-mint-fresh'
           ? mf_c3
-          : theme === 'theme-ocean-breeze'
-          ? ob_c3
+          : theme === 'theme-deep-ocean'
+          ? do_c3
           : theme === 'theme-sunset-glow'
           ? sg_c3
           : mn_c3,
@@ -155,8 +155,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c4
           : theme === 'theme-mint-fresh'
           ? mf_c4
-          : theme === 'theme-ocean-breeze'
-          ? ob_c4
+          : theme === 'theme-deep-ocean'
+          ? do_c4
           : theme === 'theme-sunset-glow'
           ? sg_c4
           : mn_c4,
@@ -170,8 +170,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c5
           : theme === 'theme-mint-fresh'
           ? mf_c5
-          : theme === 'theme-ocean-breeze'
-          ? ob_c5
+          : theme === 'theme-deep-ocean'
+          ? do_c5
           : theme === 'theme-sunset-glow'
           ? sg_c5
           : mn_c5,
@@ -185,8 +185,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c6
           : theme === 'theme-mint-fresh'
           ? mf_c6
-          : theme === 'theme-ocean-breeze'
-          ? ob_c6
+          : theme === 'theme-deep-ocean'
+          ? do_c6
           : theme === 'theme-sunset-glow'
           ? sg_c6
           : mn_c6,
@@ -200,8 +200,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c7
           : theme === 'theme-mint-fresh'
           ? mf_c7
-          : theme === 'theme-ocean-breeze'
-          ? ob_c7
+          : theme === 'theme-deep-ocean'
+          ? do_c7
           : theme === 'theme-sunset-glow'
           ? sg_c7
           : mn_c7,
@@ -215,8 +215,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c8
           : theme === 'theme-mint-fresh'
           ? mf_c8
-          : theme === 'theme-ocean-breeze'
-          ? ob_c8
+          : theme === 'theme-deep-ocean'
+          ? do_c8
           : theme === 'theme-sunset-glow'
           ? sg_c8
           : mn_c8,
@@ -230,8 +230,8 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
           ? lf_c9
           : theme === 'theme-mint-fresh'
           ? mf_c9
-          : theme === 'theme-ocean-breeze'
-          ? ob_c9
+          : theme === 'theme-deep-ocean'
+          ? do_c9
           : theme === 'theme-sunset-glow'
           ? sg_c9
           : mn_c9,
@@ -259,7 +259,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
                   height={400}
                   priority
                   alt='carousel image'
-                  className='rounded-md size-full object-cover'
+                  className='rounded-md size-full doject-cover'
                 />
               </CarouselItem>
             ))}
@@ -286,7 +286,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
               height={400}
               priority
               alt='carousel image'
-              className='rounded-md size-full object-cover'
+              className='rounded-md size-full doject-cover'
             />
           </CarouselItem>
         ))}

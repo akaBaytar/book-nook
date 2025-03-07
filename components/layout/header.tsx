@@ -37,12 +37,12 @@ const Header = async () => {
             </Button>
           ) : (
             <>
-              <SignInButton mode='modal'>
+              <SignInButton mode='redirect' forceRedirectUrl='/dashboard'>
                 <Button variant='ghost' className='hidden sm:flex'>
                   Log in
                 </Button>
               </SignInButton>
-              <SignInButton mode='modal' forceRedirectUrl='/dashboard'>
+              <SignInButton mode='redirect' forceRedirectUrl='/dashboard'>
                 <Button className='bg-gradient-to-r from-violet-200 to-pink-200 border-none shadow-violet-100'>
                   Get Started
                   <ArrowRightIcon className='size-4' />

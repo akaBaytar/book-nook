@@ -85,11 +85,11 @@ export type ShareContent = {
 
 export type Theme =
   | 'theme-soft-pastel'
-  | 'theme-ocean-breeze'
   | 'theme-lavender-fields'
   | 'theme-mint-fresh'
   | 'theme-sunset-glow'
-  | 'theme-midnight-nebula';
+  | 'theme-midnight-nebula'
+  | 'theme-deep-ocean';
 
 export type ThemeContext = {
   theme: Theme;

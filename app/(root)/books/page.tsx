@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 
 import { useDebounce } from 'use-debounce';
 import { SearchIcon, LibraryBigIcon } from 'lucide-react';
@@ -22,17 +21,11 @@ import BookCard, { BookSkeleton } from '@/components/shared/book-card';
 import { useToast } from '@/hooks/use-toast';
 import { BOOKS_PER_PAGE, SORT_OPTIONS } from '@/constants';
 
-import {
-  getAllBooks,
-  getAllGenres,
-  getAllCategories,
-} from '@/actions/book.actions';
+import { getAllBooks, getGenresAndCategories } from '@/actions/book.actions';
 
 import type { Book, Filter, Sort } from '@/types';
 
 const AllBooksPage = () => {
-  const router = useRouter();
-
   const { toast } = useToast();
 
   const [count, setCount] = useState(0);
@@ -54,75 +47,50 @@ const AllBooksPage = () => {
 
   const totalPages = useMemo(() => Math.ceil(count / BOOKS_PER_PAGE), [count]);
 
-  const fetchGenres = useCallback(async () => {
+  const fetchGenresAndCategories = useCallback(async () => {
     try {
-      const result = await getAllGenres();
-
-      if (result.success) setGenres(['all', ...(result.genres as string[])]);
-    } catch (error) {
-      toast({ description: `Failed to fetch genres. ${error}` });
-    }
-  }, [toast]);
-
-  const fetchCategories = useCallback(async () => {
-    try {
-      const result = await getAllCategories();
+      const result = await getGenresAndCategories();
 
       if (result.success) {
+        setGenres(['all', ...(result.genres as string[])]);
         setCategories(['all', ...(result.categories as string[])]);
       }
-    } catch (error) {
-      toast({
-        description: `Failed to fetch categories. ${error}`,
-      });
+    } catch {
+      toast({ description: 'Failed to fetch genres and categories.' });
     }
   }, [toast]);
 
-  const fetchBooks = useCallback(
-    async (force = false) => {
-      setIsLoading(true);
+  const fetchBooks = useCallback(async () => {
+    setIsLoading(true);
 
-      try {
-        const result = await getAllBooks({
-          genre,
-          filter,
-          sortBy,
-          category,
-          page: currentPage,
-          limit: BOOKS_PER_PAGE,
-          search: force ? searchQuery : debouncedSearch,
-        });
+    try {
+      const result = await getAllBooks({
+        genre,
+        filter,
+        sortBy,
+        category,
+        page: currentPage,
+        limit: BOOKS_PER_PAGE,
+        search: debouncedSearch,
+      });
 
-        if (result.success) {
-          setBooks(result.books);
-          setCount(result.count as number);
-        }
-      } catch (error) {
-        toast({ description: `An error occurred. ${error}` });
-      } finally {
-        setIsLoading(false);
+      if (result.success) {
+        setBooks(result.books);
+        setCount(result.count as number);
       }
-    },
-    [
-      toast,
-      genre,
-      filter,
-      sortBy,
-      category,
-      currentPage,
-      searchQuery,
-      debouncedSearch,
-    ]
-  );
+    } catch {
+      toast({ description: 'An error occurred.' });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [toast, genre, filter, sortBy, category, currentPage, debouncedSearch]);
+
+  useEffect(() => {}, [fetchBooks]);
 
   useEffect(() => {
     fetchBooks();
-  }, [fetchBooks]);
-
-  useEffect(() => {
-    fetchGenres();
-    fetchCategories();
-  }, [fetchGenres, fetchCategories]);
+    fetchGenresAndCategories();
+  }, [fetchBooks, fetchGenresAndCategories]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -150,9 +118,8 @@ const AllBooksPage = () => {
   };
 
   const handleBookAdded = useCallback(() => {
-    router.refresh();
-    fetchBooks(true);
-  }, [router, fetchBooks]);
+    fetchBooks();
+  }, [fetchBooks]);
 
   const filterOptions = [
     { value: 'all', label: 'All' },

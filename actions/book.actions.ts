@@ -202,61 +202,38 @@ export const getAllBooks = async ({
   }
 };
 
-export const getAllGenres = async () => {
+export const getGenresAndCategories = async () => {
   const userId = await getCurrentUser();
 
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
-    const genres = await prisma.book.findMany({
+    const data = await prisma.book.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
       select: {
         genre: true,
+        category: true,
       },
     });
 
-    const uniqueGenres = [...new Set(genres.flatMap((book) => book.genre))];
+    const uniqueGenres = [...new Set(data.flatMap((book) => book.genre))];
 
     const sortedGenres = uniqueGenres.sort((a, b) => a.localeCompare(b));
 
-    return {
-      success: true,
-      genres: sortedGenres,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: handleError(error),
-    };
-  }
-};
-
-export const getAllCategories = async () => {
-  const userId = await getCurrentUser();
-
-  if (!userId) throw new Error('User is not authenticated.');
-
-  try {
-    const categories = await prisma.book.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      select: { category: true },
-    });
-
     const uniqueCategories = [
       ...new Set(
-        categories
-          .map((book) => book.category)
-          .filter((c): c is string => c !== null)
+        data.map((book) => book.category).filter((c): c is string => c !== null)
       ),
     ];
+
     const sortedCategories = uniqueCategories.sort((a, b) =>
       a.localeCompare(b)
     );
 
     return {
       success: true,
+      genres: sortedGenres,
       categories: sortedCategories,
     };
   } catch (error) {

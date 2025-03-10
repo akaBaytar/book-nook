@@ -1,3 +1,7 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Loader2Icon } from 'lucide-react';
@@ -8,23 +12,23 @@ import { Button } from '@/components/ui/button';
 
 import {
   Dialog,
+  DialogTitle,
+  DialogHeader,
+  DialogFooter,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
 } from '@/components/ui/dialog';
 
 import {
   Form,
-  FormControl,
-  FormField,
   FormItem,
+  FormField,
+  FormControl,
   FormMessage,
 } from '@/components/ui/form';
 
 import { GoalSchema } from '@/schemas';
-import { updateReadingGoal } from '@/actions/dashboard.action';
+import { updateReadingGoal, getBookStats } from '@/actions/dashboard.action';
 
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -36,6 +40,8 @@ type PropTypes = {
 };
 
 const GoalDialog = ({ open, onOpenChange }: PropTypes) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const form = useForm<Goal>({
     resolver: zodResolver(GoalSchema),
     defaultValues: {
@@ -43,9 +49,32 @@ const GoalDialog = ({ open, onOpenChange }: PropTypes) => {
     },
   });
 
+  useEffect(() => {
+    if (open) {
+      const fetchGoal = async () => {
+        try {
+          setIsLoading(true);
+
+          const { success, readingGoal } = await getBookStats();
+
+          if (success && readingGoal) {
+            form.reset({ goal: readingGoal });
+          }
+        } catch {
+          toast.error('Failed to fetch current goal.');
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchGoal();
+    }
+  }, [open, form]);
+
   const onSubmitGoal = async (values: Goal) => {
     try {
       const response = await updateReadingGoal(values.goal);
+
       if (response.success) {
         toast.success(response.message);
 
@@ -76,9 +105,12 @@ const GoalDialog = ({ open, onOpenChange }: PropTypes) => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      type='number'
-                      placeholder='Number of books'
                       {...field}
+                      type='number'
+                      disabled={isLoading}
+                      placeholder='Number of books'
+                      onFocus={(e) => e.target.select()}
+                      value={field.value === 0 ? '' : field.value}
                       onChange={(e) => field.onChange(Number(e.target.value))}
                       className='w-full'
                     />
@@ -88,8 +120,8 @@ const GoalDialog = ({ open, onOpenChange }: PropTypes) => {
               )}
             />
             <DialogFooter>
-              {form.formState.isSubmitting ? (
-                <Button disabled className='w-[85.45px]'>
+              {form.formState.isSubmitting || isLoading ? (
+                <Button disabled className='min-w-[85.45px]'>
                   <Loader2Icon className='animate-spin size-4' />
                 </Button>
               ) : (

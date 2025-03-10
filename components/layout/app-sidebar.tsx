@@ -33,12 +33,12 @@ import {
   SidebarGroupContent,
 } from '@/components/ui/sidebar';
 
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
-import ImageCarousel from './image-carousel';
-import ThemeSwitcher from './theme-switcher';
-import GoalDialog from '../shared/goal-dialog';
-import SearchDialog from '../shared/search-dialog';
+import GoalDialog from '@/components/shared/goal-dialog';
+import SearchDialog from '@/components/shared/search-dialog';
+import ImageCarousel from '@/components/layout/image-carousel';
+import ThemeSwitcher from '@/components/layout/theme-switcher';
 
 import { useTheme } from '@/context/theme';
 
@@ -198,7 +198,6 @@ const AppSidebar = () => {
           )}
         </SidebarFooter>
       </Sidebar>
-
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
       <GoalDialog open={goalDialogOpen} onOpenChange={setGoalDialogOpen} />
     </>

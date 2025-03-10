@@ -1,5 +1,6 @@
 import { PickaxeIcon } from 'lucide-react';
 
+import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 import BookCard from '@/components/shared/book-card';
@@ -7,9 +8,16 @@ import BookCard from '@/components/shared/book-card';
 import { getBookReadThisYear } from '@/actions/book.actions';
 
 import type { Book } from '@/types';
+import { getBookStats } from '@/actions/dashboard.action';
 
 const GoalProgressPage = async () => {
   const { books } = await getBookReadThisYear();
+  const { booksReadThisYear, readingGoal } = await getBookStats();
+
+  const percentage =
+    booksReadThisYear && readingGoal
+      ? Number(((booksReadThisYear / readingGoal) * 100).toFixed(2))
+      : 0;
 
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
@@ -19,6 +27,12 @@ const GoalProgressPage = async () => {
             <PickaxeIcon className='size-5' />
             Goal Progress
           </h1>
+          {percentage > 0 && (
+            <div className='flex items-center gap-1'>
+              {booksReadThisYear}/{readingGoal} completed
+              <Badge variant='outline'>{percentage} %</Badge>
+            </div>
+          )}
         </header>
       </div>
       <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>

@@ -23,6 +23,7 @@ const BookCard = ({ book, progress }: { book: Book; progress?: boolean }) => {
             height={90}
             alt={book.name}
             className='object-cover rounded-md aspect-[2/3]'
+            priority
           />
           <div className='flex flex-col'>
             <CardTitle
@@ -52,7 +53,11 @@ const BookCard = ({ book, progress }: { book: Book; progress?: boolean }) => {
             book.completed ? formatDate(book.endDate as Date) : 'Not completed'
           }
           className='absolute end-2.5 top-2.5'>
-          {book.completed ? <BookCheckIcon className='opacity-70'/> : <BookIcon className='opacity-30'/>}
+          {book.completed ? (
+            <BookCheckIcon className='opacity-70' />
+          ) : (
+            <BookIcon className='opacity-30' />
+          )}
         </div>
       </Card>
     </Link>

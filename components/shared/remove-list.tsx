@@ -11,7 +11,6 @@ import { Button } from '../ui/button';
 import {
   AlertDialog,
   AlertDialogTitle,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -28,6 +27,7 @@ const RemoveList = ({ id }: { id: string }) => {
 
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const onRemove = async () => {
@@ -36,7 +36,9 @@ const RemoveList = ({ id }: { id: string }) => {
 
       await removeList(id);
 
-      router.push('/my-lists')
+      setOpen(false);
+
+      router.push('/my-lists');
 
       toast({
         description: 'List removed successfully.',
@@ -44,7 +46,7 @@ const RemoveList = ({ id }: { id: string }) => {
     } catch {
       toast({
         title: 'Error',
-        description: 'An error occurred while removing the list.',
+        description: 'An error occurred.',
       });
     } finally {
       setIsDeleting(false);
@@ -52,7 +54,7 @@ const RemoveList = ({ id }: { id: string }) => {
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button size='icon'>
           <TrashIcon />
@@ -70,18 +72,13 @@ const RemoveList = ({ id }: { id: string }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={onRemove}
-            disabled={isDeleting}
-            className='min-w-20'>
+          <Button onClick={onRemove} disabled={isDeleting} className='min-w-20'>
             {isDeleting ? (
-              <span>
-                <Loader2Icon className='animate-spin' />
-              </span>
+              <Loader2Icon className='size-4 animate-spin' />
             ) : (
               'Remove'
             )}
-          </AlertDialogAction>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

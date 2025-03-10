@@ -10,7 +10,6 @@ import { Button } from '../ui/button';
 import {
   AlertDialog,
   AlertDialogTitle,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -27,6 +26,7 @@ const RemoveBook = ({ id }: { id: string }) => {
 
   const { toast } = useToast();
 
+  const [open, setOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const onRemove = async () => {
@@ -39,11 +39,13 @@ const RemoveBook = ({ id }: { id: string }) => {
         description: 'Book removed successfully.',
       });
 
+      setOpen(false);
+      
       router.push('/books');
     } catch {
       toast({
         title: 'Error',
-        description: 'An error occurred while removing the book.',
+        description: 'An error occurred.',
       });
     } finally {
       setIsDeleting(false);
@@ -51,7 +53,7 @@ const RemoveBook = ({ id }: { id: string }) => {
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button variant='outline' size='icon'>
           <TrashIcon className='size-4' />
@@ -69,18 +71,16 @@ const RemoveBook = ({ id }: { id: string }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
+          <Button
             onClick={onRemove}
             disabled={isDeleting}
             className='min-w-20'>
             {isDeleting ? (
-              <span>
-                <Loader2Icon className='animate-spin' />
-              </span>
+              <Loader2Icon className='size-4 animate-spin' />
             ) : (
               'Remove'
             )}
-          </AlertDialogAction>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

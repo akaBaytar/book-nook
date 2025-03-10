@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+import { Loader2Icon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '@/components/ui/input';
@@ -94,9 +95,15 @@ const CheckListForm = ({
             </FormItem>
           )}
         />
-        <Button type='submit' className='w-full'>
-          {isEdit ? 'Edit Checklist Name' : 'Create a Checklist'}
-        </Button>
+        {form.formState.isSubmitting ? (
+          <Button type='submit' className='w-full'>
+            <Loader2Icon className='animate-spin size-4' />
+          </Button>
+        ) : (
+          <Button type='submit' className='w-full'>
+            {isEdit ? 'Edit Checklist Name' : 'Create a Checklist'}
+          </Button>
+        )}
       </form>
     </Form>
   );

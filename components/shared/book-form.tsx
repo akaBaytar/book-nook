@@ -801,9 +801,15 @@ const BookForm = ({
             )}
           />
         </div>
-        <Button type='submit' className='w-full'>
-          {isEdit ? 'Update Book' : 'Add New Book'}
-        </Button>
+        {form.formState.isSubmitting ? (
+          <Button disabled className='w-full'>
+            <Loader2Icon className='animate-spin size-4' />
+          </Button>
+        ) : (
+          <Button type='submit' className='w-full'>
+            {isEdit ? 'Update Book' : 'Add New Book'}
+          </Button>
+        )}
       </form>
     </Form>
   );

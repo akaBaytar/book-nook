@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { SearchIcon } from 'lucide-react';
 import { useDebouncedCallback } from 'use-debounce';
+import { Loader2Icon, SearchIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 
@@ -45,25 +45,29 @@ const SearchForm = ({
 }: PropTypes) => {
   const router = useRouter();
 
+  const [isPending, startTransition] = useTransition();
+
   const updateSearchParams = useCallback(
     (params: Record<string, string | undefined>) => {
-      const url = new URL(window.location.href);
+      startTransition(() => {
+        const url = new URL(window.location.href);
 
-      Object.entries(params).forEach(([key, value]) => {
-        if (value) {
-          url.searchParams.set(key, value);
-        } else {
-          url.searchParams.delete(key);
+        Object.entries(params).forEach(([key, value]) => {
+          if (value) {
+            url.searchParams.set(key, value);
+          } else {
+            url.searchParams.delete(key);
+          }
+        });
+
+        if (!('page' in params)) {
+          url.searchParams.set('page', '1');
         }
+
+        router.push(url.pathname + url.search);
       });
-
-      if (!('page' in params)) {
-        url.searchParams.set('page', '1');
-      }
-
-      router.push(url.pathname + url.search);
     },
-    [router]
+    [router, startTransition]
   );
 
   const handleSearch = useDebouncedCallback(
@@ -76,7 +80,11 @@ const SearchForm = ({
   return (
     <>
       <div className='relative w-full'>
-        <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
+        {isPending ? (
+          <Loader2Icon className='absolute start-2 top-2.5 size-4 text-muted-foreground animate-spin' />
+        ) : (
+          <SearchIcon className='absolute start-2 top-2.5 size-4 text-muted-foreground' />
+        )}
         <Input
           type='search'
           placeholder='Search books...'
@@ -88,7 +96,8 @@ const SearchForm = ({
       <div className='grid gap-5 sm:grid-cols-2 2xl:grid-cols-4'>
         <Select
           defaultValue={genre}
-          onValueChange={(value) => updateSearchParams({ genre: value })}>
+          onValueChange={(value) => updateSearchParams({ genre: value })}
+          disabled={isPending}>
           <SelectTrigger className='w-full'>
             {genre === 'all' ? 'Genres' : genre}
           </SelectTrigger>
@@ -102,7 +111,8 @@ const SearchForm = ({
         </Select>
         <Select
           defaultValue={category}
-          onValueChange={(value) => updateSearchParams({ category: value })}>
+          onValueChange={(value) => updateSearchParams({ category: value })}
+          disabled={isPending}>
           <SelectTrigger className='w-full'>
             {category === 'all' ? 'Categories' : category}
           </SelectTrigger>
@@ -116,7 +126,8 @@ const SearchForm = ({
         </Select>
         <Select
           defaultValue={filter}
-          onValueChange={(value) => updateSearchParams({ filter: value })}>
+          onValueChange={(value) => updateSearchParams({ filter: value })}
+          disabled={isPending}>
           <SelectTrigger className='w-full'>
             {filter === 'all'
               ? 'Reading Status'
@@ -135,7 +146,8 @@ const SearchForm = ({
         </Select>
         <Select
           defaultValue={sortBy}
-          onValueChange={(value) => updateSearchParams({ sort: value })}>
+          onValueChange={(value) => updateSearchParams({ sort: value })}
+          disabled={isPending}>
           <SelectTrigger className='w-full'>
             {sortBy === 'recent'
               ? 'Most Recent'

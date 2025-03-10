@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { Loader2Icon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Input } from '@/components/ui/input';
@@ -149,9 +150,15 @@ const ListForm = ({ isEdit, setIsOpen, onSuccess, list }: PropTypes) => {
             </FormItem>
           )}
         />
-        <Button type='submit' className='w-full'>
-          {isEdit ? 'Update List' : 'Create a List'}
-        </Button>
+        {form.formState.isSubmitting ? (
+          <Button type='submit' className='w-full'>
+            <Loader2Icon className='size-4 animate-spin' />
+          </Button>
+        ) : (
+          <Button type='submit' className='w-full'>
+            {isEdit ? 'Update List' : 'Create a List'}
+          </Button>
+        )}
       </form>
     </Form>
   );

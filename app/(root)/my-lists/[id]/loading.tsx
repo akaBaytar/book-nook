@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { ArrowLeftIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -11,19 +9,16 @@ const ListDetailsLoadingPage = () => {
     <div className='space-y-5 bg-sidebar rounded-md border p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-2.5'>
-          <Button size='icon' asChild>
-            <Link href='/my-lists'>
-              <ArrowLeftIcon className='size-4' />
-            </Link>
+          <Button size='icon'>
+            <ArrowLeftIcon className='size-4' />
           </Button>
           <div className='hidden sm:flex items-center justify-between md:hidden xl:flex'>
             <Skeleton className='h-7 w-48' />
           </div>
         </div>
         <div className='flex items-center gap-2'>
-          <Skeleton className='h-10 w-10 rounded-md inline-block' />
-          <Skeleton className='h-10 w-10 rounded-md inline-block' />
-          <Skeleton className='h-10 w-10 rounded-md inline-block' />
+          <Skeleton className='size-9 rounded-md inline-block' />
+          <Skeleton className='size-9 rounded-md inline-block' />
         </div>
       </div>
       <div className='sm:hidden flex items-center gap-2.5 justify-between md:flex xl:hidden'>

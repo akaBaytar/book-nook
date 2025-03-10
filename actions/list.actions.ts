@@ -2,6 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 
+import { Prisma } from '@prisma/client';
+
 import prisma from '@/database';
 
 import { handleError } from '@/utils';
@@ -10,19 +12,50 @@ import { getCurrentUser } from '@/actions/user.actions';
 
 import type { List } from '@/types';
 
-export const getAllList = async () => {
+export const getAllList = async (searchQuery = '', privacyFilter = 'all') => {
   const userId = await getCurrentUser();
 
   if (!userId) throw new Error('User is not authenticated.');
 
   try {
+    const searchCondition = searchQuery
+      ? {
+          OR: [
+            {
+              name: {
+                contains: searchQuery,
+                mode: Prisma.QueryMode.insensitive,
+              },
+            },
+            {
+              description: {
+                contains: searchQuery,
+                mode: Prisma.QueryMode.insensitive,
+              },
+            },
+          ],
+        }
+      : {};
+
+    const privacyCondition =
+      privacyFilter === 'all'
+        ? {}
+        : privacyFilter === 'public'
+        ? { private: false }
+        : { private: true };
+
     const lists = await prisma.list.findMany({
-      where: { userId },
+      where: {
+        userId,
+        ...searchCondition,
+        ...privacyCondition,
+      },
       orderBy: { createdAt: 'desc' },
     });
 
     return {
       success: true,
+      count: lists.length,
       lists: JSON.parse(JSON.stringify(lists)),
     };
   } catch (error) {

@@ -22,14 +22,17 @@ const GoalProgressPage = async () => {
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
       <div className='flex flex-col gap-5'>
-        <header className='flex items-center justify-between'>
+        <header className='flex gap-2.5 items-center justify-between'>
           <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
             <PickaxeIcon className='size-5' />
             Goal Progress
           </h1>
           {percentage > 0 && (
-            <div className='flex items-center gap-1'>
-              {booksReadThisYear}/{readingGoal} completed
+            <div className='flex items-center gap-2.5'>
+              <span className='flex items-center gap-1'>
+                {booksReadThisYear}/{readingGoal}
+                <span className='hidden sm:flex lg:hidden xl:flex'>completed</span>
+              </span>
               <Badge variant='outline'>{percentage} %</Badge>
             </div>
           )}

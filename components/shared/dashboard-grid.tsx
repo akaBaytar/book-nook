@@ -94,7 +94,7 @@ const DashboardGrid = ({
 
   return (
     <div className='mt-5'>
-      <div className='grid grid-cols-1 gap-5 xl:grid-cols-3'>
+      <div className='grid grid-cols-1 gap-5 2xl:grid-cols-3'>
         <StatCard
           title='Total Books'
           value={totalBooks}
@@ -114,7 +114,7 @@ const DashboardGrid = ({
           color='#d7b'
         />
       </div>
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5'>
+      <div className='grid grid-cols-1 2xl:grid-cols-2 gap-5 mt-5'>
         <Card className='rounded-md'>
           <CardHeader className='flex flex-row items-center justify-between pb-2'>
             <h3 className='text-lg tracking-[0.015em]'>
@@ -171,7 +171,7 @@ const DashboardGrid = ({
           )}
         </Card>
       </div>
-      <div className='mt-5 grid grid-cols-1 xl:grid-cols-3 gap-5'>
+      <div className='mt-5 grid grid-cols-1 2xl:grid-cols-3 gap-5'>
         <StatCard
           title='Monthly Progress'
           value={`${monthlyProgress.count} ${

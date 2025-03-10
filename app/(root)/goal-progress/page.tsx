@@ -1,44 +1,15 @@
-'use client';
-
-import { useState, useEffect, useCallback } from 'react';
-
 import { PickaxeIcon } from 'lucide-react';
 
-import BookCard, { BookSkeleton } from '@/components/shared/book-card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
-import { useToast } from '@/hooks/use-toast';
+import BookCard from '@/components/shared/book-card';
 
 import { getBookReadThisYear } from '@/actions/book.actions';
 
 import type { Book } from '@/types';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
-const AllBooksPage = () => {
-  const { toast } = useToast();
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [books, setBooks] = useState<Book[]>([]);
-
-  const fetchBooks = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      const result = await getBookReadThisYear();
-
-      if (result.success) {
-        setBooks(result.books);
-      }
-    } catch (error) {
-      toast({ description: `An error occurred. ${error}` });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [toast]);
-
-  useEffect(() => {
-    fetchBooks();
-  }, [fetchBooks]);
+const GoalProgressPage = async () => {
+  const { books } = await getBookReadThisYear();
 
   return (
     <section className='space-y-5 bg-sidebar border rounded-md p-4 min-h-[calc(100vh-2rem)]'>
@@ -51,22 +22,20 @@ const AllBooksPage = () => {
         </header>
       </div>
       <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
-        {isLoading ? (
-          <BookSkeleton />
-        ) : books.length === 0 ? (
+        {books.length === 0 ? (
           <div className='col-span-full'>
             <Alert>
-              <AlertDescription>
-                No books found.
-              </AlertDescription>
+              <AlertDescription>No books found.</AlertDescription>
             </Alert>
           </div>
         ) : (
-          books.map((book) => <BookCard key={book.id} book={book} progress />)
+          books.map((book: Book) => (
+            <BookCard key={book.id} book={book} progress />
+          ))
         )}
       </div>
     </section>
   );
 };
 
-export default AllBooksPage;
+export default GoalProgressPage;

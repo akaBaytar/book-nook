@@ -22,7 +22,6 @@ type PageProps = {
 };
 
 const AllBooksPage = async ({ searchParams }: PageProps) => {
-
   const page = Number((await searchParams).page) || 1;
   const genre = (await searchParams).genre || 'all';
   const category = (await searchParams).category || 'all';
@@ -75,23 +74,20 @@ const AllBooksPage = async ({ searchParams }: PageProps) => {
         <header className='flex items-center justify-between'>
           <h1 className='flex items-center gap-2 text-2xl tracking-[0.015em]'>
             <LibraryBigIcon className='size-5' />
-            My Books
-            ({count})
+            My Books ({count})
           </h1>
           <AddBookButton />
         </header>
-        <div className='flex flex-col gap-5'>
-          <SearchForm
-            search={search}
-            genre={genre}
-            category={category}
-            filter={filter}
-            sortBy={sortBy}
-            allGenres={allGenres}
-            allCategories={allCategories}
-            filterOptions={filterOptions}
-          />
-        </div>
+        <SearchForm
+          search={search}
+          genre={genre}
+          category={category}
+          filter={filter}
+          sortBy={sortBy}
+          allGenres={allGenres}
+          allCategories={allCategories}
+          filterOptions={filterOptions}
+        />
       </div>
       <div className='grid gap-5 xl:grid-cols-2 2xl:grid-cols-3'>
         {books.length === 0 ? (

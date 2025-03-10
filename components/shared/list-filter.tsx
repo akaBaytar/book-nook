@@ -35,21 +35,18 @@ const ListFilter = ({ initialFilter = 'all' }) => {
     <div className='flex gap-1 sm:gap-2.5'>
       <Button
         variant={currentFilter === 'all' ? 'default' : 'outline'}
-        size='sm'
         onClick={() => handleFilterChange('all')}
         disabled={isPending}>
         All
       </Button>
       <Button
         variant={currentFilter === 'public' ? 'default' : 'outline'}
-        size='sm'
         onClick={() => handleFilterChange('public')}
         disabled={isPending}>
         Public
       </Button>
       <Button
         variant={currentFilter === 'private' ? 'default' : 'outline'}
-        size='sm'
         onClick={() => handleFilterChange('private')}
         disabled={isPending}>
         Private

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 import { PlusIcon } from 'lucide-react';
 
@@ -17,18 +16,10 @@ import {
 
 import BookForm from './book-form';
 
-const AddBookButton = ({ onBookAdded }: { onBookAdded: () => void }) => {
-  const router = useRouter();
-
+const AddBookButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleBookAdded = () => {
-    setIsOpen(false);
-
-    router.refresh();
-
-    if (onBookAdded) onBookAdded();
-  };
+  const handleBookAdded = () => setIsOpen(false);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

@@ -24,7 +24,7 @@ export const addBook = async (data: BookData) => {
 
     await prisma.book.create({ data: { ...book, userId } });
 
-    revalidatePath('/all-books');
+    revalidatePath('/books');
 
     return {
       success: true,

@@ -251,7 +251,7 @@ const AppSidebar = () => {
         </SidebarFooter>
       </Sidebar>
 
-      <SearchDialog searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
+      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
       <Dialog open={goalDialogOpen} onOpenChange={setGoalDialogOpen}>
         <DialogContent style={{ zIndex: 9999 }}>
           <DialogHeader>

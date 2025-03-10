@@ -1,4 +1,11 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useTransition } from 'react';
+
+import Link from 'next/link';
+import Image from 'next/image';
+
+import { Loader2Icon, SearchIcon } from 'lucide-react';
 
 import {
   Dialog,
@@ -10,137 +17,174 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { getAllBooks } from '@/actions/book.actions';
 import { getAllList } from '@/actions/list.actions';
-
-import type { Dispatch, SetStateAction } from 'react';
+import { getAllBooks } from '@/actions/book.actions';
 
 import type { Book, List } from '@/types';
-import { Loader2Icon } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 type PropTypes = {
-  searchOpen: boolean;
-  setSearchOpen: Dispatch<SetStateAction<boolean>>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
-export default function SearchDialog({ searchOpen, setSearchOpen }: PropTypes) {
-  const [isLoading, setLoading] = useState(false);
+const SearchDialog = ({ open, onOpenChange }: PropTypes) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState('books');
   const [results, setResults] = useState<Book[] | List[]>([]);
 
-  useEffect(() => {
-    if (searchQuery.trim() === '') {
+  const [isPending, startTransition] = useTransition();
+
+  const fetchSearchResults = async (query: string, type: string) => {
+    if (type === 'books') {
+      const res = await getAllBooks({ search: query });
+
+      return res.success ? res.books : [];
+    } else {
+      const res = await getAllList();
+
+      return res.success
+        ? res.lists.filter((list: List) =>
+            list.name.toLowerCase().includes(query.toLowerCase())
+          )
+        : [];
+    }
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+
+    if (query.trim() === '') {
       setResults([]);
       return;
     }
 
-    const fetchResults = async () => {
-      setLoading(true);
+    startTransition(async () => {
+      const searchResults = await fetchSearchResults(query, searchType);
 
-      let data = [];
+      setResults(searchResults);
+    });
+  };
 
-      if (searchType === 'books') {
-        const res = await getAllBooks({ search: searchQuery });
+  const handleTabChange = (value: string) => {
+    setSearchType(value);
 
-        if (res.success) data = res.books;
-      } else {
-        const res = await getAllList();
+    setResults([]);
 
-        if (res.success) {
-          data = res.lists.filter((list: List) =>
-            list.name.toLowerCase().includes(searchQuery.toLowerCase())
-          );
-        }
-      }
-      setResults(data);
+    if (searchQuery.trim() !== '') {
+      startTransition(async () => {
+        const searchResults = await fetchSearchResults(searchQuery, value);
 
-      setLoading(false);
-    };
-
-    const timeoutId = setTimeout(fetchResults, 300);
-    return () => clearTimeout(timeoutId);
-  }, [searchQuery, searchType]);
+        setResults(searchResults);
+      });
+    }
+  };
 
   return (
-    <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-      <DialogContent className='z-50 p-6'>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className='z-50'>
         <DialogHeader>
-          <DialogTitle>Search Books & Lists</DialogTitle>
+          <DialogTitle className='text-xl'>Search</DialogTitle>
           <DialogDescription>
+            Find your{' '}
             {searchType === 'books'
-              ? 'Search your books by title, author or publisher.'
-              : 'Search your lists by title.'}
+              ? 'books by title, author or publisher'
+              : 'lists by name'}
           </DialogDescription>
         </DialogHeader>
-        <Tabs value={searchType} onValueChange={setSearchType}>
-          <TabsList className='mb-4 w-full flex items-center gap-2.5'>
-            <TabsTrigger
-              value='books'
-              onClick={() => setSearchQuery('')}
-              className='flex-1'>
+        <Tabs value={searchType} onValueChange={handleTabChange}>
+          <TabsList className='mb-5 w-full grid grid-cols-2 gap-2.5'>
+            <TabsTrigger value='books' className='rounded-sm'>
               Books
             </TabsTrigger>
-            <TabsTrigger
-              value='lists'
-              onClick={() => setSearchQuery('')}
-              className='flex-1'>
+            <TabsTrigger value='lists' className='rounded-sm'>
               Lists
             </TabsTrigger>
           </TabsList>
-          <Input
-            type='search'
-            placeholder={`Search ${searchType}`}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className='w-full mb-4'
-          />
-          {isLoading ? (
-            <div className='grid place-content-center p-2.5 rounded-md'>
-              <Loader2Icon className='animate-spin size-4' />
-            </div>
-          ) : (
-            <TabsContent value={searchType}>
-              {results.length > 0 && (
-                <ScrollArea className='max-h-64 overflow-y-auto'>
-                  <ul className='space-y-2'>
-                    {results.map((item) => (
-                      <li key={item.id} className='p-2 border rounded-md'>
-                        {searchType === 'books' ? (
-                          <Link
-                            href={`/books/${item.id}`}
-                            onClick={() => setSearchOpen(false)}
-                            className='flex items-center gap-2.5'>
-                            <Image
-                              src={(item as Book).image || '/placeholder.jpg'}
-                              alt={item.name}
-                              width={27}
-                              height={48}
-                              className='rounded-sm object-contain'
-                            />
-                            {item.name} by {(item as Book).author}
-                          </Link>
-                        ) : (
-                          <Link
-                            href={`/my-lists/${item.id}`}
-                            onClick={() => setSearchOpen(false)}
-                            className='flex'>
-                            {item.name}
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </ScrollArea>
+          <div className='relative mb-5'>
+            <Input
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder={`Search ${
+                searchType === 'books'
+                  ? 'by title, author or publisher'
+                  : 'by list name'
+              }`}
+              className='w-full pe-10'
+            />
+            <div className='absolute end-2.5 top-1/2 -translate-y-1/2'>
+              {isPending ? (
+                <Loader2Icon className='animate-spin size-4' />
+              ) : (
+                <SearchIcon className='size-4' />
               )}
-            </TabsContent>
-          )}
+            </div>
+          </div>
+          <div className='min-h-60'>
+            {isPending ? (
+              <p className='text-sm font-light text-center py-5'>
+                <Loader2Icon className='animate-spin inline size-4 me-2' />
+                Searching {searchType}...
+              </p>
+            ) : results.length > 0 ? (
+              <ScrollArea
+                className={cn(
+                  'max-h-60 overflow-y-auto',
+                  results.length >= 4 && 'pe-2.5'
+                )}>
+                <ul className='space-y-2.5'>
+                  {results.map((item) => (
+                    <li
+                      key={item.id}
+                      className='p-2 border rounded-md hover:bg-accent transition-colors'>
+                      {searchType === 'books' ? (
+                        <Link
+                          href={`/books/${item.id}`}
+                          onClick={() => onOpenChange(false)}
+                          className='flex items-center gap-2.5'>
+                          <Image
+                            src={(item as Book).image || '/placeholder.jpg'}
+                            alt={item.name}
+                            width={27}
+                            height={48}
+                            className='rounded-sm object-contain'
+                          />
+                          <div>
+                            <p className='font-medium'>{item.name}</p>
+                            <p className='text-sm text-muted-foreground'>
+                              by {(item as Book).author}
+                            </p>
+                          </div>
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/my-lists/${item.id}`}
+                          onClick={() => onOpenChange(false)}
+                          className='flex items-center'>
+                          <div className='size-5 me-2 bg-primary/10 rounded-sm grid place-items-center text-primary'>
+                            <span className='text-xs'>
+                              {item.name.charAt(0)}
+                            </span>
+                          </div>
+                          <span>{item.name}</span>
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </ScrollArea>
+            ) : searchQuery.trim() !== '' ? (
+              <p className='text-center text-muted-foreground py-5'>
+                No results found.
+              </p>
+            ) : null}
+          </div>
         </Tabs>
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default SearchDialog;

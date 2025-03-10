@@ -51,6 +51,10 @@ export const metadata: Metadata = {
     'content-security-policy': "default-src 'self'",
   },
   manifest: '/manifest.json',
+  appleWebApp: {
+    title: 'Book Nook',
+    statusBarStyle: 'black-translucent',
+  },
 };
 
 const sourGummy = Sour_Gummy({ subsets: ['latin-ext'] });

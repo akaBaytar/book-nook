@@ -1,5 +1,5 @@
 {
-  "name": "Book Nook",
+  "name": "Ceren's Book Nook",
   "short_name": "Book Nook",
   "icons": [
     {
@@ -22,6 +22,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "theme_color": "#000",
+  "background_color": "#000"
 }

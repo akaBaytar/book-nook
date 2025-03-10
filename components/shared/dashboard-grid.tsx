@@ -17,6 +17,7 @@ import {
 import UpdateGoal from './update-goal';
 
 import type { ElementType } from 'react';
+import Image from 'next/image';
 
 type PropTypes = {
   booksRead: number;
@@ -42,6 +43,7 @@ type PropTypes = {
         book: {
           id: string;
           name: string;
+          image: string;
           author: string;
           publisher: string;
         } | null;
@@ -148,14 +150,23 @@ const DashboardGrid = ({
           {currentlyReading && currentlyReading.book ? (
             <CardContent>
               <Link href={`/books/${currentlyReading.book.id}`}>
-                <div className='mt-1 space-y-1'>
-                  <p className='text-xl tracking-[0.015em]'>
-                    {currentlyReading.book.name}
-                  </p>
-                  <p className='text-sm'>{currentlyReading.book.author}</p>
-                  <p className='text-xs text-muted-foreground'>
-                    {currentlyReading.book.publisher}
-                  </p>
+                <div className='flex items-center gap-2.5'>
+                  <Image
+                    src={currentlyReading.book.image || '/placeholder.jpg'}
+                    alt={currentlyReading.book.name}
+                    width={40}
+                    height={72}
+                    className='object-contain rounded-sm'
+                  />
+                  <div>
+                    <p className='text-xl tracking-[0.015em]'>
+                      {currentlyReading.book.name}
+                    </p>
+                    <p className='text-sm'>{currentlyReading.book.author}</p>
+                    <p className='text-xs text-muted-foreground'>
+                      {currentlyReading.book.publisher}
+                    </p>
+                  </div>
                 </div>
               </Link>
             </CardContent>

@@ -56,9 +56,14 @@ const DashboardLoading = () => {
               <Skeleton className='size-6' />
             </CardHeader>
             <CardContent>
-              <Skeleton className='h-6 w-60 mt-1' />
-              <Skeleton className='h-4 w-40 mt-2' />
-              <Skeleton className='h-4 w-32 mt-2' />
+              <div className='flex items-center gap-2.5'>
+                <Skeleton className='w-12 h-[72px]' />
+                <div className='space-y-2'>
+                  <Skeleton className='h-6 w-60' />
+                  <Skeleton className='h-4 w-40' />
+                  <Skeleton className='h-4 w-32' />
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>

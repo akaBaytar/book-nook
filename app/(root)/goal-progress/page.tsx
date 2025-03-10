@@ -16,7 +16,7 @@ const GoalProgressPage = async () => {
 
   const percentage =
     booksReadThisYear && readingGoal
-      ? Number(((booksReadThisYear / readingGoal) * 100).toFixed(2))
+      ? Math.round(((booksReadThisYear / readingGoal) * 100))
       : 0;
 
   return (

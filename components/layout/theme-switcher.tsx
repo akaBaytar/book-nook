@@ -61,7 +61,7 @@ const ThemeSwitcher = () => {
           <SelectItem
             key={themeOption.value}
             value={themeOption.value}
-            className='flex items-center gap-2'>
+            className='flex items-center gap-2 cursor-pointer'>
             <div className='flex items-center gap-2'>
               <div
                 className='size-3 rounded-full'

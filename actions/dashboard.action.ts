@@ -116,7 +116,9 @@ export const getBookStats = async () => {
       readingGoal: 0,
     };
 
-    const currentlyReadingBook = books.find((book) => book.readingNow);
+    const currentlyReadingBook = books.find(
+      (book) => book.readingNow && !book.completed
+    );
 
     const now = new Date();
 
@@ -214,6 +216,7 @@ export const getBookStats = async () => {
               name: currentlyReadingBook.name,
               author: currentlyReadingBook.author,
               publisher: currentlyReadingBook.publisher,
+              image: currentlyReadingBook.image || '/placeholder.jpg',
             }
           : null,
       },

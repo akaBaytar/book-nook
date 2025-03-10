@@ -32,23 +32,26 @@ const ListFilter = ({ initialFilter = 'all' }) => {
   };
 
   return (
-    <div className='flex gap-1 sm:gap-2.5'>
+    <div className='flex items-center justify-between gap-2.5 w-full xl:w-fit'>
       <Button
         variant={currentFilter === 'all' ? 'default' : 'outline'}
         onClick={() => handleFilterChange('all')}
-        disabled={isPending}>
+        disabled={isPending}
+        className='w-full xl:w-[94px]'>
         All
       </Button>
       <Button
         variant={currentFilter === 'public' ? 'default' : 'outline'}
         onClick={() => handleFilterChange('public')}
-        disabled={isPending}>
+        disabled={isPending}
+        className='w-full xl:w-[94px]'>
         Public
       </Button>
       <Button
         variant={currentFilter === 'private' ? 'default' : 'outline'}
         onClick={() => handleFilterChange('private')}
-        disabled={isPending}>
+        disabled={isPending}
+        className='w-full xl:w-[94px]'>
         Private
       </Button>
     </div>

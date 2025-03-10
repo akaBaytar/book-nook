@@ -40,8 +40,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     if (theme === null || typeof window === 'undefined') return;
 
     const root = document.documentElement;
+
     validThemes.forEach((cls) => root.classList.remove(cls));
-    root.classList.add(theme);
+
+    if (theme === 'theme-deep-ocean' || theme === 'theme-midnight-nebula') {
+      root.classList.add('dark');
+      root.classList.add(theme);
+    } else {
+      root.classList.remove('dark');
+      root.classList.add(theme);
+    }
 
     if (isInitialized) {
       localStorage.setItem('selected-theme', theme);

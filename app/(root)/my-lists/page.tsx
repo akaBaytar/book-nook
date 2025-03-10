@@ -36,7 +36,7 @@ const ListsPage = async ({ searchParams }: PageProps) => {
           </h1>
           <AddListButton />
         </div>
-        <div className='flex items-center justify-between gap-5 sm:gap-10'>
+        <div className='flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-10'>
           <ListSearch initialQuery={searchQuery} />
           <ListFilter initialFilter={privacyFilter} />
         </div>

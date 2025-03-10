@@ -112,7 +112,7 @@ const SearchDialog = ({ open, onOpenChange }: PropTypes) => {
                   ? 'by title, author or publisher'
                   : 'by list name'
               }`}
-              className='w-full pe-10'
+              className='w-full text-sm pe-10'
             />
             <div className='absolute end-2.5 top-1/2 -translate-y-1/2'>
               {isPending ? (
@@ -152,8 +152,8 @@ const SearchDialog = ({ open, onOpenChange }: PropTypes) => {
                             className='rounded-sm object-contain'
                           />
                           <div>
-                            <p className='font-medium'>{item.name}</p>
-                            <p className='text-sm text-muted-foreground'>
+                            <p className='font-medium line-clamp-1'>{item.name}</p>
+                            <p className='text-sm text-muted-foreground line-clamp-1'>
                               by {(item as Book).author}
                             </p>
                           </div>
@@ -168,7 +168,7 @@ const SearchDialog = ({ open, onOpenChange }: PropTypes) => {
                               {item.name.charAt(0)}
                             </span>
                           </div>
-                          <span>{item.name}</span>
+                          <span className='line-clamp-1'>{item.name}</span>
                         </Link>
                       )}
                     </li>

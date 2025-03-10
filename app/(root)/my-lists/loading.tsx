@@ -15,14 +15,14 @@ const LoadingListsPage = () => {
           </h1>
           <Skeleton className='h-8 w-[94px]' />
         </div>
-        <div className='flex items-center justify-between gap-5 sm:gap-10'>
+        <div className='flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-10'>
           <div className='relative w-full'>
             <Skeleton className='h-9 w-full' />
           </div>
-          <div className='flex gap-1 sm:gap-2.5'>
-            <Skeleton className='h-9 w-[47px]' />
-            <Skeleton className='h-9 w-[71px]' />
-            <Skeleton className='h-9 w-[78px]' />
+          <div className='flex items-center justify-between gap-2.5 w-full xl:w-fit'>
+            <Skeleton className='h-9 w-full xl:w-[94px]' />
+            <Skeleton className='h-9 w-full xl:w-[94px]' />
+            <Skeleton className='h-9 w-full xl:w-[94px]' />
           </div>
         </div>
       </div>

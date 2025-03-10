@@ -95,7 +95,7 @@ const CheckListItem = ({ item }: CheckListItemProps) => {
           onClick={onClick}
           disabled={isUpdating}
           className={
-            isCompleted ? 'line-through truncate opacity-60' : 'truncate'
+            isCompleted ? 'line-through line-clamp-1 opacity-60 text-start' : 'line-clamp-1 text-start'
           }>
           {item.name}
         </button>

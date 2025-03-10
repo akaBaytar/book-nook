@@ -74,3 +74,10 @@ export const BookEntrySchema = z.object({
   month: z.number().int(),
   pagesRead: z.number().int(),
 });
+
+export const GoalSchema = z.object({
+  goal: z
+    .number()
+    .min(0, { message: 'Goal must be a positive number' })
+    .max(1000, { message: 'Goal must be reasonable (max 1000)' }),
+});

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import {
   ListSchema,
   BookSchema,
+  GoalSchema,
   BookEntrySchema,
   CheckListSchema,
   CheckListItemSchema,
@@ -73,6 +74,8 @@ export type Sort = 'recent' | 'oldest' | 'name' | 'author';
 export type CheckList = z.infer<typeof CheckListSchema>;
 
 export type CheckListItem = z.infer<typeof CheckListItemSchema>;
+
+export type Goal = z.infer<typeof GoalSchema>;
 
 export type List = z.infer<typeof ListSchema> & { id: string };
 

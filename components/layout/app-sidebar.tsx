@@ -5,12 +5,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import * as z from 'zod';
-import { toast } from 'sonner';
 import { dark } from '@clerk/themes';
-import { useForm } from 'react-hook-form';
+
 import { UserButton, useUser } from '@clerk/nextjs';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   SearchIcon,
@@ -37,40 +34,13 @@ import {
 } from '@/components/ui/sidebar';
 
 import { Skeleton } from '../ui/skeleton';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
-
-import { updateReadingGoal } from '@/actions/dashboard.action';
 
 import ImageCarousel from './image-carousel';
-import SearchDialog from '../shared/search-dialog';
 import ThemeSwitcher from './theme-switcher';
+import GoalDialog from '../shared/goal-dialog';
+import SearchDialog from '../shared/search-dialog';
 
 import { useTheme } from '@/context/theme';
-
-const formSchema = z.object({
-  goal: z
-    .number()
-    .min(0, { message: 'Goal must be a positive number' })
-    .max(1000, { message: 'Goal must be reasonable (max 1000)' }),
-});
 
 const AppSidebar = () => {
   const { user } = useUser();
@@ -86,28 +56,6 @@ const AppSidebar = () => {
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [goalDialogOpen, setGoalDialogOpen] = useState(false);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      goal: 0,
-    },
-  });
-
-  const onSubmitGoal = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await updateReadingGoal(values.goal);
-      if (response.success) {
-        toast.success(response.message);
-
-        setGoalDialogOpen(false);
-      } else {
-        toast.error(response.message || 'Failed to update reading goal');
-      }
-    } catch {
-      toast.error('An error occurred.');
-    }
-  };
 
   const openSearchDialog = () => {
     setOpenMobile(false);
@@ -252,43 +200,7 @@ const AppSidebar = () => {
       </Sidebar>
 
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
-      <Dialog open={goalDialogOpen} onOpenChange={setGoalDialogOpen}>
-        <DialogContent style={{ zIndex: 9999 }}>
-          <DialogHeader>
-            <DialogTitle>Set Reading Goal</DialogTitle>
-            <DialogDescription>
-              Set your yearly reading target.
-            </DialogDescription>
-          </DialogHeader>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmitGoal)}
-              className='space-y-4'>
-              <FormField
-                control={form.control}
-                name='goal'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type='number'
-                        placeholder='Number of books'
-                        {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        className='w-full'
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <DialogFooter>
-                <Button type='submit'>Set Goal</Button>
-              </DialogFooter>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
+      <GoalDialog open={goalDialogOpen} onOpenChange={setGoalDialogOpen} />
     </>
   );
 };

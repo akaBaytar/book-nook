@@ -43,7 +43,7 @@ const FAQSection = () => {
             Still have questions? We&apos;re here to help!
           </p>
           <Button className='bg-gradient-to-r from-violet-200 to-pink-200 border-none shadow-violet-100 text-black/80'>
-            <Link href='mailto:support@booknook.com'>Contact Support</Link>
+            <Link href='mailto:contact@burakbilgili.co.uk'>Contact Support</Link>
           </Button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-# Ceren's Book Nook
+# Book Nook
 
 > Track your progress, set reading goals and build your dream library.
 

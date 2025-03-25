@@ -242,7 +242,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
 
   if (isBoxed) {
     return (
-      <Card className='p-8 rounded-md'>
+      <Card className='p-4 rounded-md'>
         <Carousel
           opts={{ loop: true }}
           plugins={[
@@ -259,7 +259,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
                   height={400}
                   priority
                   alt='carousel image'
-                  className='rounded-md size-full doject-cover'
+                  className='rounded-md size-full'
                 />
               </CarouselItem>
             ))}
@@ -286,7 +286,7 @@ const ImageCarousel = ({ orientation, isBoxed = true }: PropTypes) => {
               height={400}
               priority
               alt='carousel image'
-              className='rounded-md size-full doject-cover'
+              className='rounded-md size-full'
             />
           </CarouselItem>
         ))}

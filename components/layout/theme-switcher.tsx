@@ -50,7 +50,7 @@ const ThemeSwitcher = () => {
     <Select
       value={theme}
       onValueChange={(newTheme) => setTheme(newTheme as Theme)}>
-      <SelectTrigger className='w-full flex items-center gap-2 border-none shadow-none px-2'>
+      <SelectTrigger className='w-full h-8 flex items-center gap-2 border-none shadow-none px-2 hover:bg-sidebar-accent'>
         <div className='flex items-center gap-2'>
           <PaletteIcon className='size-4' />
           <span>Theme</span>

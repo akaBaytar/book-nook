@@ -80,7 +80,7 @@ const AppSidebar = () => {
   return (
     <>
       <Sidebar side='left' variant='floating'>
-        <SidebarHeader className='bg-gradient-to-r from-muted to-secondary mt-2 rounded-md shadow-sm'>
+        <SidebarHeader className='bg-gradient-to-r from-muted to-secondary mt-2 mx-2 rounded-md shadow-sm'>
           <Link href='/dashboard' className='flex items-center'>
             <Image
               src={isDark ? '/logo-dark.png' : '/logo.png'}
